@@ -1,0 +1,70 @@
+{ignore}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.js"></script>
+<script type="text/javascript" src="https://dl.dropboxusercontent.com/u/16542600/metro.min.js"></script>
+{/ignore}
+<script type="text/javascript" src="http://localhost/dev/jquery-ui.js"></script>
+<script type="text/javascript" src="http://localhost/dev/metro.min.js"></script>
+
+<header id="site_title">
+  <nav class="navigation-bar dark">
+    <nav class="navigation-bar-content">
+      <div class="element">
+          <a href="/home.php" accesskey="h">NERDZ</a>
+      </div>
+      <div class="element-divider"></div>
+      <div class="element">
+        <a class="dropdown-toggle" id="welcome" href="#">{$welcome}, {$myusername_n}</a>
+        <ul class="dropdown-menu" data-role="dropdown" style="z-index: 1001; padding: 0px;width:auto;">
+          <li><a href="/{$myusername4link_n}" accesskey="p"><i class="icon-user"></i>{$profile}</a></li>
+          <li><a href="/preferences.php" accesskey="z"><i class="icon-wrench"></i>{$preferences}</a></li>
+          <li>
+            <a class="dropdown-toggle" href="#"><i class=" icon-tools"></i>{$preferences} Nerdz8</a>
+            <ul class="dropdown-menu" data-role="dropdown" data-pos="right">
+              <li style="cursor:pointer">
+                <i class="icon-ruler">Tema:</i>
+                <select id="theme-switcher" style="margin-left: 1.5em">
+                  <option value="dark">Dark</option>
+                  <option value="light">Light</option>
+                </select>
+                <script>
+                  ts = $("#theme-switcher");
+                  if(localStorage.getItem("nerdz8-light")) 
+                    ts.children().eq(1).attr("selected",true);
+                  
+                  ts.on("change", function(){
+                    if( ts.val() == "dark" )
+                      localStorage.removeItem("nerdz8-light");
+                    else {
+                      localStorage.setItem("nerdz8-light", "yep");
+                    }
+                    location.reload();
+                  })
+                </script>
+              </li>
+              <li style="cursor:pointer" onclick="alert('Nerdz8 Theme by Dr.Jest\nBased on work made by Sergey Pimenov @(https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE)');">
+                <i class="icon-info">Info</i>
+              </li>
+              <li style="cursor:pointer" onclick="window.open('http://github.com/DrJest/nerdzTemplateNerdz8')">
+                <i class="icon-github-2">GitHub</i>
+              </li>
+            </ul>
+          </li>
+          <li><a href="/" id="logout" data-tok="{$tok_n}"><i class="icon-exit"></i>{$logout}</a></li>
+        </ul>
+      </div>
+      <a class="element place-right" style="padding-left:30px; padding-right: 30px" href="/pm.php" accesskey="m" id="gotopm">
+        <i title="{$pm}" class="icon-mail" id="pmcounter" accesskey="q"></i>
+      </a>
+      <div class="element-divider place-right">&nbsp;</div>
+      <a class="element place-right" href="/feed.php?project=1">
+        <i title="Feed Project" class="icon-feed"></i>
+      </a>
+      <a href="/feed.php" class="element place-right">
+        <i title="Feed Posts" class="icon-feed"></i>
+      </a>
+      <div class="element-divider place-right"></div>
+    </nav>
+  </nav>
+</header>
+<div id="loadtxt" data-loading="{$loading}"></div>
+<div class="grid fluid">

@@ -1,0 +1,59 @@
+<form id="edprojform" class="grid fluid">
+  <div class="row">
+    <span class="span2 offset1">
+      {$members}: <i class="small">{$one_per_line}</i>
+    </span>
+    <textarea name="members" rows="8" class="span3">
+      {loop="members_a"}{$value}&#13;&#10;{/loop}
+    </textarea>
+    
+    <span class="span2">
+      {$description}:
+    </span>
+    <textarea name="description" rows="8" class="span3">
+      {loop="description_a"}{$value}&#13;&#10;{/loop}
+    </textarea>
+  </div>
+  <div class="row thin">
+    <span class="span2 offset1">
+      {$goal}:
+    </span>
+    <textarea name="goal" rows="8" class="span3">
+      {loop="goal_a"}{$value}&#13;&#10;{/loop}
+    </textarea>
+    
+    <div class="span2 center">
+      <label for="open">    {$open_project}:    <input style="margin:5px;" type="checkbox" id="open" name="open" value="1" {if="$openproject_b"} checked {/if}/>           </label>
+      <label for="visible"> {$visible_project}: <input style="margin:5px;" type="checkbox" id="visible" name="visible" value="1" {if="$visibleproject_b"} checked {/if}/>  </label>
+      <label for="private"> {$private_project}: <input style="margin:5px;" type="checkbox" id="private" name="private" value="1" {if="$privateproject_b"} checked {/if}/>  </label>
+      
+      [<a href="/faq.php#q19" onclick="window.open(this.href); return false;">?</a>]
+    </div>
+    <span class="span3">
+      {$photo}:<br />
+      <input type="text" name="photo" value="{$photo_n}" /><br />
+      <i class="small">{$insert_url}</i>
+    </span>
+  </div>
+  <div class="row">
+    <span class="span2 offset4">
+      <input type="submit" value="{$edit}" />
+    </span>
+    <span class="span5">
+      <div id="res"></div>
+    </span>
+  </div>
+  <input type="hidden" name="tok" value="{$tok_n}" />
+  <input type="hidden" name="id" value="{$id_n}" />
+</form>
+<hr />
+<form id="delprojfrm" class="center">
+  <input type="hidden" name="tok" value="{$tok_n}" />
+  <input type="hidden" name="id" value="{$id_n}" />
+  {$captcha}:  <br />
+  <img alt="" id="captcha" title="captcha" style="border: 1px solid #FFF" width="90" height="30" /> 
+  &nbsp;<span onclick="N.reloadCaptcha()" style="font-size:6pt; cursor: pointer">{$reload_captcha}</span> <br />
+  <input type="text" id="cptxt" name="captcha" required /><br />
+  <input type="submit" value="{$delete}" />
+</form>
+<div id="res2"></div>

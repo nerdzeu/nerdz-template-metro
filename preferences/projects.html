@@ -1,0 +1,38 @@
+<div class="grid fluid">
+  <hr />
+  <div class="row">
+    <div class="span4 offset4">
+      {$projects_descr}
+    </div>
+    <span class="span1">
+      <button onclick="location.href='/project.php'">{$create}</button>
+    </span>
+  </div>
+  <br />
+  <hr />
+  <div id="cont">
+    <div class="center">{$project_list}</div>
+    {loop="myprojects_a"}
+      <div class="row thin">
+        <div class="span3 offset4">
+          <a href="/{$value.name4link_n}">{$value.name_n}</a>
+        </div>
+        <button class="manage" data-id="{$value.id_n}" class="span1">{$manage}</button>
+      </div>
+    {else}
+      Yu don't have any project
+    {/loop}
+  </div>
+</div>
+
+<script type="application/javascript">
+$(document).ready(function() {
+    $(".manage").on('click',function(e){
+        e.preventDefault();
+        $("#cont").html($("#loadtxt").data('loading'));
+        N.html.post('/pages/preferences/projects.html.html.php',{id: $(this).data('id')},function(data) {
+            $("#cont").html(data);
+        });
+    });
+});
+</script>

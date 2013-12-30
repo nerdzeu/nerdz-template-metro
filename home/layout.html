@@ -1,0 +1,100 @@
+<div id="main" class="row">
+  <nav id="left_col" class="sidebar span2">
+    <ul id="leftmenu">
+      <li>
+        <a id="profilePostList" href="#">NERDZ</a>
+        <i class="icon-arrow-down-2" id="profilePostArrow"></i>
+        <ul id="nerdzlist">
+          <li class="selectlang" data-lang="*">{$everybody}</li>
+          <li class="selectlang" data-lang="usersifollow">{$users_i_follow}</li>
+          {loop="langs_a"}
+            <li class="selectlang" data-lang="{$value.shortlang_n}">{$value.longlang_n}</li>
+          {/loop}
+        </ul>
+      </li>
+      <li>
+        <a id="projectPostList" href="#">{$projects}</a>
+        <i class="icon-arrow-down-2" id="projectPostArrow"></i>
+        <ul id="projlist">
+          <li class="projlang" data-lang="*">{$everybody}</li>
+          <li class="projlang" data-lang="usersifollow">{$users_i_follow}</li>
+          {loop="langs_a"}
+            <li class="projlang" data-lang="{$value.shortlang_n}">{$value.longlang_n}</li>
+          {/loop}
+        </ul>
+      </li>
+      <li><a href="/userslist.php">{$users_list}</a></li>
+      <li><a href="/projectslist.php">{$projects_list}</a></li>
+      <li><a href="/bookmarks.php">{$bookmarks} [{$users}]</a></li>
+      <li><a href="/bookmarks.php?project=1">{$bookmarks} [{$projects}]</a></li>
+      <li><a href="/rank.php">Top 100</a></li>
+      <li><a href="/rank.php?top=thismonth">Monthly 100</a></li>
+      <li><a href="/last.php">{$last_user}</a></li>
+      <li><a href="/stats.php">{$stats}</a></li>
+      <li><a href="/faq.php">F.A.Q.</a></li>
+      <li style="text-align:center">
+        {$advertisement}
+        <div style="width:120px;margin:auto">{$banners_a.120x60}</div>
+      </li>
+    </ul>
+  </nav>
+  
+  <div id="center_col" class="span8" style="padding-top: 5px">
+      <div id="fast_nerdz">
+        <form id="stdfrm" class="grid fluid">
+          <div class="row">  
+            <textarea id="frmtxt" name="message" style="width: 99.5%; height: 60px" tabindex="1"></textarea>
+          </div>
+          <div class="row">
+            <button type="button" class="span" onclick="window.open('/bbcode.php')" tabindex="4">BBCode</button> 
+            <div id="pmessage" class="error span8"></div>
+            
+            <button type="button" class="preview span" data-refto="#frmtxt" tabindex="3">{$preview}</button> 
+            <input type="submit" class="span" value="{$nerdz_it}" tabindex="2" />
+          </div>
+        </form>
+      </div>
+      <div id="postlist" data-type="profile" data-location="home" data-mode="std"></div>
+      <br /><br /><br />
+  </div>
+  
+  <nav id="right_col" class="sidebar span2">
+  {if="!empty($followed_a)"}
+      <div style="text-align: center;">
+          {$you_follow}
+          <div style="font-style: italic" class="small">[{$followedonlinetot_n}/{$followedtot_n}]</div>
+      </div>
+        <ul id="followedlist" style="color: #AFAFAF">
+        {loop="followed_a"}
+            <li>
+                <a href="/{$value.username4link_n}" {if="!$value.online_b"} style="color: #AFAFAF"{/if}>{$value.username_n}</a>
+                {if="$value.birthday_b"}
+                    <i class="icon-gift"></i>
+                {/if}
+            </li>
+        {/loop}
+        </ul>
+      <br />
+  {/if}
+  {if="!empty($ownerof_a)"}
+      <div style="text-align: center;">{$your_projects}</div>
+      <ul>
+      {loop="ownerof_a"}
+          <li><a href="/{$value.name4link_n}">{$value.name_n}</a></li>
+      {/loop}
+      </ul>
+      <br />
+  {/if}
+  {if="!empty($memberof_a)"}
+    <div style="text-align: center;">{$member_of}</div>
+    <ul>
+    {loop="memberof_a"}
+        <li><a href="/{$value.name4link_n}">{$value.name_n}</a></li>
+    {/loop}
+    </ul>
+    <br />
+  {/if}
+    <div style="text-align: center;cursor:pointer;" id="hposts" onclick="$('#hptable').toggle()">Hidden Posts</div>
+    <ul id="hptable"><li style="text-align: center">None</li></ul>
+  </nav>
+</div>

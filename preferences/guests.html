@@ -1,0 +1,9 @@
+<hr />
+<div>{$guests_descr}</div>
+<hr />
+<form id="gufrm" data-tok="{$tok_n}" class="center">
+  <label for="public"> <input type="radio" name="check" id="public" value="public" {if="!$private_b"} checked {/if} /> {$public_profile}</label>
+  <label for="private"> <input type="radio" name="check" id="private"  value="private" {if="$private_b"} checked {/if} /> {$private_profile}</label>
+  <input type="submit" value="{$edit}" />
+  <div id="res"></div>
+</form>

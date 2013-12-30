@@ -1,0 +1,83 @@
+{loop="list_a"}
+    <div id="post{$value.hpid_n}" data-hpid="{$value.hpid_n}" data-hide="{$hide}">
+    {if="$value.news_b"}
+        <span class="nerdz_date" style="float:left">
+            <i class="icon-clock">{$value.datetime_n}</i>
+        </span>
+        <div class="news">
+            {$value.message_n}
+            <hr />
+            <div class="small">
+                <a href="/{$value.to4link_n}{$value.pid_n}">Link</a>
+                <span style="float: right">
+                    <a class="hide" data-postid="post{$value.hpid_n}">{$hide}</a>
+                </span>
+            </div>
+        </div>
+    {else}
+        <div class="nerdz_from">
+            <a href="/{$value.from4link_n}">{$value.from_n}</a>
+            {if="$value.fromid_n != $value.toid_n"}
+                <i class="icon-arrow-right small"></i><a href="/{$value.to4link_n}">{$value.to_n}</a>
+            {else}
+            :
+            {/if}
+            <span class="nerdz_date">
+                {$value.datetime_n}
+            </span>
+        </div>
+        <div class="nerdz_message">
+            <span class="nerdz_date" style="font-size: 7pt">
+                #{$value.pid_n}
+            </span>
+            <div>
+              {$value.message_n}
+            </div>
+            <div style="clear:both; padding-top: 5px" class="small" data-expand="{$expand}">
+                <a href="/{$value.to4link_n}{$value.pid_n}" class="post_link"><i class="post_icons icon-link" style="float:left;"></i></a>&nbsp;&nbsp;
+                <a href="#" class="showcomments" data-hpid="{$value.hpid_n}" data-refto="commentlist{$value.hpid_n}">
+                     <i class="post_icons icon-comments-4" title="{$comments}" style="float:left">{$value.postcomments_n}</i>
+                </a>
+
+                <i title="{$hide}" class="post_icons hide icon-cancel-2" data-postid="post{$value.hpid_n}"></i>
+
+                {if="$value.canremovepost_b"}
+                    <i title="{$delete}" data-hpid="{$value.hpid_n}" data-refto="post{$value.hpid_n}" class="post_icons icon-remove"></i>
+                {/if}
+                
+                {if="$value.caneditpost_b"}
+                    <i data-hpid="{$value.hpid_n}" data-refto="post{$value.hpid_n}" class="post_icons icon-pencil" title="{$edit}"></i>
+                {/if}
+
+                {if="$value.canshowlock_b"}
+                  {if="$value.lock_b"}
+                    <i class="post_icons icon-locked" data-hpid="{$value.hpid_n}" title="{$recv_notify}"></i>
+                  {else}
+                    <i class="post_icons icon-unlocked" data-hpid="{$value.hpid_n}" title="{$not_recv_notify}"></i>
+                  {/if}
+                {/if}
+                
+                {if="$value.canshowlurk_b"}
+                  {if="$value.lurk_b"}
+                      <i class="post_icons icon-eye" data-hpid="{$value.hpid_n}" title="Unlurk"></i>
+                    {else}
+                      <i class="post_icons icon-eye" data-hpid="{$value.hpid_n}" title="Lurk"></i>
+                    {/if}
+                {/if}
+                
+                {if="$value.canshowbookmark_b"}
+                  {if="$value.bookmark_b"}
+                    <i class="post_icons icon-minus" data-hpid="{$value.hpid_n}" title="Unbookmark"></i>
+                  {else}
+                    <i class="post_icons icon-plus" data-hpid="{$value.hpid_n}" title="Bookmark"></i>
+                  {/if}
+                {/if}
+            </div>
+        </div>
+        <div>
+            <script type="application/javascript">var lnk{$value.hpid_n} = "/{$value.to4link_n}{$value.pid_n}";</script>
+            <div id="commentlist{$value.hpid_n}" style="width:65%;margin-top:1%; margin-bottom:15px"></div>
+        </div>
+    {/if}
+    </div>
+{/loop}

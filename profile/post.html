@@ -1,0 +1,59 @@
+<div style="margin-top: 1%" id="post{$hpid_n}">
+    <div class="nerdz_from">
+        <a href="/{$from4link_n}">{$from_n}</a>
+        {if="$fromid_n != $toid_n"}
+            <i class="icon-arrow-right small"></i><a href="/{$to4link_n}">{$to_n}</a>
+        {else}
+        :
+        {/if}
+        <span class="nerdz_date">
+            {$datetime_n}
+        </span>
+    </div>
+    <div class='nerdz_message'>
+        <div>
+            <span class="nerdz_date" style="font-size: 7pt">
+                #{$pid_n}
+            </span>
+            {$message_n}
+        </div>
+        <div style="clear:both; padding-top: 5px" class="small">
+            <a href="/{$to4link_n}{$pid_n}"><i class="post_icons icon-link" style="float:left;"></i></a>&nbsp;&nbsp;
+            <a href="#" class="showcomments" data-hpid="{$hpid_n}" data-refto="commentlist{$hpid_n}">
+               <i class="post_icons icon-comments-4" title="{$comments}" style="float:left">{$postcomments_n}</i>
+            </a>
+            {if="$canremovepost_b"}
+              <i title="{$delete}" data-hpid="{$hpid_n}" data-refto="post{$hpid_n}" class="post_icons icon-remove"></i>
+            {/if}
+            {if="$caneditpost_b"}
+                <i data-hpid="{$hpid_n}" data-refto="post{$hpid_n}" class="post_icons icon-pencil" title="{$edit}"></i>
+            {/if}            
+            {if="$canshowlock_b"}
+              {if="$lock_b"}
+                <i class="post_icons icon-locked" data-hpid="{$hpid_n}" title="{$recv_notify}"></i>
+              {else}
+                <i class="post_icons icon-unlocked" data-hpid="{$hpid_n}" title="{$not_recv_notify}"></i>
+              {/if}
+            {/if}
+            
+            {if="$canshowlurk_b"}
+              {if="$lurk_b"}
+                  <i class="post_icons icon-eye" data-hpid="{$hpid_n}" title="Unlurk"></i>
+                {else}
+                  <i class="post_icons icon-eye" data-hpid="{$hpid_n}" title="Lurk"></i>
+                {/if}
+            {/if}
+            
+            {if="$canshowbookmark_b"}
+              {if="$bookmark_b"}
+                <i class="post_icons icon-minus" data-hpid="{$hpid_n}" title="Unbookmark"></i>
+              {else}
+                <i class="post_icons icon-plus" data-hpid="{$hpid_n}" title="Bookmark"></i>
+              {/if}
+            {/if}
+        </div>
+    </div>
+    <div>
+        <div id="commentlist{$hpid_n}" style="width:65%; margin-top:1%; margin-bottom:15px"></div>
+    </div>
+</div>

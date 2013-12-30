@@ -1,0 +1,37 @@
+<article id="center_col" data-type='{if="$project_b"}project{else}profile{/if}' class="row">
+    <span class="span1"></span>
+    <div class="span10 grid fluid">
+      <div class="row pointer">
+        <span class="span2" style="cursor:default"><i class="icon-link"></i>{$url}</span>
+        <span class="span8" id="preview"><i class="icon-book"></i>{$preview}</span>
+        <span style="span2" id="time">  <i style="padding-left:20px" class="icon-clock"></i>{$when}</span>
+      </div>
+      <hr>
+      {loop="list_a"}
+      <div class="row" id="tr{$key}">
+        <span class="span2"><a href="{$value.link_n}">{$value.name_n} [{$value.pid_n}]</a></span>
+        <div class="nerdz_message span8">
+          {$value.preview_n}
+          <i class="unbookmark icon-remove" style="margin-right:3px; float: right; cursor:pointer;" title="Unbookmark">&nbsp;</i>
+        </div>
+        <span class="span2 small">
+            {$value.datetime_n}
+        </span>
+      </div>
+      <hr>
+      {/loop}
+    </div>
+
+    {if="!empty($prev_url_n)"}
+        <div style="float:left; margin-left:5%">
+            <a href="{$prev_url_n}">&lt;&lt;&lt;</a>
+        </div>
+    {/if}
+    {if="!empty($next_url_n)"}
+        <div style="float:right; margin-right:5%">
+            <a href="{$next_url_n}">&gt;&gt;&gt;</a>
+        </div>
+    {/if}
+
+    <br /><br /><br />
+</article>

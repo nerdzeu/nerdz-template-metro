@@ -1,0 +1,13 @@
+<div style="margin: auto;text-align:center">
+    <hr />
+    {$delete_descr}
+    <hr />
+    <form id="delfrm" class="center">
+      {$captcha}:  <br />
+      <img alt="" id="captcha" title="captcha" style="border: 1px solid #FFF" width="90" height="30" /> 
+      &nbsp;<span onclick="N.reloadCaptcha()" style="font-size:6pt; cursor: pointer">{$reload_captcha}</span> <br />
+      <input type="text" name="captcha" id="frmdelcpt" required /><br />
+      <input type="submit" value="{$delete}" />
+    </form>
+    <div id="res"></div>
+</div>

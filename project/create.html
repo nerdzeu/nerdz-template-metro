@@ -1,0 +1,47 @@
+<div class="row">
+  <div id="center_col" class="span10 offset1">
+    <div>{$create_project_descr}</div>
+    <hr />
+    <form id="create" class="grid fluid">
+        <div class="row">
+            <span class="span4 offset1">{$project_name}:</span>
+            <span class="span6"> <input style="width:100%" type="text" name="name"/> </span>
+        </div>
+        <div class="row thin">
+            <span class="span4 offset1">{$description}:</span>
+            <span class="span6">
+                <textarea name="description" style="width:100%; height: 240px"></textarea>
+            </span>
+        </div>
+        <div class="row thin">
+            <div class="span4 offset1">
+              {$captcha}:<br />
+              <img alt="" id="captcha" title="captcha" style="border: 1px solid #FFF" width="90" height="30" />
+              &nbsp;<span onclick="N.reloadCaptcha()" style="font-size:6pt; cursor: pointer">{$reload_captcha}</span>
+            </div>
+            <span class="span3">
+              <input type="text" name="captcha" />
+            </span>
+            <span class="span3">
+              <div class="error" id="err"></div>  
+            </span>
+        </div>
+        <div class="row thin">
+            <span class="span2 offset5"><input type="submit" value="{$create}" /></span>
+        </div>
+    </form>
+  </div>
+  <script type="application/javascript">
+    $(document).ready(function() {
+      $("#create").on('submit',function(e) {
+        e.preventDefault();
+        N.json.createProject($(this).serialize(),function(d) {
+          $("#err").html(d.message);
+          if(d.status == 'ok') {
+            location.href = '/'+encodeURIComponent($("#create").find("input[name=name]").val())+':';
+          }
+        });    
+      });
+    });
+  </script>
+</div>

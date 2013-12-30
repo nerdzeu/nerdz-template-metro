@@ -1,0 +1,25 @@
+<form id="convfrm" class="grid fluid">
+    <div class="row">
+      <div class="span1">
+          {$to}
+      </div>
+      <div class="span6">
+          <input type="text" autofocus name="to" id="to" tabindex="1"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span11">
+          {$message}
+          <br />
+          <textarea style="width:100%;height:150px" name="message" id="message" tabindex="2"></textarea>
+          <br />
+      </div>
+    </div>
+    <div class="row">
+      <div class="span1"><button type="button" style="float:left; margin-top:5px" onclick="window.open('/bbcode.php')" tabindex="5">BBCode</button></div>
+      <div class="span8"><span id="res"></span></div>
+      <div class="span1"><button type="button" style="float:right; margin-top: 5px" class="preview" data-refto="#message" tabindex="4">{$preview}</button></div>
+      <div class="span1"><input type="submit" style="float:right; margin-top:5px" value="{$send}" tabindex="3"/></div>
+    </div>
+</form>
+<br /><br />

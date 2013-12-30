@@ -1,0 +1,137 @@
+<hr />
+<div>{$preferences_descr}</div>
+<hr />
+<form id="edaccfrm" class="grid fluid">
+  <div class="row">
+    <span class="span5 offset1">
+      {$username}:
+    </span>
+    <span class="span5">
+      <input type="text" value="{$username_n}" name="username" />
+    </span>
+  </div>
+  
+  <div class="row thin">
+    <span class="span5 offset1">
+      {$name}:
+    </span>
+    <span class="span5">
+      <input type="text" value="{$name_n}" name="name" />
+    </span>
+  </div>
+  
+  <div class="row thin">
+    <span class="span5 offset1">
+      {$surname}:
+    </span>
+    <span class="span5">
+      <input type="text" value="{$surname_n}" name="surname" />
+    </span>
+  </div>
+  
+  <div class="row thin">
+    <span class="span5 offset1">
+      {$gender}:
+    </span>
+    <span class="span5">
+      <select name="gender">
+          {if="$ismale_b"}
+            <option value="1">{$male}</option>
+            <option value="2">{$female}</option>
+          {else}
+            <option value="2">{$female}</option>
+            <option value="1">{$male}</option>
+          {/if}
+      </select>
+    </span>
+  </div>
+  
+  <div class="row thin">
+    <span class="span5 offset1">
+      {$email}:
+    </span>
+    <span class="span5">
+      <input type="text" value="{$email_n}" name="email" />
+    </span>
+  </div>
+  
+  <div class="row thin">
+    <span class="span5 offset1">
+      {$birth_date}:
+    </span>
+    <span class="span5">
+      <select name="birth_day">
+          <option value="-1">{$day}</option>
+          {loop="days_a"}
+              {if="$counter+1 == $day_n"}
+                  <option value="{$counter+1}" selected="selected">{$counter+1}</option>
+              {else}
+                  <option value="{$counter+1}">{$counter+1}</option>
+              {/if}
+          {/loop}
+      </select>
+      <select name="birth_month">
+          <option value="-1">{$month}</option>
+          {loop="months_a"}
+              {if="$value == $month_n"}
+                  <option value="{$counter+1}" selected="selected">{$value}</option>
+              {else}
+                  <option value="{$counter+1}">{$value}</option>
+              {/if}
+          {/loop}
+      </select>
+      <select name="birth_year">
+          <option value="-1">{$year}</option>
+          {loop="years_a"}
+              {if="$value == $year_n"}
+                  <option value="{$value}" selected="selected">{$value}</option>
+              {else}
+                  <option value="{$value}">{$value}</option>
+              {/if}
+          {/loop}
+      </select>
+    </span>
+  </div>
+  
+  <div class="row thin">
+    <span class="span5 offset1">
+      {$timezone}:
+    </span>
+    <span class="span5">
+      <select name="timezone">
+          {loop="timezones_a"}
+              {if="$value == $timezone_n"}
+                  <option value="{$value}" selected="selected">{$value}</option>
+              {else}
+                  <option value="{$value}">{$value}</option>
+              {/if}
+          {/loop}
+      </select>
+    </span>
+  </div>
+  
+  <div class="row">
+    <span class="span5 offset1">
+      {$password}:
+      <p class="small">
+          {$leave_empty_pass}
+      </p>
+    </span>
+    <span class="span5">
+      <input type="text" value="" name="password" />
+    </span>
+  </div>
+  
+  <div class="row">
+    <span class="span2 offset5">
+      <input type="submit" value="{$edit}" />
+      <input type="hidden" name="tok" value="{$tok_n}" />
+    </span>
+  </div>
+  
+  <div class="row">
+    <span class="span8 offset3">
+      <p id="res"></p>
+    </span>
+  </div>
+</form>

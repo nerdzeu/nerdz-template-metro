@@ -1,0 +1,131 @@
+<hr />
+<div>{$profile_descr}</div>
+<hr />
+<form id="edprofrm" class="grid fluid center">
+  <div class="row thin">
+    <span class="span2 offset1">
+      {$interests}:
+      <br /><i class="small">
+        {$one_per_line}
+      </i>
+    </span>
+    <textarea class="span8" name="interests" rows="8">
+        {loop="interests_a"}
+            {$value}&#13;
+        {/loop}
+    </textarea>
+  </div>
+  <div class="row thin">
+    <span class="span2 offset1">
+      {$biography}:
+      <br /><i class="small">
+          {$biography_sub}
+      </i>
+    </span>
+    <textarea class="span8" name="biography" rows="8">
+      {$biography_n}
+    </textarea>
+  </div>
+  <div class="row thin">
+    <span class="span2 offset1">
+      {$quotes}:
+      <br /><i class="small">
+          {$one_per_line}
+      </i>
+    </span>
+    <textarea name="quotes" rows="8" class="span8">
+        {loop="quotes_a"}
+            {$value}&#13;&#10;
+        {/loop}
+    </textarea>
+  </div>
+  <div class="row thin">
+    <span class="span2 offset1">
+      {$website}:
+    </span>
+      <input type="text" name="website" value="{$website_n}" class="span3" />
+    <span class="span2">
+      {$github}:
+    </span>
+      <input type="text" name="github" value="{$github_n}" class="span3" />
+  </div>
+  <div class="row thin">
+    <span class="span2 offset1">
+      {$jabber}:
+    </span>
+      <input type="text" name="jabber" value="{$jabber_n}" class="span3" />
+    <span class="span2">
+      {$yahoo}:
+    </span>
+      <input type="text" name="yahoo" value="{$yahoo_n}" class="span3" />
+  </div>
+  <div class="row thin">
+    <span class="span2 offset1">
+      {$facebook}:<br /><i class="small">{$insert_url}</i>
+    </span>
+      <input type="text" name="facebook" value="{$facebook_n}" class="span3" />
+    <span class="span2">
+      {$twitter}:<br /><i class="small">{$insert_url}</i>
+    </span>
+      <input type="text" name="twitter" value="{$twitter_n}" class="span3" />
+  </div>
+  <div class="row thin">
+    <span class="span2 offset1">
+      {$steam}:
+    </span>
+      <input type="text" name="steam" value="{$steam_n}" class="span3" />
+    <span class="span2">
+      {$skype}:
+    </span>
+      <input type="text" name="skype" value="{$skype_n}" class="span3" />
+  </div>
+  <div class="row thin">
+    <span class="span2 offset1">
+      {$user_script}: [<a href="/faq.php#q19" onclick="window.open(this.href); return false;">?</a>]
+      <br /><i class="small">
+        {$insert_url}
+      </i>
+    </span>
+      <input type="text" name="userscript" value="{$userscript_n}" class="span3" />
+    <span class="span2">
+      {$date_format}:
+    </span>
+      <input type="text" name="dateformat" value="{$dateformat_n}" class="span3" />
+  </div>
+  <div class="row thin">
+    <span class="span5 offset1">
+      <label for="closed">{$closed_profile}:</label>
+      <input type="checkbox" name="closed" value="1" {if="$closedprofile_b"} checked {/if} id="closed"/>
+    </span>
+    <script>
+      $("#closed").on("change",function(){
+        this.checked ?
+          $(".whitelist").show(100) : 
+          $(".whitelist").hide(100)
+      })
+    </script>
+    <div class="span2 whitelist">
+      {$whitelist}: [<a href="/faq.php#q17">?</a>]
+      <br /><i class="small">
+        {$one_per_line}
+      </i>
+    </div>
+    <textarea name="whitelist" rows="8" cols="26" class="span3 whitelist">
+      {loop="whitelist_a"}
+        {$value}&#13;&#10;
+      {/loop}
+    </textarea>
+  </div>
+  <div class="row">
+    <div class="span2 offset5">
+      <input type="submit" value="{$edit}" />
+      <input type="hidden" name="tok" value="{$tok_n}" />
+    </div>
+    <div id="res" class="span5"></div>
+  </div>
+</form>
+{if="!$canshowwhitelist_b"}
+<style type="text/css">
+  .whitelist { display:none; }
+</style>
+{/if}

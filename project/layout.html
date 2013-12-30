@@ -1,0 +1,234 @@
+<div class="row">
+  <aside id="left_col" class="span2">
+    <div class="grid fluid">
+      <div class="row">
+          <a href="/{$name4link_n}" class="span10 offset1">
+          {if="empty($photo_n)"}
+              <img src="/images/noImage.jpg" alt="{$name}" style="max-width:100%; max-height:100%" width="180" height="180" />
+          {else}
+              <img src="{$photo_n}#" alt="{$name}" style="max-width:100%; max-height:100%" onerror="this.src='{$onerrorimgurl_n}'" />
+          {/if}
+          </a>
+      </div>
+      <div class="row smallest center">
+        {if="$canshowmenu_b"}
+            <div class="span5 offset1">
+              <div class="g-plusone" data-size="small" data-count="1" data-href="http://www.nerdz.eu/{$name4link_n}"></div>
+            </div>
+          {if="$canifollow_b"}
+            <span class="span5" id="follow" data-id="{$id_n}">{$follow}</span>
+          {else}
+            <span class="span5" id="unfollow" data-id="{$id_n}">{$unfollow}</span>
+          {/if}
+        {else}
+          <div class="span10 offset1">
+            <div class="g-plusone" data-size="small" data-count="1" data-href="http://www.nerdz.eu/{$name4link_n}"></div>&nbsp;
+          </div>
+        {/if}
+      </div>
+      <div class="row">
+        <div class="span10 offset1"><h4>{$informations}</h4></div>
+      </div>
+      <div class="row thin">
+        <div class="span10 offset1">
+          <b>{$name}: </b>
+          {$name_n}
+        </div>
+      </div>
+      {if="!empty($website_n)"}
+      <div class="row thin">
+        <div class="span10 offset1">
+          <b>{$website}: </b>
+          <a class="small" href="{$website4link_n}#" onclick="window.open(this.href); return false">{$website_n}</a>
+        </div>
+      </div>
+      {/if}
+      <div class="row">
+        <span class="span6 offset1">
+          <b>{$id}:</b>
+        </span>
+        <span class="span5">
+          {$id_n}
+        </span>
+      </div>
+      <div class="row thin">
+        <span class="span6 offset1">
+          <b>{$members}:</b>
+        </span>
+        <span class="span5">
+          {$members_n}
+        </span>
+      </div>
+      <div class="row thin">
+        <span class="span6 offset1">
+          <b>{$users}:</b>
+        </span>
+        <span class="span5">
+          {$users_n}
+        </span>
+      </div>
+      <div class="row thin">
+        <span class="span6 offset1">
+          <b>{$owner}:</b>
+        </span>
+        <span class="span5">
+          <a href="/{$owner4link_n}">{$owner_n}</a>
+        </span>
+      </div>
+      {if="!empty($users_a)"}
+        <div class="row">
+          <div class="span10 offset1">
+            <b>{$users}  ({$users_n})</b><br />
+            <div style="max-height:250px; overflow: auto">
+              {loop="users_a"}
+                <a href="/{$value.username4link_n}">{$value.username_n}</a><br />
+              {/loop}
+            </div>
+          </div>
+        </div>
+      {/if}
+      {if="!empty($members_a)"}
+        <div class="row">
+          <div class="span10 offset1">
+            <b>{$members}  ({$members_n})</b><br />
+            <div style="max-height:250px; overflow: auto">
+              {loop="members_a"}
+                <a href="/{$value.username4link_n}">{$value.username_n}</a><br />
+              {/loop}
+            </div>                  
+          </div>
+        </div>
+      {/if}
+    </div>
+  </aside>
+  
+  <article id="center_col" class="span8">
+    {if="$canwrite_b"}
+      <div id="fast_nerdz">
+        <form id="stdfrm" class="grid fluid" data-to="{$id_n}">
+          <div class="row">  
+            <textarea id="frmtxt" name="message" style="width: 99.5%; height: 60px" tabindex="1"></textarea>
+          </div>
+          <div class="row">
+            <button type="button" class="span" onclick="window.open('/bbcode.php')" tabindex="4">BBCode</button> 
+            {if="$canwritenews_b"}
+              <span class="span1">
+                <input type="checkbox" name="news" value="1" id="sendnews" /><label style="display: inline;" for="sendnews">News</label>
+              </span>
+            {/if}
+            <div id="pmessage" class="error span7"></div>
+            
+            <button type="button" class="preview span" data-refto="#frmtxt" tabindex="3">{$preview}</button> 
+            <input type="submit" class="span" value="{$nerdz_it}" tabindex="2" />
+          </div>
+        </form>
+      </div>
+    {/if}
+
+    <div id="postlist" data-type="project" data-projectid="{$id_n}" data-location="project" data-limit="0" data-mode="std">
+      {if="$singlepost_b"}
+        {$post_n}
+      {/if}
+    </div>
+    <br /><br />
+  </article>
+  
+  <aside id="right_col" class="span2">
+    {if="!empty($description_n)"}
+        <b>{$description}</b><br />
+        <div>
+          {$description_n}
+        </div>
+        <br />
+    {/if}
+
+    {if="!empty($goal_n)"}
+        <b>{$goal}</b>
+        <div>
+          {$goal_n}
+        </div>
+        <br />
+    {/if}
+        <br />
+        <b>{$advertisement}</b>
+        <div>
+            {$banners_a.120x600}
+        </div>
+    </aside>
+
+    <div id="showpostlist" style="display:none"></div>
+{if="!$singlepost_b"}
+    <script type="application/javascript">
+        $(document).ready(function() {
+            var plist = $("#postlist");
+            var num = 10; 
+            var load = false;
+            var sl = 'searchLoad'; 
+            var loading = $("#loadtxt").data('loading'); 
+            var divId = 'scrtxt';
+            var append = '<h3 id="'+divId+'">'+loading+'...</h3>';
+
+            $("#showpostlist").on('click',function() {
+                plist.html(loading);
+                load = false;
+                N.html.project.getPostList(num, $("#postlist").data('projectid'),function(data) {
+                    plist.html(data);
+                    load = true;
+                    sessionStorage.setItem(sl,"0");
+                });
+            });
+            
+            $("#showpostlist").click();
+            
+            {ignore} Autoload vecchi post allo scrolldown {/ignore}
+
+            $(window).scroll(function() {
+                if($(this).scrollTop()+200 >= ( $(document).height() - $(this).height() ) )
+                {
+                    var hpid = null;
+                    if((load || ("1" == sessionStorage.getItem(sl)) && !$("#"+divId).length))
+                    {
+                        plist.append(append);
+                        hpid = plist.find("div[id^='post']").last().data('hpid');
+                    }
+
+                    if(load)
+                    {
+                        load = false;
+
+                        if(plist.data('mode') == 'std') {
+                            N.html.project.getPostListBeforeHpid(num, plist.data('projectid'), hpid,function(data) {
+                                $("#"+divId).remove();
+                                if(data.length > 0) {
+                                    plist.append(data);
+                                    load = true;
+                                    sessionStorage.setItem(sl,"0");
+                                }
+                            });
+                        }
+                    }
+                    
+                    if(sessionStorage.getItem(sl) == "1")
+                    {
+                        sessionStorage.setItem(sl,"0");
+                        N.html.search.specificProfilePostsBeforeHpid(num, $("#footersearch input[name=q]").val(), plist.data('projectid'), hpid, function(data) {
+                            $("#"+divId).remove();
+                            if(data.length > 0) {
+                                plist.append(data);
+                                load = false;
+                                sessionStorage.setItem(sl,"1");
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+{else}
+    <script type="application/javascript">
+    $(document).ready(function() {
+            $(".showcomments").click();
+    });
+    </script>
+{/if}
+</div>

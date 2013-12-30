@@ -1,0 +1,447 @@
+@import url("metro.css");
+body{
+  background-color: #3D3D3D;
+  color: #eee;
+  overflow-x: hidden;
+}
+body.light {
+  background-color: #fff;
+  color: #222222;
+}
+aside ul  {
+  color: #eee;
+}
+.light aside ul {
+  color: #222;
+}
+
+.nerdz_comments, .frmcomment { 
+  margin-left: 30px; 
+}
+#main {
+  margin-top: 0px;
+}
+
+.notify {
+  padding: 0px;
+  list-style-type: none;
+  text-align: right;
+  margin: 0px;
+  color: #222;
+}
+
+.icon-jabber:before{
+  height:16px;
+  width:16px;
+  content: "  ";
+  padding: 0px;
+  float: left;
+  margin-right: .3em;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAA3NCSVQICAjb4U/gAAABI1BMVEX///93UgB7AAAAAABDAAAzAAAAAADkoQC+AACZAACDAAAAAABfTgC1AAClAAAgGgAAAADrowC1AAClAACNAAAgGgBTAAAYEgAbAAAAAACNAACDAABmAABDAAAzAAAbAAAAAACVdgC+AACZAABbAAAmAAAbAAAKAAAAAADtrgDXnwDMmQCldgCZZgBTOQC1AAB7AAB0AAAbAAAAAADKjgCceQC1AAClAACZAACDAAB7AABmAABbAAC+AAC1AACuAACZAACNAACDAAB0AABbAABTAAD2rQDMmQC+AAC1AAClAACZAAB7AADfrgDkoQDdoADFAAC1AACuAAClAAD2rQDmrQD3pQDrowDFAAC+AAC1AAD2rQDMAADFAAC+AADMAADFAADk26DAAAAAYXRSTlMAERERIiIiMzMzMzNERERERFVVVVVVVVVVVWZmZmZmZmZ3d3d3d3d3d4iIiIiIiIiIiIiImZmZmZmZmZmZqqqqqqqqqqqqu7u7u7u7u8zMzMzMzMzd3d3d3d3d7u7u7v//jSrczwAAAAlwSFlzAAALEgAACxIB0t1+/AAAAB90RVh0U29mdHdhcmUATWFjcm9tZWRpYSBGaXJld29ya3MgOLVo0ngAAAEOSURBVCiRbZDnUsNADIQPBEc5ykFoBwRMNzWEEmoIoWN6j03s9fs/BT4Pwygm+0/7SauRhEg1eFMHUCv3igZRLXERxZa1ciCBi22rrXugiwGFS6OstHGjmNjEtP6tSLs4YTvkXxepY7SJZiKDvaZAqLc6NQWyCsnKlqtlGuhIs6pQDKw8rn1+v9sM6YcM0M716PrGh80YxxmLopknpb92E6cbkWHLSfXL1YfkzBziJZbUWSCinmFJJQSuYgNDKKX3F3DucF+oQzzn+mbbcWQk96kcLB5UbucmI8Nvs6s9nM7nR4qBEo3g5c7xQoRFX2bAPl6nHGcsv5kFesELQz+YUNm/kjKJtPz/b5JW3P8B6OYpumRkML4AAAAASUVORK5CYII=);
+  background-size: cover;
+}
+
+.icon-steam:before{
+  height:16px;
+  width:16px;
+  content: "  ";
+  padding: 0px;
+  float: left;
+  margin-right: .3em;
+  background-image: url(data:image/gif;base64,R0lGODlhEAAQAPcAAAQCBIyOjFRWVMTKxPwCBKSunGxubBwaHAwKDPz+/LS2tHx+fAQGDJSWjFxaXMzWxHRydLy+vAAS/wAA/wBTywIbtABM1AAAdwDgDAHltQAS1AAAd7QCEOQAABIAAAAAAHmUDwjlAIISAHwAAAAAAAAAAAEAAAAAAFYAHAAAtQAA1AAAd7yMAOPlABISAAAAAHM0AACHAADUAAB3ANxcAOQHABIsAAAAABgPAO4AAJAAAHwAAHAAqAUA5pEAEnwAAP8A4/8A6v8AkP8AfG2YAAXlAJE9FXx3ABXNGAqrAIK6AHzcAAAAqAAANBUAeQAAAGDIDwPlAAASAAAAAJCYAKLlABg9AAB3ANj0AGPlABUSAAAAAADZmACL5QDUAQB3AH4AAgDQAAD9AMB/AAD09ADl5QASEgAAAP9aKv+I2P/U1P93d/+06P/l5v8SEv8AAAAqGACI7gDUkAB3fAAAcAAABQAAkQAAfABc/wAH/xUs/wAA/2sAEv/wnwAAgAAAfOwUAOQAABIAAAAAAC8BAA4AAIIAAHwAANsABwUAAIIAAHwAAKAAAAwAAFAAAAAAANgQAGMA0AEAFQAAAGwAAAAAAAAAAAAAAChrAOT/ABIAAAAAADQEAADmAAASAMAAAJyDAPcqABKCAAB8ABgAGO4An5AAgHwAfHAA/wUA/5EA/3wA//8AEv8An/8AgP8AfG0AMQUBAJEAAHwAAErnMfYqAICCAHx8AAAogADm7RUSEgAAAADC/wAq/wCC/wB8/9gAAGMAABUAAAAAAAAYMAEA5wAAEgAAAAC+jgA+2ACCSwB8AFf/EPb/54D/Enz/ABQse+bn8BISTgAAANj3RGM+5xWCEgB8AETcvuX6PhJOggAAfAaw4R0S50xPEgAAAOIAzeUB/xIA/wAAfygosOXm5xISEgAAAAAAAAABAAAAAAAAAMgWvgU/PpGCgnx8fGgBAJYAABUAAAAAAPQAa+UA/xIAAAByAFEAAAUAAJEAAHwAAHgcRwfmuxUSRwAAACH5BAEAAAQALAAAAAAQABAABwieAAkAAMAAAUEGDA4cEHCAAQCBABA4NIhAwIAEGAcYLBiRIIIDFxGITDCAo8SOBxIgKJCgQEqHJh0KUImRpoOJOB+oZOkygYONBwNgVCASgYEEDAQglJiyptObGCFAiOC0ZoOGCKoeoBr1pMGqCVIOONBxI0unKSPipOjggQMFCg484EgXIQAHYeVCKKt2IMEFAwZAwHrQL0S7XnE+DAgAOw==);
+}
+i:before { padding: 2px; }
+
+.post_icons {
+  color: #eee; 
+  font-size: 1.4em; 
+  cursor: pointer;
+  float: right;
+  margin: 3px;
+}
+body.light .post_icons {
+  color: #333;
+}
+
+.nerdz_from { 
+  height: 30px; 
+  line-height: 30px;
+}
+
+.place-right{
+  cursor: pointer;
+}
+
+.projlang, .selectlang, .more{ 
+  cursor: pointer;
+}
+/** QUOTE **/
+.quote{
+  margin: .5%;
+  max-width: 97%;
+  outline: #999999 solid 3px;
+  border-radius: 2px;
+  padding-bottom: 1em;
+}
+.quote:before {
+  float: left;
+  content: "\e163";
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  padding-left: 2px;
+}
+.quote:after {
+  clear: both;
+  float: right;
+  content: "\e164";
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  padding-right: 2px;
+}
+.quote span img {  
+  display: none;
+}
+.quote blockquote {
+  clear:both;
+  margin-top: .5em;
+}
+.quote > *:first-child:before  {
+  clear:both;
+  font-weight: bold;
+  content: "Quote ";
+  margin-left: 10px;
+}
+/** CODE **/
+.nerdz-code-wrapper {
+  margin: .5%;
+  max-width: 97%; 
+  padding: 0px;
+}
+.nerdz-code-wrapper a:after {
+  content: "\e00f";
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  padding-right: 2px;
+}
+.nerdz-code-wrapper:before {
+  clear: both;
+  float: left;
+  text-align: left;
+  width:100%;  clear: both;
+  content: "\e0b5";
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  padding-right: 2px;
+}
+.nerdz-code-wrapper:after {
+  float: right;
+  content: "\e0b6";
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  padding-right: 2px;
+}
+.nerdz-code-wrapper pre {
+  padding-bottom: 1em;
+  clear: both;
+  overflow-y: hidden; 
+  height: auto;
+}
+.nerdz-code-wrapper pre br:first-child {
+  display: none; 
+}
+.nerdz-code-title {
+  cursor: pointer;
+  float:left;
+  clear: both;
+}
+/** SPOILER **/
+.spoiler {
+  float: left;
+  outline: 1px #AFAFAF solid;
+  width: 97%;
+  margin: 3px;
+}
+.spoiler > div { 
+  clear: both;
+}
+.spoiler > div br:first-child {
+  display:none;
+}
+.spoiler span {
+  float: left;
+  clear: both;
+  display: block;
+  text-decoration: none;
+  background-color: #eeeeee;
+  color: #2e92cf;
+  padding-left: 10px;
+  width: 100%;
+  color: #1d1d1d;
+}
+.spoiler span:before {
+  float: left;
+  margin-right: 7px;
+  display: block;
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid black;
+}
+.spoiler.expanded span:before {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  margin-left: -4px;
+}
+/** FOOTER **/
+#footer_main
+{
+    background-color: #AFAFAF;
+    text-align: center;
+    border-top: 1px #000 solid;
+    bottom: 0px;
+    clear: both;
+    display: block;
+    height: 30px;
+    overflow: hidden;
+    width: 100%;
+    position: fixed;
+    z-index: 1001;
+}
+
+#notify_list
+{
+  position: fixed;
+  display: block;
+  bottom: 30px;
+  right: 0px;
+  background-color: #EEE;
+  border: 1px solid #FFF;
+}
+#notifycounter:after{display:none}
+#bug_bar
+{
+  float:left;
+  width: 30px;
+  border: 0px;
+}
+
+.small{
+  font-size: 75%;
+}
+.smallest{
+  font-size: 60%;
+}
+.center{
+  text-align: center;
+}
+.pointer > * {
+  cursor: pointer;
+}
+#hptable li, #hptable li:hover {
+  border:none
+}
+.nerdz_date{
+  float:right;
+  color: #eee;
+}
+body.light .nerdz_date{
+  color: #222222;
+}
+
+.nerdz_from .nerdz_date{
+  position: relative;
+  height: 30px;
+}
+.nerdz_from .nerdz_date:before {
+  position: absolute;
+  display: block;
+  content: "\e01e";
+  left: -15px;
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  z-index: 102;
+  top: 0;
+}
+.nerdz_message, .nerdz_comments, .news
+{
+  border:1px solid #cecece;
+  width: 100%;
+  border-radius: 2.5px;
+  font-size: 90%;
+  overflow: hidden;
+  padding: 2px;
+  word-wrap: break-word;
+  margin-bottom: 10px;
+}
+.news {
+  border: 3px solid #4390df;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #eee;
+  color: #222;
+}
+.news .nerdz_date, .news .post_icons {
+  color: #4390df;
+}
+.light .news {
+  background-color: #444444;
+  color: #eee;
+}
+.more
+{
+  position: relative;
+  top: 0px;
+  text-align: center;
+  font-size: 1em;
+}
+hr {
+  margin:0px !important;
+}
+.nerdz_message, .sidebar>div {
+  background-color: rgba(200,200,200,0.2);
+}
+.nerdz_message > div
+{
+  box-shadow: 0 0 0 #000;
+}
+.nerdz_message > div.compressed
+{
+  width:100%;
+  max-height:200px;
+  overflow:hidden;
+  box-shadow: inset 0 -30px 30px -30px #ccc;
+}
+/** IMG AND VIDEO FRAMES **/
+.img_frame, .yt_frame
+{
+  clear: both;
+  text-align: center;
+  overflow: hidden;
+  display: block;
+  background-color: transparent;
+  margin: 0 3px 3px 0;
+  padding: 0;
+  cursor: pointer;
+  background-color: #eeeeee;
+  box-shadow: inset 0px 0px 1px #FFFFCC;
+  border: 4px #4390df solid;
+  height:120px;
+  width: 120px;
+  position: relative;
+}
+.img_frame:hover, .yt_frame:hover {
+  outline: #999999 solid 3px;
+}
+.img_frame:active, .yt_frame:active {
+  outline: 0;
+}
+.img_frame img, .yt_frame img
+{
+    height:120px;
+    margin: auto;
+}
+.img_frame:after, .yt_frame:after {
+  position: absolute;
+  display: block;
+  border-top: 28px solid #4390df;
+  border-left: 28px solid transparent;
+  right: 0;
+  content: "";
+  top: 0;
+  z-index: 101;
+}
+.yt_frame:before {
+  position: absolute;
+  display: block;
+  content: "\e007";
+  color: #fff;
+  right: 0;
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  z-index: 102;
+  top: 0;
+}
+.img_frame:before {
+  position: absolute;
+  content: "\e004";
+  color: #fff;
+  right: 0;
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  z-index: 102;
+  top: 0;
+}
+.img_frame.img_frame-extended
+{
+  width: auto;
+  height: auto;
+  border: none;
+  background-color: transparent;
+  position: static;
+  border: none;
+  box-shadow: none;
+}
+.img_frame.img_frame-extended img {
+  float: left;
+  width: auto;
+  height: auto;
+}
+.img_frame.img_frame-extended:hover
+{
+  outline: none;
+}
+.img_frame.img_frame-extended:before, .img_frame.img_frame-extended:after {
+  display: none;
+}
+
+.yt_frame span, .img_frame span, .img_frame-extended span, #hposts:after
+{
+  display: none;
+}
+.nerdz_message img {
+  display: block;
+  background-color: transparent;
+  padding: 0px;
+}
+/****/
+#form, #inbox{
+  cursor: pointer;
+}
+
+#profilePostArrow, #projectPostArrow {
+  position: absolute;
+  top: 15px;
+  right: 5px;
+  cursor: pointer;
+  font-size: 10pt;
+}
+.row.thin {
+  margin-top: 3px;
+}
+.dropdown-menu a {
+  padding: 8px 12px !important;
+}
+.name {
+  padding-left: 10px;
+}
+#prefbar.compact {
+  height:40px;
+  overflow: hidden;
+  transition: height .2s;
+}
+#prefbar.compact:hover {
+  height: 130px;
+}

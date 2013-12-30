@@ -1,0 +1,337 @@
+<div class="row">
+  <aside id="left_col" class="span2">
+    <div class="grid fluid">
+      <div class="row">
+        <div class="span1"></div>
+        <div class="span10">
+          <a href="/{$username4link_n}">
+              <img src="{$gravatarurl_n}?s=180#" alt="{$username}" style="max-width:100%; max-height:100%" onerror="this.src='{$onerrorimgurl_n}'" />
+          </a>
+        </div>
+      </div>
+      <div class="row smallest center">
+        <div class="span1"></div>
+        <div class="span4">
+          {if="$online_b"}
+              <span style="color:#00FF00">{$online}</span>
+          {else}
+              <span style="color:#FF0000">{$offline}</span>
+          {/if}
+        </div>
+        <div class="span2">
+          <img src="/images/flags/{$lang_n}.png" alt="{$lang_n}" title="{$lang_n}" style="border: 1px solid #FFF; margin-left:10%" width="18" height="12" />
+        </div>
+        <div class="span4">
+          <div class="g-plusone" data-size="small" data-count="1" data-href="http://www.nerdz.eu/{$username4link_n}"></div>
+        </div>
+      </div>
+      {if="$canshowmenu_b"}
+      <div class="row smallest center pointer">
+        <div class="span1"></div>
+        <div class="span3" id="profilepm">
+          {$pm}
+        </div>
+        {if="$canifollow_b"}
+          <div class="span4" id="follow" data-id="{$id_n}">{$follow}</div>
+        {else}
+          <div class="span4" id="unfollow" data-id="{$id_n}">{$unfollow}</div>
+        {/if}
+        {if="$caniblacklist_b"}
+          <div class="span4" id="blacklist" data-id="{$id_n}">Blacklist</div>
+        {else}
+          <div class="span4" id="unblacklist" data-id="{$id_n}">Unblacklist</div>
+        {/if}
+        </tr>
+      </div>
+      {/if}
+      <div class="row">
+        <div class="span1"></div>
+        <div class="span10">
+          <h3>{$about_me}</h3>
+          {$username}: <br />
+          <span id="username">{$username_n}</span> <br />
+          <br />
+          {$name}:<br />
+          {$name_n}<br />
+          {$surname}:<br />
+          {$surname_n}<br />
+          {$birth_date}:<br />
+          {$birthdate_n}<br />
+          {$gender}:<br />
+          {$gender_n}<br />
+        </div>
+      </div>
+      <div class="row thin">
+        <div class="span1"></div>
+        <div class="span10">
+          {if="!empty($website_n)"}
+            <br />
+            {$website}:<br />
+            <span style="font-size: 8pt;">
+                <a href="{$website4link_n}#" onclick="window.open(this.href); return false">{$website_n}</a>
+            <br />
+            </span>
+          {/if}
+        </div>
+      </div>
+      <div class="row small">
+        <div class="span1"></div>
+        <div class="span">
+          5tUp1d stUfF!1
+        </div>
+        <span class="span">
+          -{$stupidstuffless_n} =&gt;
+        </span>
+        <br>
+        <i class="span1"></i>
+        <span class="span">
+          <i class="icon-trophy">{$stupidstuffnext_n}</i>
+        </span>
+      </div>
+      <div class="row small">
+        <div class="span1"></div>
+        <span class="span6">
+          {$id}:
+        </span>
+        <span class="span5">
+          {$id_n}
+        </span>
+      </div>
+      <div class="row thin small">
+        <div class="span1"></div>
+        <span class="span6">
+          {$comments}:
+        </span>
+        <span class="span5">
+          {$totalcomments_n}
+        </span>
+      </div>
+      <div class="row thin small">
+        <div class="span1"></div> 
+        <span class="span6">
+          {$last_visit}:
+        </span>
+        <span class="span5">
+          {$lastvisit_n}
+        </span>
+      </div>
+      <div class="row small">
+        <div class="span1"></div>
+        <span class="span4">Browser:</span>
+        <span class="span">{$useragent_a.name} {$useragent_a.version}</span>
+      </div>
+      <div class="row thin small">
+        <div class="span1"></div>
+        <span class="span4">Platform:</span>
+        <span class="span">{$useragent_a.platform} {$useragent_a.platver}</span>
+      </div>
+      {if="!empty($friends_a)"}
+        <div class="row">
+          <span class="span1"></span>
+          <div class="span10" style="max-height:250px; overflow: auto">
+            {$friends}    ({$totalfriends_n}) <br />
+            {loop="friends_a"}
+              <a href="/{$value.username4link_n}">{$value.username_n}</a><br />
+            {/loop}
+          </div>
+        </div>
+      {/if}
+    </div>
+  </aside>
+  
+  <article id="center_col" class="span8">
+    {if="$canwrite_b"}
+      <div id="fast_nerdz">
+        <form id="stdfrm" class="grid fluid" data-to="{$id_n}">
+          <div class="row">  
+            <textarea id="frmtxt" name="message" style="width: 99.5%; height: 60px" tabindex="1"></textarea>
+          </div>
+          <div class="row">
+            <button type="button" class="span" onclick="window.open('/bbcode.php')" tabindex="4">BBCode</button> 
+            <div id="pmessage" class="error span8"></div>
+            
+            <button type="button" class="preview span" data-refto="#frmtxt" tabindex="3">{$preview}</button> 
+            <input type="submit" class="span" value="{$nerdz_it}" tabindex="2" />
+          </div>
+        </form>
+      </div>
+    {/if}
+    <div id="postlist" data-type="profile" data-profileid="{$id_n}" data-location="profile" data-mode="std">
+        {ignore} Data type == profile, è un profilo{/ignore}
+        {if="$singlepost_b"}
+            {$post_n}
+        {/if}
+    </div>
+    <br /><br />
+  </article>
+
+  <aside id="right_col" class="span2">
+    {if="!empty($biography_n)"}
+        <b>{$biography}</b>
+        <div style="overflow:hidden">
+            {$biography_n}
+        </div>
+        <br />
+    {/if}
+
+    {if="!empty($quotes_a)"}
+        <b>{$quotes}</b><br />
+            <ul style="list-style-type: none; margin: 0px; padding:0px">
+            {loop="quotes_a"}
+                <li style="margin:1px; padding:0px"><blockquote>{$value}</blockquote></li>
+            {/loop}
+            </ul>
+        <br />
+    {/if}
+
+    {if="!empty($interests_a)"}
+        <b>{$interests}</b><br />
+            <ul style="list-style-type: circle; margin: 0px;">
+            {loop="interests_a"}
+                <li>{$value}</li>
+            {/loop}
+            </ul>
+        <br />
+    {/if}
+
+    {if="!empty($ownerof_a)"}
+        <b>{$owner_of}</b><br />
+            <ul style="list-style-type: none; margin: 0px; padding:0px">
+            {loop="ownerof_a"}
+                <li><a href="/{$value.name4link_n}">{$value.name_n}</a></li>
+            {/loop}
+            </ul>
+        <br />
+    {/if}
+    
+    {if="!empty($memberof_a)"}
+        <b>{$member_of}</b><br />
+        <div>
+            <ul style="list-style-type: none; margin: 0px; padding:0px">
+            {loop="memberof_a"}
+                <li><a href="/{$value.name4link_n}">{$value.name_n}</a></li>
+            {/loop}
+            </ul>
+        </div>
+        <br />
+    {/if}
+    
+    {if="!empty($userof_a)"}
+        <div>{$user_of}</div>
+        <div>
+            <ul style="list-style-type: none; margin: 0px; padding:0px">
+            {loop="userof_a"}
+                <li><a href="/{$value.name4link_n}">{$value.name_n}</a></li>
+            {/loop}
+            </ul>
+        </div>
+        <br />
+    {/if}
+    {if="!empty($jabber_n) || !empty($yahoo_n) || !empty($skype_n) || !empty($steam_n) || !empty($facebook_n) || !empty($twitter_n) || !empty($github_n)"}
+      <b>{$contact_info}</b><br>
+      <div class="small" style="white-space: nowrap;">
+        {if="!empty($jabber_n)"}
+            <i class="icon-jabber" title="{$jabber}"> {$jabber_n} </i> <br />
+        {/if}
+        {if="!empty($github_n)"}
+            <i class="icon-github" title="{$github}"> <a href="{$github_n}">{$github_n}</a> </i> <br />
+        {/if}
+        {if="!empty($yahoo_n)"}
+            <i class="icon-yahoo" title="{$yahoo}"> {$yahoo_n} </i> <br />
+        {/if}
+        {if="!empty($skype_n)"}
+            <i class="icon-skype" title="{$skype}"> {$skype_n} </i> <br />
+        {/if}
+        {if="!empty($facebook_n)"}
+            <i class="icon-facebook" title="{$facebook}"> <a href="{$facebook_n}">{$facebook_n}</a> </i> <br />
+        {/if}
+        {if="!empty($twitter_n)"}
+            <i class="icon-twitter" title="{$twitter}"> <a href="{$twitter_n}">{$twitter_n}</a> </i> <br />
+        {/if}
+        {if="!empty($steam_n)"}
+            <i class="icon-steam" title="{$steam}"> {$steam_n} </i> <br />
+        {/if}
+        </div>
+      <br />
+    {/if}
+    <div>{$advertisement}</div>
+    <div>
+      {$banners_a.120x600}
+    </div>
+  </aside>
+</div>
+<div id="showpostlist"></div>
+
+{if="!$singlepost_b"}
+    <script type="application/javascript">
+        $(document).ready(function() {
+            var plist = $("#postlist");
+            var num = 10; 
+            var load = false;
+            var sl = 'searchLoad'; 
+            var loading = $("#loadtxt").data('loading'); 
+            var divId = 'scrtxt';
+            var append = '<h3 id="'+divId+'">'+loading+'...</h3>';
+
+            $("#showpostlist").click(function() {
+                plist.html(loading);
+                load = false;
+                N.html.profile.getPostList(num, plist.data('profileid'),function(data) {
+                    plist.html(data);
+                    load = true;
+                    sessionStorage.setItem(sl,"0");
+                });
+            });
+            
+            $("#showpostlist").click();
+            
+            {ignore} Autoload vecchi post allo scrolldown {/ignore}
+            $(window).scroll(function() {
+                if($(this).scrollTop()+200 >= ( $(document).height() - $(this).height() ) )
+                {
+                    var hpid = null;
+
+                    if((load || ("1" == sessionStorage.getItem(sl)) && !$("#"+divId).length))
+                    {
+                        plist.append(append);
+                        hpid = plist.find("div[id^='post']").last().data('hpid');
+                    }
+
+                    if(load)
+                    {
+                        load = false;
+
+                        if(plist.data('mode') == 'std') {
+                            N.html.profile.getPostListBeforeHpid(num, plist.data('profileid'), hpid,function(data) {
+                                $("#"+divId).remove();
+                                if(data.length > 0) {
+                                    plist.append(data);
+                                    load = true;
+                                    sessionStorage.setItem(sl,"0");
+                                }
+                            });
+                        }
+                    }
+                    if(sessionStorage.getItem(sl) == "1")
+                    {
+                        sessionStorage.setItem(sl,"0");
+                        N.html.search.specificProfilePostsBeforeHpid(num, $("#footersearch input[name=q]").val(), plist.data('profileid'), hpid, function(data) {
+                            $("#"+divId).remove();
+                            if(data.length > 0) {
+                                plist.append(data);
+                                load = false;
+                                sessionStorage.setItem(sl,"1");
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+{else}
+    <script type="application/javascript">
+    $(document).ready(function() {
+            $(".showcomments").click();
+    });
+    </script>
+{/if}

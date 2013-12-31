@@ -79,6 +79,26 @@ $(document).ready(function() {
       $("#projlist").toggle(400,function(){$("#projectPostArrow").toggleClass("icon-arrow-down-2").toggleClass("icon-arrow-up-2")});
     })
     
+    plist.on('click', ".yt_frame", function(e) {
+      e.preventDefault();
+      var vid = $(this).data("vid");
+      $.Dialog({
+        overlay: false,
+        shadow: true,
+        flat: false,
+        icon: '<i class="icon-youtube">',
+        title: 'Youtube Video',
+        content: '',
+        onShow: function(_dialog){
+            var html = [
+                '<iframe width="640" height="480" src="//www.youtube.com/embed/',vid,'" frameborder="0"></iframe>'
+            ].join("");
+ 
+            $.Dialog.content(html);
+        }
+      });
+    });
+    
     $("#hptable").on("click",".show",function(){
       var pids = localStorage.getItem('hid').split("|").sort();
       pids.splice( $(this).data("i"), 1 );

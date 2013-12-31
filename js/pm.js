@@ -21,12 +21,6 @@ $(document).ready(function() {
                     if(pmid) {
                         N.html.pm.getConversationAfterPmid({ from: c_from, to: c_to, pmid: pmid }, function(d) {
                             var newPms = $('<div>' + d + '</div>').find (pattern), internalCounter = mess.length, lastPm = mess.last();
-                            // This implementation is almost the same as the one in tpl/x/js/default.js.
-                            // For explanations see that file.
-                            // NOTE: it appears that mess.eq (mess.length - 1) isn't properly selecting
-                            // the secondlast element. But.. it works. Yeah, I really can't explain that.
-                            // But until it works, let's keep it like that. I left debugging stuff here for that.
-                            //console.log ("DBG: secondlast? " + mess.eq(mess.length-1).data('pmid'));
                             if (mess.length > 1) {
                                 mess.eq (mess.length - 1).remove();
                                 internalCounter--;
@@ -35,15 +29,12 @@ $(document).ready(function() {
                                 lastPm.remove();
                                 internalCounter--;
                             }
-                            //console.log ("Reduce to: " + ((($(".more_btn").data ('counter') || 0) + 1) * 10));
-                            //console.log ("counter: " + internalCounter + ", newPmLength: " + newPms.length);
                             while ((internalCounter + newPms.length) > ((($(".more_btn").data ('counter') || 0) + 1) * 10))
                             {
                                 mess.first().remove();
                                 mess = $("#conversation").find (pattern);
                                 internalCounter--;
                             }
-                            //console.log ("counter: " + internalCounter);
                             $("#convfrm").before (d);
                         });
                     }
@@ -101,7 +92,6 @@ $(document).ready(function() {
         var conv = $("#conversation");
         conv.html(loadtxt);
         e.preventDefault();
-        /*variabili esterne che richiamo per far mostrare il pm appena inviato */
         c_from =  $(this).data('from');
         c_to = $(this).data('to');
         N.html.pm.getConversation({ from: c_from, to: c_to, start: 0, num: 10 },function(data) {

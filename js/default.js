@@ -14,11 +14,14 @@ $(document).ready(function() {
       var html = ('.%name% .news .nerdz_date, .%name% .news .post_icons, .%name% a, .%name% #profilePostArrow, .%name% #projectPostArrow, .%name% .spoiler span {'+
                         '  color: %color%;'+
                         '}'+
-                        '.%name% .news, .%name% .img_frame, .%name% .yt_frame  {'+
-                        '  border: 3px solid %color%;'+
+                        '.%name% .news, .%name% .img_frame, .%name% .yt_frame, .%name% .window, .%name% .caption  {'+
+                        '  border-color: %color%;'+
                         '}'+
                         '.%name% .img_frame:after, .%name% .yt_frame:after {'+
                         '  border-top: 28px solid %color%;'+
+                        '}'+
+                        '.%name% .window > .caption {'+
+                        '  background-color: %color%;'+
                         '}'+
                         '.%name% .nerdz_message > div.compressed'+
                         '{'+
@@ -54,6 +57,18 @@ $(document).ready(function() {
       }
       location.reload();
     })
+
+    $("#metro-info").on('click', function(){
+      $.Dialog({
+        shadow: true,
+        overlay: false,
+        icon: '<span class="icon-rocket"></span>',
+        title: 'Nerdz Metro Template',
+        width: 500,
+        padding: 10,
+        content: 'Nerdz8 Theme by Dr.Jest<br>Based on work made by Sergey Pimenov <a href="https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE">@https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE</a>)'
+      });
+    });
     //prettyprinter for [code]
     var append_theme = "";
     if (localStorage.getItem ("has-dark-theme") == 'yep')
@@ -191,11 +206,6 @@ $(document).ready(function() {
 
     plist.on('click', ".spoiler", function(e) {
         $(this).toggleClass("expanded");
-    });
-
-    plist.on('click', ".yt_frame", function(e) {
-        e.preventDefault();
-        N.yt($(this), $(this).data("vid"));
     });
 
     plist.on('click','.preview',function(){
@@ -536,12 +546,23 @@ $(document).ready(function() {
         document.location.reload();
     });
 
-    //end plist into events
+    var curpm = localStorage.getItem("curpm") ? parseInt(localStorage.getItem("curpm")) : 0;
     setInterval(function() {
         var nc = $("#notifycounter"), val = parseInt(nc.html());
         nc.css('color',val == 0 || isNaN(val) ? $color : '#FF0000');
         var pc = $("#pmcounter");
         val = parseInt(pc.html());
+        if(!isNaN(val) && val != curpm) 
+        {
+          nw = val-curpm;
+          if(nw>0)
+          {
+            $.Notify.show('<a href="/pm.php#new">You have '+nw+' new message'+(nw>1?"s":"")+'!</a>');
+            $("#notifyaudio")[0].play();
+          }
+          curpm = val;
+          localStorage.setItem("curpm",curpm);
+        }
         pc.css('color',val == 0 || isNaN(val) ? $color : '#FF0000');
     },200);
 

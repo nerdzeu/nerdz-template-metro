@@ -148,6 +148,9 @@ a {
   z-index: 102;
   top: 0;
 }
+.shadow {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), 0 3px 8px rgba(0, 0, 0, 0.2);
+}
 .rotate45 {
   -webkit-transform: rotate(45deg);
   -moz-transform: rotate(45deg);
@@ -3088,7 +3091,7 @@ img.polaroid {
 }
 .window .content {
   position: relative;
-  padding: 32px 0;
+  padding: 0px;
   width: auto;
   height: auto;
   -webkit-box-sizing: content-box;
@@ -3258,6 +3261,39 @@ img.polaroid {
 }
 .window.flat .content {
   padding-top: 38px;
+}
+.metro.notify-container {
+  position: fixed;
+  right: 0;
+  top: 45px;
+  z-index: 1060;
+}
+.metro.notify-container .notify {
+  background-color: #ffffff;
+  display: block;
+  position: relative;
+  min-width: 220px;
+  font-family: 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  color: #1d1d1d;
+  padding: 10px;
+  margin: 2px 2px 2px 0;
+}
+.metro.notify-container .notify .caption {
+  font-size: 18px;
+  line-height: 20px;
+  margin-bottom: 5px;
+}
+.metro.notify-container .notify .content {
+  font-size: 14px;
+  line-height: 16px;
+}
+.metro .notify-wrapper {
+  position: relative;
+  background-color: #1d1d1d;
+  width: auto;
+  height: auto;
+  min-width: 250px;
+  color: #ffffff;
 }
 .hint {
   position: absolute;

@@ -29,11 +29,11 @@ $(document).ready(function() {
     }
     for(col in $colors)
       $("<div>").attr("class","tile tiny").html('<div class="tile-content icon"><i class="icon-record" style="color:'+$colors[col]+';"></i></div>')
-                .attr("title",mc).data("color",col).addClass( mc==col?"selected":"" ).appendTo($("#color-switcher"));
+                .attr("title",col).addClass( mc==col?"selected":"" ).appendTo($("#color-switcher"));
     $("#color-switcher").on("click",".tile", function(e) {
       e.preventDefault();
       if($(this).hasClass("selected")) return;
-      localStorage.setItem("metro-color",$(this).data("color"));
+      localStorage.setItem("metro-color",$(this).attr("title"));
       location.reload();
     });
     //metro theme

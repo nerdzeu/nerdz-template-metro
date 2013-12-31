@@ -32,6 +32,9 @@ aside ul  {
 .pointer > * {
   cursor: pointer;
 }
+.bolder > * {
+  font-weight: bold;
+}
 #hptable li, #hptable li:hover {
   border:none
 }

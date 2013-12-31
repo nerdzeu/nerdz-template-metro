@@ -1,29 +1,38 @@
-<article id="center_col">
-    <table style="margin: auto" class="page">
-        <tr style="cursor: pointer">
-            <th style="width:5%" id="id">{$id}</th>
-            <th style="width:10%" id="name">{$name}</th>
-            <th style="width:85%" id="description">{$description}</th>
-        </tr>
+<article id="center_col" class="row">
+  <div class="span10 offset1">
+    <div class="row pointer bolder">
+      <span class="span1" id="id">
+        {$id}
+      </span>
+      <span class="span4" id="name">
+        {$name}
+      </span>
+      <span class="span7" id="description">
+        {$description}
+      </span>
+    </div>
     {loop="list_a"}
-        <tr>
-            <td>{$value.id_n}</td>
-            <td><a href="/{$value.name4link_n}">{$value.name_n}</a></td>
-            <td>{$value.description_n}</td>
+      <div class="row">
+        <span class="span1">
+          {$value.id_n}
+        </span>
+        <span class="span4">
+          <a href="/{$value.name4link_n}">{$value.name_n}</a>
+        </span>
+        <span class="span7">
+          {$value.description_n}</td>
         </tr>
+        </span>
+      </div>
     {/loop}
-    </table>
-
-    {if="!empty($prev_url_n)"}
-        <div style="float:left; margin-left:5%">
-            <a href="{$prev_url_n}">&lt;&lt;&lt;</a>
-        </div>
-    {/if}
-    {if="!empty($next_url_n)"}
-        <div style="float:right; margin-right:5%">
-            <a href="{$next_url_n}">&gt;&gt;&gt;</a>
-        </div>
-    {/if}
-
-    <br /><br /><br />
+    <div class="row">
+      <span class="span1 offset5">
+        {if="!empty($prev_url_n)"}<a href="{$prev_url_n}">&lt;&lt;&lt;</a>{/if}
+      </span>
+      <span class="span1">
+        {if="!empty($next_url_n)"}<a href="{$next_url_n}">&gt;&gt;&gt;</a>{/if}
+      </span>
+    </div>
+  </div>
+<br /><br /><br />
 </article>

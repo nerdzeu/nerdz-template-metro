@@ -59,38 +59,20 @@
     <span class="span5 offset1">
       {$birth_date}:
     </span>
-    <span class="span5">
-      <select name="birth_day">
-          <option value="-1">{$day}</option>
-          {loop="days_a"}
-              {if="$counter+1 == $day_n"}
-                  <option value="{$counter+1}" selected="selected">{$counter+1}</option>
-              {else}
-                  <option value="{$counter+1}">{$counter+1}</option>
-              {/if}
-          {/loop}
-      </select>
-      <select name="birth_month">
-          <option value="-1">{$month}</option>
-          {loop="months_a"}
-              {if="$value == $month_n"}
-                  <option value="{$counter+1}" selected="selected">{$value}</option>
-              {else}
-                  <option value="{$counter+1}">{$value}</option>
-              {/if}
-          {/loop}
-      </select>
-      <select name="birth_year">
-          <option value="-1">{$year}</option>
-          {loop="years_a"}
-              {if="$value == $year_n"}
-                  <option value="{$value}" selected="selected">{$value}</option>
-              {else}
-                  <option value="{$value}">{$value}</option>
-              {/if}
-          {/loop}
-      </select>
-    </span>
+    <div id="datepicker" class="input-control text span5">
+      <input type="text" id="birth_date" />
+      <button class="btn-date"></button>
+      <input type="hidden" id="birth_day" name="birth_day" value="{$day_n}">
+      <input type="hidden" id="birth_month" name="birth_month" value="{$month_n}">
+      <input type="hidden" id="birth_year" name="birth_year" value="{$year_n}">
+    </div>
+    <script type="text/javascript">
+      $("#datepicker").datepicker({
+        date: "{$year_n}-{$month_n}-{$day_n}", 
+        format: "d/m/yyyy", 
+        effect: "fade"
+      });
+    </script>
   </div>
   
   <div class="row thin">
@@ -127,11 +109,8 @@
       <input type="submit" value="{$edit}" />
       <input type="hidden" name="tok" value="{$tok_n}" />
     </span>
-  </div>
-  
-  <div class="row">
-    <span class="span8 offset3">
-      <p id="res"></p>
-    </span>
+    <div class="span">
+      <b id="res"></b>
+    </div>
   </div>
 </form>

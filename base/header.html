@@ -1,10 +1,6 @@
-{ignore}
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.js"></script>
 <script type="text/javascript" src="https://dl.dropboxusercontent.com/u/16542600/metro.min.js"></script>
-{/ignore}
-<script type="text/javascript" src="http://localhost/dev/jquery-ui.js"></script>
-<script type="text/javascript" src="http://localhost/dev/metro.min.js"></script>
-
+{if="$logged_b"}
 <header id="site_title">
   <nav class="navigation-bar dark">
     <nav class="navigation-bar-content">
@@ -13,12 +9,12 @@
       </div>
       <div class="element-divider"></div>
       <div class="element">
-        <a class="dropdown-toggle" id="welcome" href="#">{$welcome}, {$myusername_n}</a>
+        <a class="dropdown-toggle" id="welcome" href="#">{$welcome}, {$myusername_n} &nbsp;&nbsp;</a>
         <ul class="dropdown-menu" data-role="dropdown" style="z-index: 1001; padding: 0px;width:auto;">
           <li><a href="/{$myusername4link_n}" accesskey="p"><i class="icon-user"></i>{$profile}</a></li>
           <li><a href="/preferences.php" accesskey="z"><i class="icon-wrench"></i>{$preferences}</a></li>
           <li>
-            <a class="dropdown-toggle" href="#"><i class=" icon-tools"></i>{$preferences} Nerdz8</a>
+            <a class="dropdown-toggle" href="#"><i class=" icon-tools"></i>{$preferences} Metro</a>
             <ul class="dropdown-menu" data-role="dropdown" data-pos="right">
               <li style="cursor:pointer">
                 <i class="icon-ruler">Tema:</i>
@@ -35,7 +31,7 @@
                     if( ts.val() == "dark" )
                       localStorage.removeItem("nerdz8-light");
                     else {
-                      localStorage.setItem("nerdz8-light", "yep");
+                      localStorage.setItem("nerdz8-light", "1");
                     }
                     location.reload();
                   })
@@ -44,7 +40,7 @@
               <li style="cursor:pointer" onclick="alert('Nerdz8 Theme by Dr.Jest\nBased on work made by Sergey Pimenov @(https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE)');">
                 <i class="icon-info">Info</i>
               </li>
-              <li style="cursor:pointer" onclick="window.open('http://github.com/DrJest/nerdzTemplateNerdz8')">
+              <li style="cursor:pointer" onclick="window.open('http://github.com/DrJest/nerdzTemplateMetroNerdz')">
                 <i class="icon-github-2">GitHub</i>
               </li>
             </ul>
@@ -66,5 +62,56 @@
     </nav>
   </nav>
 </header>
+{else}
+<header id="site_title">
+  <form id="loginfrm" class="navigation-bar dark">
+    <nav class="navigation-bar-content">
+      <div class="element">
+          <a href="/home.php" accesskey="h">NERDZ</a>
+      </div>
+      <div class="element place-right" style="padding:10px">
+        <input type="submit" value="{$login}"  tabindex="3 "/>
+        <input type="hidden" value="{$tok_n}" name="tok" />
+      </div>
+      <div class="element place-right" style="padding:12px">
+        <input type="password" name="password" placeholder="*******" required tabindex="2" />
+      </div>
+      <div class="element place-right" style="padding:12px">
+        <input type="text" name="username" placeholder="{$username}" required autofocus  tabindex="1" />
+      </div>
+      <div class="element place-right" style="padding:10px">
+        <label class="small" for="remember"><input type="checkbox" name="setcookie" id="remember" checked="checked" tabindex="4"> {$remember_me}</label>
+      </div>
+      <div class="element place-right small" style="padding:10px">
+        <label class="small" for="markoffline"><input type="checkbox" name="offline" id="markoffline" tabindex="5"> {$hide_status}</label>
+      </div>
+    </nav>
+  </form>
+</header>
+<script type="application/javascript">
+$("#loginfrm").on('submit',function(event) {
+    event.preventDefault();
+    var t = $("#title_right");
+    N.json.login($("#loginfrm").serialize(), function(r) {
+        var tmp = t.html();
+        if(r.status == 'ok')
+        {
+            t.html(r.message);
+            setTimeout(function() {
+                document.location.reload();
+            },1500);
+        }
+        else
+        {
+            t.html('<h2 class="error">'+ r.message + '</h2>');
+            setTimeout(function() {
+                t.html(tmp);
+            },1500);
+        }
+    });
+});
+$(document).ready(function(){$("#notifycounter").parent().remove();});
+</script>
+{/if}
 <div id="loadtxt" data-loading="{$loading}"></div>
 <div class="grid fluid">

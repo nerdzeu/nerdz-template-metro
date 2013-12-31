@@ -16,6 +16,12 @@ $(document).ready(function() {
 
   c.on("submit", "#edaccfrm", function(e){
     e.preventDefault();
+    $("#birth_date").attr("readonly",false);
+    $date = $("#birth_date").val().split("/");
+    if(!$date.length) { $("#error").html("Missing: Birth Date"); return; }
+    $("#birth_day").val($date[0]);
+    $("#birth_month").val($date[1]);
+    $("#birth_year").val($date[2]);
     var c = $('#res');
     c.html('...');
     N.json.post('/pages/preferences/account.html.json.php',$(this).serialize(), function(data) {

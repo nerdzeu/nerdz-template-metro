@@ -18,7 +18,6 @@
         "reset": "js/reset.js",
 		"share": "js/share.js"
 	},
-    //LANGS section [acceppt only "default" : "path/%lang%/path/path ... path/file.json], where %path% will be replaced with it, en, de, pt, ...
     "langs": {
         "default": "langs/%lang%/json/default.json"
     }

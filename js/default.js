@@ -1,26 +1,71 @@
 $(document).ready(function() {
-    if (localStorage.getItem ("nerdz8-light"))
+    var loading = $("#loadtxt").data('loading');
+    $("body").append($('<br />')); 
+    $("iframe").attr("scrolling","no");
+    _h = $("head");
+    //metro colors
+    if(!localStorage.getItem("metro-color")) localStorage.setItem("default");
+    $color = "#4390DF";
+    $colors = {"default":"#4390DF","lime":"#a4c400","amber":"#F0A30A"};
+    var mc = localStorage.getItem("metro-color");
+    if (mc!="default")
+    {
+      $color = $colors[mc];
+      var html = ('.%name% .news .nerdz_date, .%name% .news .post_icons, .%name% a, .%name% #profilePostArrow, .%name% #projectPostArrow, .%name% .spoiler span {'+
+                        '  color: %color%;'+
+                        '}'+
+                        '.%name% .news, .%name% .img_frame, .%name% .yt_frame  {'+
+                        '  border: 3px solid %color%;'+
+                        '}'+
+                        '.%name% .img_frame:after, .%name% .yt_frame:after {'+
+                        '  border-top: 28px solid %color%;'+
+                        '}'+
+                        '.%name% .nerdz_message > div.compressed'+
+                        '{'+
+                        '  box-shadow: inset 0 -30px 30px -30px %color%;'+
+                        '}').replace(/\%name\%/g,mc).replace(/\%color\%/g,$color);
+      $('<style type="text/css">').html(html).appendTo(_h);
+      $("body").addClass( mc );
+    }
+    for(col in $colors)
+      $("<div>").attr("class","tile tiny").html('<div class="tile-content icon"><i class="icon-record" style="color:'+$colors[col]+';"></i></div>')
+                .attr("title",mc).data("color",col).addClass( mc==col?"selected":"" ).appendTo($("#color-switcher"));
+    $("#color-switcher").on("click",".tile", function(e) {
+      e.preventDefault();
+      if($(this).hasClass("selected")) return;
+      localStorage.setItem("metro-color",$(this).data("color"));
+      location.reload();
+    });
+    //metro theme
+    if (localStorage.getItem("metro-light"))
     {
       $(".sidebar").addClass("light")
       $(".navigation-bar").removeClass("dark").addClass("light")
       $("body").addClass("light")
-      $(".post_icons").css("color","#ccc")
     }
-    
-    var loading = $("#loadtxt").data('loading');
-    $("body").append($('<br />')); 
-    $("iframe").attr("scrolling","no");
-    var append_theme = "", _h = $("head");
+    ts = $("#theme-switcher");
+    if(localStorage.getItem("metro-light")) 
+      ts.children().eq(1).attr("selected",true);
+    ts.on("change", function(){
+      if( ts.val() == "dark" )
+        localStorage.removeItem("metro-light");
+      else {
+        localStorage.setItem("metro-light", "1");
+      }
+      location.reload();
+    })
+    //prettyprinter for [code]
+    var append_theme = "";
     if (localStorage.getItem ("has-dark-theme") == 'yep')
-        append_theme = "?skin=sons-of-obsidian";
+    {
+      append_theme = "?skin=sons-of-obsidian";
+      $("body").addClass("has-dark-theme");
+    }
     var prettify = document.createElement ("script");
     prettify.type = "text/javascript";
     prettify.src  = 'https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.js' + append_theme;
     _h.append (prettify);
-    if (append_theme != "")
-        _h.append ('<style type="text/css">.nerdz-code-wrapper { background-color: #000; color: #eee; }</style>');
-    else
-        _h.append ('<style type="text/css">.nerdz-code-wrapper { background-color: #eee; color: #222; }</style>');
+
     
     $("#notifycounter").on('click',function(e) {
       e.preventDefault();
@@ -35,9 +80,7 @@ $(document).ready(function() {
       $(this).html(isNaN(nold) ? old : '0');
     });
 
-    /* il footersearch si mostra solo in alcune pagine */
-    var wrongPages = [ '/bbcode.php','/terms.php','/faq.php','/stats.php','/rank.php','/preferences.php', '/informations.php', '/preview.php' ];
-       if($.inArray(location.pathname,wrongPages) != -1) {
+    if($.inArray(location.pathname,[ '/bbcode.php','/terms.php','/faq.php','/stats.php','/rank.php','/preferences.php', '/informations.php', '/preview.php' ]) != -1) {
            $("#footersearch").remove();
        };
 
@@ -306,18 +349,13 @@ $(document).ready(function() {
     });
 
     plist.on ('click', '.scroll_bottom_btn', function() {
-        // thanks to stackoverflow for .eq(x) and for the scroll hack
         var cList = $(this).parents().eq (2);
-        // Select the second last comment, do a fancy scrolling and then focus the textbox.
         $("html, body").animate ({ scrollTop: cList.find (".singlecomment:nth-last-child(2)").offset().top }, function() {
             cList.find (".frmcomment textarea").focus();
         });
     });
 
     plist.on ('click', '.all_comments_btn', function() {
-        // TODO do not waste precious performance by requesting EVERY
-        // comment, but instead adapt the limited function to allow
-        // specifying a start parameter without 'num'.
         var btn         = $(this),
             btnDb       = btn.parent().parent(),
             moreBtn     = btnDb.find (".more_btn"),
@@ -501,10 +539,10 @@ $(document).ready(function() {
     //end plist into events
     setInterval(function() {
         var nc = $("#notifycounter"), val = parseInt(nc.html());
-        nc.css('color',val == 0 || isNaN(val) ? '#4390df' : '#FF0000');
+        nc.css('color',val == 0 || isNaN(val) ? $color : '#FF0000');
         var pc = $("#pmcounter");
         val = parseInt(pc.html());
-        pc.css('color',val == 0 || isNaN(val) ? '#4390df' : '#FF0000');
+        pc.css('color',val == 0 || isNaN(val) ? $color : '#FF0000');
     },200);
 
 });

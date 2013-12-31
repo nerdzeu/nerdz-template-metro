@@ -107,7 +107,6 @@ $(document).ready(function() {
     
     plist.on('click','.more',function() {
         var me = $(this), par = me.parent(), jenk = par.prev();
-        par.removeClass("shadowed");
         jenk.removeClass("compressed")
         me.slideUp ('slow', function() {
             me.remove();
@@ -140,7 +139,7 @@ $(document).ready(function() {
         lang = $(this).data('lang');
         localStorage.setItem("autolang",lang);
         $(".selectlang").css('color','');
-        $(this).css('color','#2370B6');
+        $(this).css('color',$color);
         load = false;
         if(lang == 'usersifollow')
         {
@@ -179,7 +178,7 @@ $(document).ready(function() {
         plist.html('<h1>'+loading+'...</h1>');
         lang = $(this).data('lang');
         $(".projlang").css('color','');
-        $(this).css('color','#2370B6');
+        $(this).css('color',$color);
         load = false;
         if(lang == 'usersifollow')
         {
@@ -244,7 +243,7 @@ $(document).ready(function() {
 
     if(localStorage.getItem("autolang"))
     {
-      $("#nerdzlist").find("[data-lang='"+localStorage.getItem("autolang")+"']").click().css('color','#2370B6');
+      $("#nerdzlist").find("[data-lang='"+localStorage.getItem("autolang")+"']").click().css('color',$color);
       $("#profilePostArrow").click()
     }
     else

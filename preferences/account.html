@@ -62,10 +62,10 @@
     <div id="datepicker" class="input-control text span5">
       <input type="text" id="birth_date" />
       <button class="btn-date"></button>
-      <input type="hidden" id="birth_day" name="birth_day" value="{$day_n}">
-      <input type="hidden" id="birth_month" name="birth_month" value="{$month_n}">
-      <input type="hidden" id="birth_year" name="birth_year" value="{$year_n}">
     </div>
+    <input type="hidden" id="birth_day" name="birth_day" value="{$day_n}">
+    <input type="hidden" id="birth_month" name="birth_month" value="{$month_n}">
+    <input type="hidden" id="birth_year" name="birth_year" value="{$year_n}">
     <script type="text/javascript">
       $("#datepicker").datepicker({
         date: "{$year_n}-{$month_n}-{$day_n}", 
@@ -95,9 +95,9 @@
   <div class="row">
     <span class="span5 offset1">
       {$password}:
-      <p class="small">
+      <i class="small">
           {$leave_empty_pass}
-      </p>
+      </i>
     </span>
     <span class="span5">
       <input type="text" value="" name="password" />

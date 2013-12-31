@@ -217,7 +217,9 @@ body.light .post_icons {
     position: fixed;
     z-index: 1001;
 }
-
+#footer_main [class*="span"] {
+  height: 100%;
+}
 #notify_list
 {
   position: fixed;

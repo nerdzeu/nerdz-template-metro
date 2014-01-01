@@ -3,8 +3,8 @@ $(document).ready(function() {
     $("body").append($('<br />')); 
     $("iframe").attr("scrolling","no");
     _h = $("head");
-    //metro colors
-    if(!localStorage.getItem("metro-color")) localStorage.setItem("default","1");
+    if(!localStorage.getItem("metro-color")) 
+      localStorage.setItem("default","1");
     $color = "#4390DF";
     $colors = {"default":"#4390DF","lime":"#a4c400","amber":"#F0A30A"};
     var mc = localStorage.getItem("metro-color");
@@ -33,32 +33,45 @@ $(document).ready(function() {
     for(col in $colors)
       $("<div>").attr("class","tile tiny").html('<div class="tile-content icon"><i class="icon-record" style="color:'+$colors[col]+';"></i></div>')
                 .attr("title",col).addClass( mc==col?"selected":"" ).appendTo($("#color-switcher"));
-    $("#color-switcher").on("click",".tile", function(e) {
-      e.preventDefault();
-      if($(this).hasClass("selected")) return;
-      localStorage.setItem("metro-color",$(this).attr("title"));
-      location.reload();
-    });
-    //metro theme
+                
     if (localStorage.getItem("metro-light"))
     {
       $(".sidebar").addClass("light")
       $(".navigation-bar").removeClass("dark").addClass("light")
       $("body").addClass("light")
     }
+    $("#pref-metro").on("click", function(event) {
+      event.stopPropagation();
+    });
     ts = $("#theme-switcher");
     if(localStorage.getItem("metro-light")) 
-      ts.children().eq(1).attr("selected",true);
-    ts.on("change", function(){
-      if( ts.val() == "dark" )
-        localStorage.removeItem("metro-light");
-      else {
+      ts.attr("checked",true);
+    ts.parent().on("click", function(e){
+      e.preventDefault();
+      if( ts.is(":disabled") ) return false;
+      if( ts.is(':checked') ) {
+        localStorage.removeItem("metro-light") 
+        ts.attr("checked",false);
+      } else {
         localStorage.setItem("metro-light", "1");
+        ts.attr("checked",true);
       }
-      location.reload();
+      ts.attr("disabled",true);
+      setTimeout(function(){location.reload();},1000);
     })
-
-    $("#metro-info").on('click', function(){
+    $("#color-switcher").on("click",".tile", function() {
+      if($(this).hasClass("selected")) return false;
+      localStorage.setItem("metro-color",$(this).attr("title"));
+      setTimeout(function(){location.reload();},1000);
+    });
+    ns = $("#metro-notify");
+    if(localStorage.getItem("metro-no-notify")) 
+      ns.attr("checked",false);
+    ns.on("change", function(e) {
+      ( ns.is(':checked') ) ? localStorage.removeItem("metro-no-notify") : localStorage.setItem("metro-no-notify", "1");
+    });
+    $("#metro-info").on('click', function(event){
+      event.stopPropagation();
       $.Dialog({
         shadow: true,
         overlay: false,
@@ -67,11 +80,10 @@ $(document).ready(function() {
         width: 500,
         padding: 10,
         draggable: true,
-        content:  'Nerdz8 Theme by Dr.Jest<br>Based on work made by Sergey Pimenov <br />'+
-                  '<a href="https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE">@https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE</a>'
+        content:  'NerdzMetro Theme by Dr.Jest<br>Based on work made by Sergey Pimenov <br />'+
+                  '<a target="_blank" href="https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE">@https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE</a>'
       });
     });
-    //prettyprinter for [code]
     var append_theme = "";
     if (localStorage.getItem ("has-dark-theme") == 'yep')
     {
@@ -83,7 +95,6 @@ $(document).ready(function() {
     prettify.src  = 'https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.js' + append_theme;
     _h.append (prettify);
 
-    
     $("#notifycounter").on('click',function(e) {
       e.preventDefault();
       var list = $("#notify_list"), old = $(this).html();
@@ -554,7 +565,7 @@ $(document).ready(function() {
         nc.css('color',val == 0 || isNaN(val) ? $color : '#FF0000');
         var pc = $("#pmcounter");
         val = parseInt(pc.html());
-        if(!isNaN(val) && val != curpm) 
+        if(!isNaN(val) && val != curpm && !localStorage.getItem("metro-no-notify")) 
         {
           nw = val-curpm;
           if(nw>0)

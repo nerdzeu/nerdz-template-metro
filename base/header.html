@@ -13,20 +13,28 @@
         <ul class="dropdown-menu" data-role="dropdown" style="z-index: 1001; padding: 0px;width:auto;">
           <li><a href="/{$myusername4link_n}" accesskey="p"><i class="icon-user"></i>{$profile}</a></li>
           <li><a href="/preferences.php" accesskey="z"><i class="icon-wrench"></i>{$preferences}</a></li>
-          <li>
+          <li id="pref-metro">
             <a class="dropdown-toggle" href="#"><i class="icon-tools"></i>{$preferences} Metro</a>
             <ul class="dropdown-menu pointer" id="metro-pref" data-role="dropdown" data-pos="right">
-              <li>
-                <i class="icon-ruler">Tema:</i>
-                <select id="theme-switcher" style="margin-left: 1.5em">
-                  <option value="dark">Dark</option>
-                  <option value="light">Light</option>
-                </select>
+              <li class="input-control switch" style="margin-bottom: 0px;">
+                  <label>
+                    <i class="icon-ruler"></i>Theme: &nbsp; <i class="icon-lamp" title="Dark"></i>
+                    <input type="checkbox" id="theme-switcher" />
+                    <span class="check"></span>
+                    <i class="icon-lamp-2" title="Light"></i>
+                  </label>
               </li>
               <li style="float:left">
                 <i class="icon-brush">{$color}:</i><br />
                 <span id="color-switcher" style="float:left; margin-left: 20px; padding: 3px; width:100%; overflow: auto;">
                 </span>
+              </li>
+              <li class="input-control switch" style="margin-bottom: 0px;">
+                  <label>
+                    <i class="icon-alarm-2"></i>Notifications: &nbsp;&nbsp;
+                    <input type="checkbox" id="metro-notify" checked />
+                    <span class="check"></span>
+                  </label>
               </li>
               <li id="metro-info">
                 <i class="icon-info">Info</i>

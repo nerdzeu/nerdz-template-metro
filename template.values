@@ -6,9 +6,13 @@
 	},
 	// JS section
 	"js": {
-		"default": "js/default.js",
+		"default": [
+                "js/default.js",
+                "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.js",
+                "js/metro.min.js"
+                ],
 		"home": "js/home.js",
-        "preferences": "js/preferences.js",
+    "preferences": "js/preferences.js",
 		"profile": "js/profile.js",
 		"project": "js/project.js",
 		"pm": "js/pm.js",

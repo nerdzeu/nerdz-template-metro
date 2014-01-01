@@ -1,9 +1,17 @@
+h2 {
+  color: #ccc;
+}
+.light h2 {
+  color: #eee;
+}
 .question {
+  width:100%;
   font-size: large;
   color: #2370B6;
   cursor:pointer;
 }
 .answer {
+  width:100%;
   font-size: medium;
   color: #eee;
   font-weight: normal;
@@ -13,4 +21,33 @@
 }
 .question, .answer {
   margin-bottom: 20px;
+}
+#center_col li {
+  color: #eee;
+}
+.light #center_col li {
+  color: #222;
+}
+#index {
+  position: fixed;
+  width: 650px;
+  font-size: 80%;
+  top: 35px;
+  left: -600px;
+  height: auto;
+  overflow: hidden;
+  transition: 1s;
+  background-color: rgba(100,100,100, 0.5);
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 50px;
+  border-radius: 0px 10px 10px 0px;
+}
+#index:hover {
+  transition: all .5s;
+  left: -1px;
+  background-color: rgba(100,100,100,1); 
+}
+#index:hover span {
+  display: none;
 }

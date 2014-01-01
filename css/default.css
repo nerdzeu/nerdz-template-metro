@@ -497,3 +497,9 @@ body.light  #footer_main {
 .window .content {
   color: #222222 !important;
 }
+p {
+  color: #eee;
+}
+.light p {
+  color: #222;
+}

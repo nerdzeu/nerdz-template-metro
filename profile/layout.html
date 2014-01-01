@@ -2,16 +2,14 @@
   <aside id="left_col" class="span2">
     <div class="grid fluid">
       <div class="row">
-        <div class="span1"></div>
-        <div class="span10">
+        <div class="span10 offset1">
           <a href="/{$username4link_n}">
               <img src="{$gravatarurl_n}?s=180#" alt="{$username}" style="max-width:100%; max-height:100%" onerror="this.src='{$onerrorimgurl_n}'" />
           </a>
         </div>
       </div>
       <div class="row smallest center">
-        <div class="span1"></div>
-        <div class="span4">
+        <div class="span4 offset1">
           {if="$online_b"}
               <span style="color:#00FF00">{$online}</span>
           {else}
@@ -27,8 +25,7 @@
       </div>
       {if="$canshowmenu_b"}
       <div class="row smallest center pointer">
-        <div class="span1"></div>
-        <div class="span3" id="profilepm">
+        <div class="span3 offset1" id="profilepm">
           {$pm}
         </div>
         {if="$canifollow_b"}
@@ -45,8 +42,7 @@
       </div>
       {/if}
       <div class="row">
-        <div class="span1"></div>
-        <div class="span10">
+        <div class="span10 offset1">
           <h3>{$about_me}</h3>
           {$username}: <br />
           <span id="username">{$username_n}</span> <br />
@@ -62,8 +58,7 @@
         </div>
       </div>
       <div class="row thin">
-        <div class="span1"></div>
-        <div class="span10">
+        <div class="span10 offset1">
           {if="!empty($website_n)"}
             <br />
             {$website}:<br />
@@ -75,8 +70,7 @@
         </div>
       </div>
       <div class="row small">
-        <div class="span1"></div>
-        <div class="span">
+        <div class="span offset1">
           5tUp1d stUfF!1
         </div>
         <span class="span">
@@ -89,8 +83,7 @@
         </span>
       </div>
       <div class="row small">
-        <div class="span1"></div>
-        <span class="span6">
+        <span class="span6 offset1">
           {$id}:
         </span>
         <span class="span5">
@@ -98,8 +91,7 @@
         </span>
       </div>
       <div class="row thin small">
-        <div class="span1"></div>
-        <span class="span6">
+        <span class="span6 offset1">
           {$comments}:
         </span>
         <span class="span5">
@@ -107,8 +99,7 @@
         </span>
       </div>
       <div class="row thin small">
-        <div class="span1"></div> 
-        <span class="span6">
+        <span class="span6 offset1">
           {$last_visit}:
         </span>
         <span class="span5">
@@ -116,13 +107,11 @@
         </span>
       </div>
       <div class="row small">
-        <div class="span1"></div>
-        <span class="span4">Browser:</span>
+        <span class="span4 offset1">Browser:</span>
         <span class="span">{$useragent_a.name} {$useragent_a.version}</span>
       </div>
       <div class="row thin small">
-        <div class="span1"></div>
-        <span class="span4">Platform:</span>
+        <span class="span4 offset1">Platform:</span>
         <span class="span">{$useragent_a.platform} {$useragent_a.platver}</span>
       </div>
       {if="!empty($friends_a)"}

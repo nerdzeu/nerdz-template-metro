@@ -1,4 +1,5 @@
   <footer id="footer_main" class="row">
+    {if="$logged_b"}
     <span id="bug_bar" style="text-align: center" class="span1">
         <a href="/NERDZilla:" title="{$bug_title}" >
             <i class="icon-bug" style="color:red; padding-top: 8px;"></i>
@@ -12,11 +13,12 @@
         <input type="text" name="q" style="width: 100%" placeholder="{$search}" />
       </form>
     </div>
-    
+    {/if}
     <div class="span1 pointer" style="color: #ff7200; padding-top: 4px">
       <i class="icon-html5" title="Valid HTML5"></i>
       <i class="icon-css3" title="Valid CSS3"></i>
     </div>
+    {if="$logged_b"}
     <div class="span1" style="border-left:1px solid black; cursor:pointer; text-align: center">
       <i class="icon-bell" id="notifycounter" accesskey="x" style="width:100%; padding-top:8px;"></i>
       <div id="notify_list" style="display:none">{$loading}</div>
@@ -24,6 +26,7 @@
         <source src='https://dl.dropboxusercontent.com/u/16542600/notify.mp3'>
       </audio>
     </div>  
+    {/if}
   </footer>
 </div>
 

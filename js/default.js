@@ -66,7 +66,9 @@ $(document).ready(function() {
         title: 'Nerdz Metro Template',
         width: 500,
         padding: 10,
-        content: 'Nerdz8 Theme by Dr.Jest<br>Based on work made by Sergey Pimenov <a href="https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE">@https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE</a>)'
+        draggable: true,
+        content:  'Nerdz8 Theme by Dr.Jest<br>Based on work made by Sergey Pimenov <br />'+
+                  '<a href="https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE">@https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE</a>'
       });
     });
     //prettyprinter for [code]

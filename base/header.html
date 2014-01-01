@@ -55,53 +55,100 @@
 </header>
 {else}
 <header id="site_title">
-  <form id="loginfrm" class="navigation-bar dark">
+  <nav id="loginfrm" class="navigation-bar dark">
     <nav class="navigation-bar-content">
       <div class="element">
           <a href="/home.php" accesskey="h">NERDZ</a>
       </div>
-      <div class="element place-right" style="padding:10px">
-        <input type="submit" value="{$login}"  tabindex="3 "/>
-        <input type="hidden" value="{$tok_n}" name="tok" />
+      <div class="element place-right size2 center" id="login">
+        {$login}
       </div>
-      <div class="element place-right" style="padding:12px">
-        <input type="password" name="password" placeholder="*******" required tabindex="2" />
-      </div>
-      <div class="element place-right" style="padding:12px">
-        <input type="text" name="username" placeholder="{$username}" required autofocus  tabindex="1" />
-      </div>
-      <div class="element place-right" style="padding:10px">
-        <label class="small" for="remember"><input type="checkbox" name="setcookie" id="remember" checked="checked" tabindex="4"> {$remember_me}</label>
-      </div>
-      <div class="element place-right small" style="padding:10px">
-        <label class="small" for="markoffline"><input type="checkbox" name="offline" id="markoffline" tabindex="5"> {$hide_status}</label>
+      <div class="element place-right size3 center">
+        <a class="dropdown-toggle" href="#"><i class="icon-tools"></i>{$preferences} Metro</a>
+        <ul class="dropdown-menu pointer" id="metro-pref" data-role="dropdown" data-pos="right">
+          <li>
+            <i class="icon-ruler">Tema:</i>
+            <select id="theme-switcher" style="margin-left: 1.5em">
+              <option value="dark">Dark</option>
+              <option value="light">Light</option>
+            </select>
+          </li>
+          <li style="float:left">
+            <i class="icon-brush">{$color}:</i><br />
+            <span id="color-switcher" style="float:left; margin-left: 20px; padding: 3px; width:100%; overflow: auto;">
+            </span>
+          </li>
+          <li id="metro-info">
+            <i class="icon-info">Info</i>
+          </li>
+          <li onclick="window.open('http://github.com/DrJest/nerdzTemplateMetroNerdz')">
+            <i class="icon-github-2">GitHub</i>
+          </li>
+        </ul>
       </div>
     </nav>
-  </form>
+  </nav>
 </header>
 <script type="application/javascript">
-$("#loginfrm").on('submit',function(event) {
+var form = '<form id="loginfrm">'+
+           '  <label>{$username}</label>'+
+           '    <input type="text" name="username" required>'+
+           '  <label>{$password}</label>'+
+           '    <input type="password" name="password" required> <br />'+
+           '  <div class="input-control checkbox">'+
+           '    <label>'+
+           '      <input type="checkbox" name="setcookie" checked="checked">'+
+           '      <span class="check"></span>{$remember_me}'+
+           '    </label>'+
+           '  </div>'+
+           '  <div class="input-control checkbox">'+
+           '    <label>'+
+           '      <input type="checkbox" name="offline" >'+
+           '      <span class="check"></span>{$hide_status}'+
+           '    </label>'+
+           '  </div>'+
+           '  <div class="center">'+
+           '    <input type="submit" class="button primary" id="loginbtn" value="{$login}" />'+
+           '  </div>'+
+           '  <input type="hidden" value="{$tok_n}" name="tok" /><br /><br />'+
+           '</form>';
+$("#login").on('click', function(){
+  $.Dialog({
+    overlay: true,
+    shadow: true,
+    flat: true,
+    icon: '<i class="icon-key"></i>',
+    title: '{$login}',
+    padding: 10,
+    content: '',
+    onShow: function(_dialog){
+      var content = _dialog.children('.content');
+      content.html(form);
+    }
+  });
+});
+$(document).on('submit',"#loginfrm",function(event) {
     event.preventDefault();
-    var t = $("#title_right");
-    N.json.login($("#loginfrm").serialize(), function(r) {
-        var tmp = t.html();
+    var t = $("#loginbtn");
+    N.json.login($(this).serialize(), function(r) {
+        console.log(r);
+        var tmp = t.val();
         if(r.status == 'ok')
         {
-            t.html(r.message);
+            t.val(r.message.replace("<br />","\n"));
             setTimeout(function() {
                 document.location.reload();
             },1500);
         }
         else
         {
-            t.html('<h2 class="error">'+ r.message + '</h2>');
+            t.val(r.message);
             setTimeout(function() {
-                t.html(tmp);
+                t.val(tmp);
             },1500);
         }
     });
 });
-$(document).ready(function(){$("#notifycounter").parent().remove();});
 </script>
 {/if}
 <div id="loadtxt" data-loading="{$loading}"></div>

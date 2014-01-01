@@ -3,6 +3,7 @@ body{
   background-color: #3D3D3D;
   color: #eee;
   overflow-x: hidden;
+  min-width: 450px;
 }
 body.light {
   background-color: #fff;
@@ -492,4 +493,7 @@ body.light  #footer_main {
 .yt_frame span, .img_frame span, .img_frame-extended span, #hposts:after
 {
   display: none;
+}
+.window .content {
+  color: #222222 !important;
 }

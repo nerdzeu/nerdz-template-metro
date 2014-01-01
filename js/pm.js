@@ -1,7 +1,6 @@
 $(document).ready(function() {
     var c_from, c_to;
     var loadtxt = $("#loadtxt").data('loading')+'...';
-
     $("#content").on('submit',"#convfrm",function(e) {
         e.preventDefault();
         $("#res").html(loadtxt);
@@ -55,6 +54,7 @@ $(document).ready(function() {
         N.html.pm.getForm(function(data) {
             c.html(data);
         });
+        location.hash="write";
     });
     $("#inbox").click(function() {
         c.html(loadtxt);
@@ -70,10 +70,10 @@ $(document).ready(function() {
                     count.html(cval -1);
                 }
             }
-
         });
+        location.hash="inbox";
     });
-
+    
     c.on('click',".delete",function(e) {
         var did = $($(this).data('id'));
         did.html(loadtxt);
@@ -166,6 +166,9 @@ $(document).ready(function() {
             newpm = true;
             $("#inbox").click();
         }
+        if(location.hash=="#write") $("#form").click();
+        if(location.hash=="#inbox") $("#inbox").click();
+        location.hash="";
     },500);
 
 });

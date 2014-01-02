@@ -11,7 +11,7 @@ $(document).ready(function() {
     if (mc!="default")
     {
       $color = $colors[mc];
-      var html = ('.%name% .news .nerdz_date, .%name% .news .post_icons, .%name% a, .%name% #profilePostArrow, .%name% #projectPostArrow, .%name% .spoiler span, .%name% .question {'+
+      var html = ('.%name% .news .nerdz_date, .%name% .news .post_icons, .%name% a, .%name% #profilePostArrow, .%name% #projectPostArrow, .%name% .spoiler span, .%name% .question, .%name% #followedlist .online {'+
                         '  color: %color%;'+
                         '}'+
                         '.%name% .news, .%name% .img_frame, .%name% .yt_frame, .%name% .window, .%name% .caption  {'+

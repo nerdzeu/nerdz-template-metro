@@ -64,10 +64,10 @@
           {$you_follow}
           <div style="font-style: italic" class="small">[{$followedonlinetot_n}/{$followedtot_n}]</div>
       </div>
-        <ul id="followedlist" style="color: #AFAFAF">
+        <ul id="followedlist">
         {loop="followed_a"}
             <li>
-                <a href="/{$value.username4link_n}" {if="!$value.online_b"} style="color: #AFAFAF"{/if}>{$value.username_n}</a>
+                <a href="/{$value.username4link_n}" {if="$value.online_b"} class="online"{/if}>{$value.username_n}</a>
                 {if="$value.birthday_b"}
                     <i class="icon-gift"></i>
                 {/if}

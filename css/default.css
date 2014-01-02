@@ -511,3 +511,6 @@ p {
   max-height: 240px !important;
   overflow: auto;
 }
+#followedlist .online {
+  color: #4390DF;
+}

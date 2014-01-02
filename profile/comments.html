@@ -1,10 +1,21 @@
 {if="$needmorebtn_b"}
-<div style="text-align: center"><a href="#" class="more_btn" data-localization="{$more_msgs}" onclick="return false;">{$more_msgs}</a><span class="scroll_bottom_hidden" style="display: none"><span class="scroll_bottom_separator"> | </span><a href="#" class="scroll_bottom_btn" data-localization="{$back_to_the_bottom}" onclick="return false;">{$back_to_the_bottom}</a></span><span class="all_comments_hidden" style="{if="!$needeverycommentbtn_b"}display: none{/if}"><span class="all_comments_separator"> | </span><a href="#" class="all_comments_btn" data-localization="{$every_comment}" onclick="return false;">{$every_comment}</span></div>
+<div class="center">
+  <span class="size3" style="display:inline-block;">
+    <a href="#" class="more_btn" data-localization="{$more_msgs}" onclick="return false;">{$more_msgs}</a>
+  </span>
+  <span class="size3" style="display:inline-block; display: none;">
+    <a href="#" class="scroll_bottom_btn" data-localization="{$back_to_the_bottom}" onclick="return false;">{$back_to_the_bottom}</a>
+  </span>  
+  <span class="size3" style='display:inline-block; {if="!$needeverycommentbtn_b"}display: none{/if}'>
+    <a href="#" class="all_comments_btn" data-localization="{$every_comment}" onclick="return false;">{$every_comment}</a>
+  </span>
+</div>
 {else}
-<span style="display: none" class="commentcount">{$commentcount_n}</span>
+  <span style="display: none" class="commentcount">{$commentcount_n}</span>
 {/if}
+<div class="comments">
 {loop="list_a"}
-<div id="{$value.uid_n}" data-hcid="{$value.hcid_n}" class="singlecomment">
+  <div id="{$value.uid_n}" data-hcid="{$value.hcid_n}" class="singlecomment">
     <a href="/{$value.from4link_n}" style="vertical-align:top">
         <img src="{$value.gravatarurl_n}?s=30#" alt="{$value.from_n}" height="30" width="30" onerror="this.src = '{$onerrorimgurl_n}'" style="float:left; padding-right:2px; padding-top: 3px" />
     </a>
@@ -31,8 +42,9 @@
         {$value.message_n}
     </div>
     <script type="application/javascript">$("#nd{$value.uid_n}{$value.hcid_n}").attr("href",(typeof(lnk{$hpid_n})=="undefined"?document.location.pathname:lnk{$hpid_n})+"#{$value.uid_n}");</script>
-</div>
+  </div>
 {/loop}
+</div>
 {if="$showform_b"}
     <div style="width:33px; float:left; ">
         <a href="/{$currentuserprofile_n}" style="vertical-align:top">

@@ -503,3 +503,11 @@ p {
 .light p {
   color: #222;
 }
+.window {
+  z-index: 1100;
+  min-height: 30px;
+}
+#followedlist {
+  max-height: 240px !important;
+  overflow: auto;
+}

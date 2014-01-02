@@ -85,16 +85,48 @@ $(document).ready(function() {
       $.Dialog({
         overlay: false,
         shadow: true,
-        flat: false,
+        sysButtons: {btnClose:true,btnMax:true,btnMin:true},
         icon: '<i class="icon-youtube">',
         title: 'Youtube Video',
         content: '',
+        overlayClickClose: false,
         onShow: function(_dialog){
-            var html = [
-                '<iframe width="640" height="480" src="//www.youtube.com/embed/',vid,'" frameborder="0"></iframe>'
-            ].join("");
- 
-            $.Dialog.content(html);
+          $(_dialog).appendTo($("body"));
+          $(".window-overlay").remove();
+          var html = [
+              '<iframe style="width:100%; min-width:640px; min-height:480px;" src="//www.youtube.com/embed/',vid,'" frameborder="0"></iframe>'
+          ].join("");
+          $.Dialog.content(html);
+          w = _dialog;
+          c = w.children(".content").eq(0);
+          w.data("old",[w.css("top"),w.css("left")].join("|"));
+          $(".btn-close").click(function(e){e.preventDefault();w.remove()});
+          $(".btn-min").click(function(e) {
+            e.preventDefault();
+            if(!w.hasClass("minimized"))
+            {
+              c.hide();
+              w.css({minHeight:"30px",height:"40px",width:"100px",top:"",bottom:"30px",left:"0px"}).addClass("minimized");
+            } else {
+              c.show();
+              ss = w.data("old").split("|");
+              w.hasClass("maximized") ? 
+                w.css({width:$(window).width(),height:$(window).height()-30,top:0,left:0,bottom:""}).removeClass("minimized") : 
+                w.css({width:624,height:517,top:ss[0],left:ss[1],bottom:""}).removeClass("minimized");
+            }
+          })
+          $(".btn-max").click(function(e) {
+            e.preventDefault();
+            if(!w.hasClass("maximized"))
+            {
+              w.css({height:$(window).height()-30,width:"100%",top:"0px",left:"0px"}).addClass("maximized");
+              c.children().css("height",$(window).height()-70);
+            } else {
+              ss = w.data("old").split("|");
+              w.css({width:624,height:517,top:ss[0],left:ss[1]}).removeClass("maximized");
+              c.children().css("height",480);
+            }
+          });
         }
       });
     });

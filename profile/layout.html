@@ -1,5 +1,5 @@
 <div class="row">
-  <aside id="left_col" class="span2">
+  <aside id="left_col" class="sidebar span2">
     <div class="grid fluid">
       <div class="row">
         <div class="span10 offset1">
@@ -154,9 +154,9 @@
     <br /><br />
   </article>
 
-  <aside id="right_col" class="span2">
+  <aside id="right_col" class="sidebar span2">
     {if="!empty($biography_n)"}
-        <b>{$biography}</b>
+        <div class="center">{$biography}</div>
         <div style="overflow:hidden">
             {$biography_n}
         </div>
@@ -164,7 +164,7 @@
     {/if}
 
     {if="!empty($quotes_a)"}
-        <b>{$quotes}</b><br />
+        <div class="center">{$quotes}</div>
             <ul style="list-style-type: none; margin: 0px; padding:0px">
             {loop="quotes_a"}
                 <li style="margin:1px; padding:0px"><blockquote>{$value}</blockquote></li>
@@ -174,7 +174,7 @@
     {/if}
 
     {if="!empty($interests_a)"}
-        <b>{$interests}</b><br />
+        <div class="center">{$interests}</div>
             <ul style="list-style-type: circle; margin: 0px;">
             {loop="interests_a"}
                 <li>{$value}</li>
@@ -184,7 +184,7 @@
     {/if}
 
     {if="!empty($ownerof_a)"}
-        <b>{$owner_of}</b><br />
+        <div class="center">{$owner_of}</div>
             <ul style="list-style-type: none; margin: 0px; padding:0px">
             {loop="ownerof_a"}
                 <li><a href="/{$value.name4link_n}">{$value.name_n}</a></li>
@@ -194,7 +194,7 @@
     {/if}
     
     {if="!empty($memberof_a)"}
-        <b>{$member_of}</b><br />
+        <div class="center">{$member_of}</div>
         <div>
             <ul style="list-style-type: none; margin: 0px; padding:0px">
             {loop="memberof_a"}
@@ -206,7 +206,7 @@
     {/if}
     
     {if="!empty($userof_a)"}
-        <div>{$user_of}</div>
+        <div class="center">{$user_of}</div>
         <div>
             <ul style="list-style-type: none; margin: 0px; padding:0px">
             {loop="userof_a"}
@@ -217,7 +217,7 @@
         <br />
     {/if}
     {if="!empty($jabber_n) || !empty($yahoo_n) || !empty($skype_n) || !empty($steam_n) || !empty($facebook_n) || !empty($twitter_n) || !empty($github_n)"}
-      <b>{$contact_info}</b><br>
+      <div class="center">{$contact_info}</div>
       <div class="small" style="white-space: nowrap;">
         {if="!empty($jabber_n)"}
             <i class="icon-jabber" title="{$jabber}"> {$jabber_n} </i> <br />
@@ -243,7 +243,7 @@
         </div>
       <br />
     {/if}
-    <div>{$advertisement}</div>
+    <div class="center">{$advertisement}</div>
     <div>
       {$banners_a.120x600}
     </div>

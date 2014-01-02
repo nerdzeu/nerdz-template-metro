@@ -214,7 +214,6 @@ $(document).ready(function() {
         }
     });
 
-    //begin plist into events (common to: homepage, projects, profiles)
     var plist = $("#postlist");
 
     plist.on('click', ".spoiler", function(e) {
@@ -239,8 +238,9 @@ $(document).ready(function() {
 
     plist.on('click',".delcomment",function() {
         var refto = $('#' + $(this).data('refto'));
+        sc = refto.parents("div[id^=\"post\"]").find(".icon-comments-4");
+        sc.html(parseInt(sc.html())-1);
         refto.html(loading+'...');
-
           N.json[plist.data('type')].delComment({ hcid: $(this).data('hcid') },function(d) {
             if(d.status == 'ok')
             {
@@ -255,18 +255,17 @@ $(document).ready(function() {
 
     plist.on('submit','.frmcomment',function(e) {
         e.preventDefault();
-        var last, hcid,
+        var last, hcid, t,
+            form     = $(this),
             hpid     = $(this).data ('hpid'),
             refto    = $('#commentlist' + hpid),
             error    = $(this).find ('.error').eq (0),
-            pattern  = 'div[id^="c"]',
-            comments = refto.find (pattern);
+            clist    = refto.children(".comments").eq(0),
+            comments = clist.children();
         if(comments.length)
         {
-            // Uses the second-last element instead of the last one (if available)
-            // to fix the append bug reported by nessuno.
-            last = comments.length > 1 ? comments.eq (comments.length - 2) : null;
-            hcid = last ? last.data('hcid') : 0;
+          last = comments.length > 1 ? comments.eq (comments.length - 2) : null;
+          hcid = last ? last.data('hcid') : 0;
         }
         error.html (loading);
         N.json[plist.data('type')].addComment ({ hpid: hpid, message: $(this).find('textarea').eq(0).val() }, function(d) {
@@ -275,38 +274,27 @@ $(document).ready(function() {
                 if(hcid && last)
                 {
                     N.html[plist.data('type')].getCommentsAfterHcid ({ hpid: hpid, hcid: hcid }, function(d) {
-                        var form = refto.find ('form.frmcomment').eq (0),
-                            pushBefore = form.parent(),
-                            newComments = $('<div>' + d + '</div>').find (pattern),
+                        t = $("<div>").html(d);
+                        var cmnum = t.children().eq(0).remove().html(),
+                            newComments = t.children().eq(0).children();
                             internalLengthPointer = comments.length,
                             lastComment = comments.last();
-                        // if available, delete the secondlast comment
+                        t.remove();
                         if (comments.length > 1) {
-                            comments.eq (comments.length - 1).remove();
+                            comments.eq(comments.length - 1).remove();
                             internalLengthPointer--;
                         }
-                        // then, check the hcid of the last comment
-                        // delete it if it matches
                         if (lastComment.data ('hcid') == newComments.last().data ('hcid')) {
                             lastComment.remove();
                             internalLengthPointer--;
                         }
-                        // wait until we reach 10 comments (except if the user pressed more)
-                        // TODO: replace this with comments.slice (0, n).remove()
-                        // TODO: add logic to show again the 'more' button if we deleted
-                        // enough comments
-                        // Fix for issue #9: add a >point<
-                        while ((internalLengthPointer + newComments.length) > (((comments.parent().find ('.more_btn').data ('morecount') || 0) + 1) * 10)) {
-                            comments.first().remove();
-                            // reassign the variable, otherwise .first() won't work
-                            // anymore with .remove().
-                            comments = refto.find (pattern);
-                            internalLengthPointer--;
-                        }
-                        // append newComments
-                        pushBefore.before (d);
-                        form.find ('textarea').val ('');
+                        n = ((internalLengthPointer + newComments.length) > (((form.parent().find ('.more_btn').data ('morecount') || 0) + 1) * 10));
+                        if(n>0) comments.slice(0,n).remove();
+                        if(n>9) refto.find(".more_btn").show();
+                        clist.append(newComments);
+                        form.find('textarea').val ('');
                         error.html('');
+                        $("#post"+hpid).find(".icon-comments-4").eq(0).text(cmnum);
                     });
                 }
                 else
@@ -326,12 +314,13 @@ $(document).ready(function() {
 
     plist.on('click',".showcomments",function(e) {
         e.preventDefault();
-        var refto = $('#' + $(this).data('refto'));
+        var hpid = $(this).data ('hpid'),
+            refto = $('#' + $(this).data('refto'));
         if(refto.html() == '')
         {
             refto.html(loading+'...');
             N.html[plist.data ('type')].getComments ({
-                hpid: $(this).data ('hpid'),
+                hpid: hpid,
                 start: 0,
                 num: 10
             }, function (res) {
@@ -351,6 +340,7 @@ $(document).ready(function() {
     plist.on ('click', '.more_btn', function() {
         var moreBtn     = $(this),
             commentList = moreBtn.parents ("div[id^=\"commentlist\"]"),
+            clist    = commentList.children(".comments").eq(0),
             hpid        = /^post(\d+)$/.exec (commentList.parents ("div[id^=\"post\"]").attr ("id"))[1],
             intCounter  = moreBtn.data ("morecount") || 0;
         if (moreBtn.data ("inprogress") === "1") return;
@@ -358,21 +348,19 @@ $(document).ready(function() {
         N.html[plist.data ('type')].getComments ({ hpid: hpid, start: intCounter + 1, num: 10 }, function (r) {
             moreBtn.data ("inprogress", "0").data ("morecount", ++intCounter).text (moreBtn.data ("localization"));
             var _ref = $("<div>" + r + "</div>");
-            // Lesson learned: don't use .parent() after a .hide()
-            moreBtn.parent().after (r);
+            clist.html(r+comments.html());
             if (intCounter == 1)
-                moreBtn.parent().find (".scroll_bottom_hidden").show();
+              commentList.find (".scroll_bottom_btn").parent().show();
             if ($.trim (r) == "" || _ref.find (".nerdz_from").length < 10 || (10 * (intCounter + 1)) == _ref.find (".commentcount:eq(0)").html())
             {
-                var btnDb = moreBtn.hide().parent();
-                btnDb.find (".scroll_bottom_separator").hide();
-                btnDb.find (".all_comments_hidden").hide();
+              commentList.find (".all_comments_btn").hide();
+              moreBtn.parent().hide();
             }
         });
     });
 
     plist.on ('click', '.scroll_bottom_btn', function() {
-        var cList = $(this).parents().eq (2);
+        var cList = $(this).parents().eq(2);
         $("html, body").animate ({ scrollTop: cList.find (".singlecomment:nth-last-child(2)").offset().top }, function() {
             cList.find (".frmcomment textarea").focus();
         });
@@ -380,20 +368,17 @@ $(document).ready(function() {
 
     plist.on ('click', '.all_comments_btn', function() {
         var btn         = $(this),
-            btnDb       = btn.parent().parent(),
-            moreBtn     = btnDb.find (".more_btn"),
             commentList = btn.parents ("div[id^=\"commentlist\"]"),
-            hpid        = /^post(\d+)$/.exec (commentList.parents ("div[id^=\"post\"]").attr ("id"))[1];
+            hpid        = /^post(\d+)$/.exec (commentList.parents ("div[id^=\"post\"]").attr ("id"))[1],
+            moreBtn     = commentList.find (".more_btn");
         if (btn.data ("working") === "1" || moreBtn.data ("inprogress") === "1") return;
         btn.data ("working", "1").text (loading + "...");
         moreBtn.data ("inprogress", "1");
         N.html[plist.data ('type')].getComments ({ hpid: hpid, forceNoForm: true }, function (res) {
-            btn.data ("working", "0").text (btn.data ("localization")).parent().hide();
-            btnDb.find (".scroll_bottom_hidden").show().find (".scroll_bottom_separator").hide();
-            var parsed = $("<div>" + res + "</div>"), push = $("#commentlist" + hpid);
-            moreBtn.hide().data ("morecount", Math.ceil (parseInt (parsed.find (".commentcount").html()) / 10));
-            push.find ("div[id^=\"c\"]").remove();
-            push.find ('form.frmcomment').eq (0).parent().before (res);
+            btn.data ("working", "0").text(btn.data ("localization")).parent().hide();
+            commentList.find (".scroll_bottom_btn").show();
+            moreBtn.hide().data ("morecount", Math.ceil (parseInt ($("<div>").html(res).find (".commentcount").html()) / 10));
+            commentList.children(".comments").eq(0).html(res);
         });
     });
 

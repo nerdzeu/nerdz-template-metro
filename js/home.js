@@ -107,19 +107,21 @@ $(document).ready(function() {
             {
               c.hide();
               w.css({minHeight:"30px",height:"40px",width:"100px",top:"",bottom:"30px",left:"0px"}).addClass("minimized");
+              if(w.hasClass("maximized")) w.removeClass("maximized").addClass("maximize")
             } else {
               c.show();
               ss = w.data("old").split("|");
-              w.hasClass("maximized") ? 
+              w.hasClass("maximize") ? 
                 w.css({width:$(window).width(),height:$(window).height()-30,top:0,left:0,bottom:""}).removeClass("minimized") : 
                 w.css({width:624,height:517,top:ss[0],left:ss[1],bottom:""}).removeClass("minimized");
             }
           })
           $(".btn-max").click(function(e) {
             e.preventDefault();
+            c.show();
             if(!w.hasClass("maximized"))
             {
-              w.css({height:$(window).height()-30,width:"100%",top:"0px",left:"0px"}).addClass("maximized");
+              w.css({height:$(window).height()-30,width:"100%",top:"0px",left:"0px"}).addClass("maximized").removeClass("minimized").removeClass("maximize");
               c.children().css("height",$(window).height()-70);
             } else {
               ss = w.data("old").split("|");

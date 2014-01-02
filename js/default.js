@@ -4,7 +4,7 @@ $(document).ready(function() {
     $("iframe").attr("scrolling","no");
     _h = $("head");
     if(!localStorage.getItem("metro-color")) 
-      localStorage.setItem("default","1");
+      localStorage.setItem("metro-color","default");
     $color = "#4390DF";
     $colors = {"default":"#4390DF","lime":"#a4c400","amber":"#F0A30A"};
     var mc = localStorage.getItem("metro-color");

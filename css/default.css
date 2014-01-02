@@ -238,14 +238,14 @@ body.light .nerdz_message .post_icons {
 }
 i:before { padding: 2px; }
 /** QUOTE **/
-.quote{
+.quote, .qu_main{
   margin: .5%;
   max-width: 97%;
   outline: #999999 solid 3px;
   border-radius: 2px;
   padding-bottom: 1em;
 }
-.quote:before {
+.quote:before, .qu_main:before {
   float: left;
   content: "\e163";
   font-family: iconFont;
@@ -253,7 +253,7 @@ i:before { padding: 2px; }
   font-weight: normal;
   padding-left: 2px;
 }
-.quote:after {
+.quote:after, .qu_main:after {
   clear: both;
   float: right;
   content: "\e164";
@@ -262,14 +262,14 @@ i:before { padding: 2px; }
   font-weight: normal;
   padding-right: 2px;
 }
-.quote span img {  
+.quote span img, .qu_main span img {
   display: none;
 }
-.quote blockquote {
+.quote blockquote, .qu_main blockquote {
   clear:both;
   margin-top: .5em;
 }
-.quote > *:first-child:before  {
+.quote > *:first-child:before{
   clear:both;
   font-weight: bold;
   content: "Quote ";

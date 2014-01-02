@@ -544,6 +544,18 @@ $(document).ready(function() {
         document.location.reload();
     });
 
+    $("#notify_list").on('click','.notref',function(e) {
+        if (e.ctrlKey) return;
+        e.preventDefault();
+        var href = $(this).attr('href');
+        if(href == window.location.pathname + window.location.hash) {
+            location.reload();
+        }
+        else {
+            location.href = href;
+        }
+    });
+    
     var curpm = localStorage.getItem("curpm") ? parseInt(localStorage.getItem("curpm")) : 0;
     setInterval(function() {
         var nc = $("#notifycounter"), val = parseInt(nc.html());

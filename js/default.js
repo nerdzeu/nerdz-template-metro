@@ -348,7 +348,7 @@ $(document).ready(function() {
         N.html[plist.data ('type')].getComments ({ hpid: hpid, start: intCounter + 1, num: 10 }, function (r) {
             moreBtn.data ("inprogress", "0").data ("morecount", ++intCounter).text (moreBtn.data ("localization"));
             var _ref = $("<div>" + r + "</div>");
-            clist.html(r+comments.html());
+            clist.html(r);
             if (intCounter == 1)
               commentList.find (".scroll_bottom_btn").parent().show();
             if ($.trim (r) == "" || _ref.find (".nerdz_from").length < 10 || (10 * (intCounter + 1)) == _ref.find (".commentcount:eq(0)").html())

@@ -256,6 +256,7 @@ i:before { padding: 2px; }
   outline: #999999 solid 3px;
   border-radius: 2px;
   padding-bottom: 1em;
+  padding-right: 3px;
 }
 .quote:before, .qu_main:before {
   float: left;

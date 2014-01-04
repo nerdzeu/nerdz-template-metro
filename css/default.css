@@ -243,7 +243,7 @@ i:before { padding: 2px; }
 /** QUOTE **/
 .quote, .qu_main{
   margin: .5%;
-  max-width: 97%;
+  max-width: 95%;
   outline: #999999 solid 3px;
   border-radius: 2px;
   padding-bottom: 1em;

@@ -267,7 +267,7 @@ $(document).ready(function() {
 
     plist.on('click',".delcomment",function() {
         var refto = $('#' + $(this).data('refto'));
-        sc = refto.parents("div[id^=\"post\"]").find(".icon-comments-4");
+        sc = refto.parents("div[id^=\"post\"]").eq(0).find(".icon-comments-4");
         sc.html(parseInt(sc.html())-1);
         refto.html(loading+'...');
           N.json[plist.data('type')].delComment({ hcid: $(this).data('hcid') },function(d) {

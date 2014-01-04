@@ -86,17 +86,14 @@ $(document).ready(function() {
         overlay: false,
         shadow: true,
         sysButtons: {btnClose:true,btnMax:true,btnMin:true},
-        icon: '<i class="icon-youtube">',
+        icon: '<i class="icon-youtube"></i>',
         title: 'Youtube Video',
         content: '',
         overlayClickClose: false,
         onShow: function(_dialog){
           $(_dialog).appendTo($("body"));
           $(".window-overlay").remove();
-          var html = [
-              '<iframe style="width:100%; min-width:640px; min-height:480px;" src="//www.youtube.com/embed/',vid,'" frameborder="0"></iframe>'
-          ].join("");
-          $.Dialog.content(html);
+          $.Dialog.content('<iframe style="width:100%; min-width:640px; min-height:480px;" src="//www.youtube.com/embed/'+vid+'" frameborder="0"></iframe>');
           w = _dialog;
           c = w.children(".content").eq(0);
           w.data("old",[w.css("top"),w.css("left")].join("|"));
@@ -192,8 +189,8 @@ $(document).ready(function() {
         plist.html('<h1>'+loading+'...</h1>');
         lang = $(this).data('lang');
         localStorage.setItem("autolang",lang);
-        $(".selectlang").css('color','');
-        $(this).css('color',$color);
+        $(".selectlang").removeClass('active');
+        $(this).addClass('active');
         load = false;
         if(lang == 'usersifollow')
         {
@@ -231,8 +228,8 @@ $(document).ready(function() {
         $("#fast_nerdz").hide();
         plist.html('<h1>'+loading+'...</h1>');
         lang = $(this).data('lang');
-        $(".projlang").css('color','');
-        $(this).css('color',$color);
+        $(".projlang").removeClass('active');
+        $(this).addClass("active");
         load = false;
         if(lang == 'usersifollow')
         {

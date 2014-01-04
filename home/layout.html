@@ -67,7 +67,7 @@
         <ul id="followedlist">
         {loop="followed_a"}
             <li>
-                <a href="/{$value.username4link_n}" {if="$value.online_b"} class="online"{/if}>{$value.username_n}</a>
+                <a href="/{$value.username4link_n}" {if="$value.online_b"} class="active"{/if}>{$value.username_n}</a>
                 {if="$value.birthday_b"}
                     <i class="icon-gift"></i>
                 {/if}

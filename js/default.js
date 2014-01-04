@@ -1,3 +1,23 @@
+rgb2hsl = function(r, g, b) {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  var h, s, l,
+      max = Math.max(r, g, b),
+      min = Math.min(r, g, b),
+      d =  max - min;
+  if(max==r) 
+      h = ((g-b)/d)%6;
+  else if(max==g)
+      h = ((b-r)/d)+2;
+  else
+    h = ((r-g)/d)+2;
+  h *= 60;
+  if(!d) h = 0;
+  l = (max + min) / 2;
+  s = d ? d/(1-Math.abs(2*l-1)) : 0;
+  return [h, s, l];
+}
 $(document).ready(function() {
     var loading = $("#loadtxt").data('loading');
     $("body").append($('<br />')); 
@@ -11,22 +31,29 @@ $(document).ready(function() {
     if (mc!="default")
     {
       $color = $colors[mc];
-      var html = ('.%name% .news .nerdz_date, .%name% .news .post_icons, .%name% a, .%name% #profilePostArrow, .%name% #projectPostArrow, .%name% .spoiler span, .%name% .question, .%name% #followedlist .online {'+
-                        '  color: %color%;'+
-                        '}'+
-                        '.%name% .news, .%name% .img_frame, .%name% .yt_frame, .%name% .window, .%name% .caption  {'+
-                        '  border-color: %color%;'+
-                        '}'+
-                        '.%name% .img_frame:after, .%name% .yt_frame:after {'+
-                        '  border-top: 28px solid %color%;'+
-                        '}'+
-                        '.%name% .window > .caption {'+
-                        '  background-color: %color%;'+
-                        '}'+
-                        '.%name% .nerdz_message > div.compressed'+
-                        '{'+
-                        '  box-shadow: inset 0 -30px 30px -30px %color%;'+
-                        '}').replace(/\%name\%/g,mc).replace(/\%color\%/g,$color);
+      var rgb = $("<span>").css("background-color",$color).css("background-color").replace(/[^0-9,]/g,"").split(",");
+      var hsl = rgb2hsl(rgb[0],rgb[1],rgb[2]);
+      $lighter = ["hsl("+hsl[0], hsl[1]*100+"%", Math.floor(hsl[2]*150)+"%)"].join(",");
+      console.log($lighter);
+      var html = ('.news .nerdz_date, .news .post_icons, a, #profilePostArrow, #projectPostArrow, .spoiler span, .question, .active {'+
+                  '  color: %color%;'+
+                  '}'+
+                  '.news, .img_frame, .yt_frame, .window, .caption  {'+
+                  '  border-color: %color% !important;'+
+                  '}'+
+                  '.img_frame:after, .yt_frame:after {'+
+                  '  border-top: 28px solid %color%;'+
+                  '}'+
+                  '.window > .caption {'+
+                  '  background-color: %color%;'+
+                  '}'+
+                  '.nerdz_message > div.compressed'+
+                  '{'+
+                  '  box-shadow: inset 0 -30px 30px -30px %color%;'+
+                  '}'+
+                  '.link:hover, a:hover {'+
+                  ' color: '+$lighter+';'+
+                  '}').replace(/\%color\%/g,$color);
       $('<style type="text/css">').html(html).appendTo(_h);
       $("body").addClass( mc );
     }

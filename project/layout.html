@@ -28,14 +28,14 @@
       <div class="row">
         <div class="span10 offset1"><h4>{$informations}</h4></div>
       </div>
-      <div class="row thin">
+      <div class="row attached">
         <div class="span10 offset1">
           <b>{$name}: </b>
           {$name_n}
         </div>
       </div>
       {if="!empty($website_n)"}
-      <div class="row thin">
+      <div class="row attached">
         <div class="span10 offset1">
           <b>{$website}: </b>
           <a class="small" href="{$website4link_n}#" onclick="window.open(this.href); return false">{$website_n}</a>
@@ -50,7 +50,7 @@
           {$id_n}
         </span>
       </div>
-      <div class="row thin">
+      <div class="row attached">
         <span class="span6 offset1">
           <b>{$members}:</b>
         </span>
@@ -58,7 +58,7 @@
           {$members_n}
         </span>
       </div>
-      <div class="row thin">
+      <div class="row attached">
         <span class="span6 offset1">
           <b>{$users}:</b>
         </span>
@@ -66,7 +66,7 @@
           {$users_n}
         </span>
       </div>
-      <div class="row thin">
+      <div class="row attached">
         <span class="span6 offset1">
           <b>{$owner}:</b>
         </span>
@@ -134,8 +134,11 @@
   
   <aside id="right_col" class="sidebar span2">
     {if="!empty($description_n)"}
-        <div class="center">{$description}<br />
-          {$description_n}
+        <div class="center">
+          {$description}<br />
+          <span class="small">
+            {$description_n}
+          </span>
         </div>
         <br />
     {/if}

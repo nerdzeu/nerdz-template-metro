@@ -34,7 +34,7 @@ $(document).ready(function() {
       var rgb = $("<span>").css("background-color",$color).css("background-color").replace(/[^0-9,]/g,"").split(",");
       var hsl = rgb2hsl(rgb[0],rgb[1],rgb[2]);
       $lighter = ["hsl("+hsl[0], hsl[1]*100+"%", Math.floor(hsl[2]*150)+"%)"].join(",");
-      var html = ('.news .nerdz_date, .news .post_icons, a, #profilePostArrow, #projectPostArrow, .spoiler span, .question {'+
+      var html = ('.news .nerdz_date, .news .post_icons, a, #profilePostArrow, #projectPostArrow, .spoiler > span, .question {'+
                   '  color: %color%;'+
                   '}'+
                   '.active {'+
@@ -451,16 +451,16 @@ $(document).ready(function() {
         var refto = $('#' + $(this).data('refto')), hpid = $(this).data('hpid');
         var editlang = $(this).attr("title");
         var form = function(fid,hpid,message,edlang,prev) {
-                    return     '<form style="margin-bottom:40px" id="' +fid+ '" data-hpid="'+hpid+'">' +
-                               '<textarea id="'+fid+'abc" autofocus style="width:99%; height:125px">' +message+ '</textarea><br />' +
-                               '<input type="submit" value="' + edlang +'" style="float: right; margin-top:5px" />' +
-                                '<button type="button" style="float:right; margin-top: 5px" class="preview" data-refto="#'+fid+'abc">'+prev+'</button>'+
-                               '<button type="button" style="float:left; margin-top:5px" onclick="window.open(\'/bbcode.php\')">BBCode</button>' +
-                           '</form>';
+                    return  '<form style="margin-bottom:40px" id="' +fid+ '" data-hpid="'+hpid+'">' +
+                            '<textarea id="'+fid+'abc" autofocus style="width:100%; height:125px">' +message+ '</textarea><br />' +
+                            '<input type="submit" value="' + edlang +'" style="float: right; margin-top:5px" />' +
+                            '<button type="button" style="float:right; margin-top: 5px; margin-right: 10px;" class="preview" data-refto="#'+fid+'abc">'+prev+'</button>'+
+                            '<button type="button" style="float:left; margin-top:5px" onclick="window.open(\'/bbcode.php\')">BBCode</button>' +
+                            '</form>';
                     };
             N.json[plist.data('type')].getPost({hpid: hpid},function(d) {
                  var fid = refto.attr('id') + 'editform';
-                 refto.html(form(fid,hpid,d.message,editlang,$(".preview").html()));
+                 refto.html(form(fid,hpid,d.message,editlang,$(".preview").val()));
 
                  $('#'+fid).on('submit',function(e) {
                       e.preventDefault();
@@ -477,7 +477,7 @@ $(document).ready(function() {
                                             refto.html(o);
                                             refto.slideToggle("slow");
                                             if(refto.data("hide").length) {
-                                                $(refto.find("div.small")[0]).prepend('<a class="hide" style="float:right; margin-left:3px" data-postid="post'+hpid+'">'+refto.data("hide")+'</a>');
+                                              $(refto.find("div.small")[0]).prepend('<i title="'+refto.data("hide")+'" class="post_icons hide icon-cancel-2" data-postid="post'+hpid+'"></i>');
                                             }
                                       });
                                  }

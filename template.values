@@ -1,7 +1,10 @@
 {
 	// CSS section
 	"css": {
-		"default": "css/default.css",
+		"default": [
+                "css/metro.css",
+                "css/default.css"
+                ],
         "faq": "css/faq.css"
 	},
 	// JS section

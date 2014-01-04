@@ -105,19 +105,20 @@
       <div id="fast_nerdz">
         <form id="stdfrm" class="grid fluid" data-to="{$id_n}">
           <div class="row">  
-            <textarea id="frmtxt" name="message" style="width: 99.5%; height: 60px" tabindex="1"></textarea>
+            <textarea id="frmtxt" name="message" style="width: 100%; height: 60px"></textarea>
           </div>
-          <div class="row">
-            <button type="button" class="span" onclick="window.open('/bbcode.php')" tabindex="4">BBCode</button> 
+          <div class="row thin">
+            <span class="span3 place-right">
+              <input type="submit" value="{$nerdz_it}" style="width:45%;" class="place-right" />
+              <input type="button" class="preview" data-refto="#frmtxt" style="width:45%; margin-right: 10%" value="{$preview}" /> 
+            </span>
+            <input type="button" class="span1 smallest" onclick="window.open('/bbcode.php')" value="BBCode" />
             {if="$canwritenews_b"}
-              <span class="span1">
-                <input type="checkbox" name="news" value="1" id="sendnews" /><label style="display: inline;" for="sendnews">News</label>
-              </span>
+              <label class="span1" for="sendnews"><input type="checkbox" name="news" value="1" id="sendnews" />News</label>
+              <div id="pmessage" class="error span7"></div>
+            {else}
+              <div id="pmessage" class="error span8"></div>
             {/if}
-            <div id="pmessage" class="error span7"></div>
-            
-            <button type="button" class="preview span" data-refto="#frmtxt" tabindex="3">{$preview}</button> 
-            <input type="submit" class="span" value="{$nerdz_it}" tabindex="2" />
           </div>
         </form>
       </div>

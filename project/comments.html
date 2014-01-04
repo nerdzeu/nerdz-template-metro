@@ -52,14 +52,16 @@
     <form style="overflow:hidden; width:auto" class="frmcomment" data-hpid="{$hpid_n}" class="grid fluid">
       <div class="row thin">
         <div class="span12">
-          <textarea id="commentto{$hpid_n}" name="message" style="width: 99.5%; height: 60px" tabindex="5"></textarea>
+          <textarea id="commentto{$hpid_n}" name="message" style="width: 100%; height: 60px"></textarea>
         </div>
       </div>
       <div class="row thin">
-        <button class="span" type="button" onclick="window.open('/bbcode.php')" tabindex="8">BBCode</button>
+        <span class="span4 place-right">
+          <input type="submit" class="place-right small" style="width:45%;" value="{$nerdz_it}" />
+          <input type="button" class="preview small place-right" style="width:45%; margin-right: 10%" data-refto="#commentto{$hpid_n}" value="{$preview}" />
+        </span>
+        <input class="span2 small" type="button" onclick="window.open('/bbcode.php')" value="BBCode" />
         <div class="error span6"></div>
-        <button type="button" class="preview span" data-refto="#commentto{$hpid_n}" tabindex="7">{$preview}</button>
-        <input class="span" type="submit" value="{$nerdz_it}" tabindex="6" />
       </div>
     </form>
 </div>

@@ -25,7 +25,7 @@ aside ul  {
   font-size: 75% !important;
 }
 .smallest{
-  font-size: 60%;
+  font-size: 60% !important;
 }
 .center{
   text-align: center;
@@ -133,6 +133,7 @@ body.light .nerdz_date a {
 }
 .nerdz_message, .nerdz_comments, .news
 {
+  clear:both;
   border:1px solid #cecece;
   width: 100%;
   border-radius: 2.5px;
@@ -183,7 +184,9 @@ body.light .nerdz_message .post_icons {
 .place-right{
   cursor: pointer;
 }
-
+form .place-right {
+  float: right !important;
+}
 .projlang, .selectlang, .more{ 
   cursor: pointer;
 }
@@ -508,8 +511,11 @@ p {
   min-height: 30px;
 }
 #followedlist {
-  max-height: 240px !important;
+  max-height: 260px !important;
   overflow: auto;
+}
+#followedlist a {
+  padding: 3px 20px;
 }
 #followedlist .online {
   color: #4390DF;

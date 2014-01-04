@@ -34,9 +34,11 @@ $(document).ready(function() {
       var rgb = $("<span>").css("background-color",$color).css("background-color").replace(/[^0-9,]/g,"").split(",");
       var hsl = rgb2hsl(rgb[0],rgb[1],rgb[2]);
       $lighter = ["hsl("+hsl[0], hsl[1]*100+"%", Math.floor(hsl[2]*150)+"%)"].join(",");
-      console.log($lighter);
-      var html = ('.news .nerdz_date, .news .post_icons, a, #profilePostArrow, #projectPostArrow, .spoiler span, .question, .active {'+
+      var html = ('.news .nerdz_date, .news .post_icons, a, #profilePostArrow, #projectPostArrow, .spoiler span, .question {'+
                   '  color: %color%;'+
+                  '}'+
+                  '.active {'+
+                  '  color: %color% !important; '+
                   '}'+
                   '.news, .img_frame, .yt_frame, .window, .caption  {'+
                   '  border-color: %color% !important;'+
@@ -315,8 +317,10 @@ $(document).ready(function() {
                             lastComment.remove();
                             internalLengthPointer--;
                         }
-                        n = ((internalLengthPointer + newComments.length) > (((form.parent().find ('.more_btn').data ('morecount') || 0) + 1) * 10));
-                        if(n>0) comments.slice(0,n).remove();
+                        var n = internalLengthPointer + newComments.length,
+                            mc = form.parent().find ('.more_btn').data('morecount'),
+                            toshow = (mc?mc:0 + 1) * 10;
+                        if(n>0) comments.slice(0,n-toshow).remove();
                         if(n>9) refto.find(".more_btn").show();
                         clist.append(newComments);
                         form.find('textarea').val ('');
@@ -375,7 +379,7 @@ $(document).ready(function() {
         N.html[plist.data ('type')].getComments ({ hpid: hpid, start: intCounter + 1, num: 10 }, function (r) {
             moreBtn.data ("inprogress", "0").data ("morecount", ++intCounter).text (moreBtn.data ("localization"));
             var _ref = $("<div>" + r + "</div>");
-            clist.html(r);
+            clist.html(_ref.children().eq(1).html()+clist.html());
             if (intCounter == 1)
               commentList.find (".scroll_bottom_btn").parent().show();
             if ($.trim (r) == "" || _ref.find (".nerdz_from").length < 10 || (10 * (intCounter + 1)) == _ref.find (".commentcount:eq(0)").html())

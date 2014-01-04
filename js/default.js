@@ -598,7 +598,7 @@ $(document).ready(function() {
           nw = val-curpm;
           if(nw>0)
           {
-            $.Notify.show('<a href="/pm.php#new">You have '+nw+' new message'+(nw>1?"s":"")+'!</a>');
+            $.Notify.show('<a href="/pm.php#new" class="notref">You have '+nw+' new message'+(nw>1?"s":"")+'!</a>');
             $("#notifyaudio")[0].play();
           }
           curpm = val;

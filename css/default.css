@@ -131,6 +131,9 @@ hr {
 .light .tagpanel .seeall {
   background-color: #FFF;
 }
+.tagpanel .button:hover {
+  color: #555 !important;
+}
 /** POSTLIST **/
 .nerdz_date{
   float:right;

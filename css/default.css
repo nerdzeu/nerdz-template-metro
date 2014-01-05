@@ -561,5 +561,5 @@ p {
   padding: 3px 20px;
 }
 .active {
-  color: #4390DF;
+  color: #4390DF !important;
 }

@@ -557,6 +557,6 @@ p {
 #followedlist a {
   padding: 3px 20px;
 }
-#followedlist .online {
+.active {
   color: #4390DF;
 }

@@ -45,7 +45,7 @@ $(document).ready(function() {
         plist.html('<h1>'+loading+'...</h1>');
         $("#fast_nerdz").show();
         if($("#profilePostArrow").hasClass("icon-arrow-up-2")) $("#profilePostArrow").click();
-        $(".selectlang").css('color','');
+        $(".selectlang.active").removeClass("active");
         localStorage.removeItem("autolang");
         load = false;
         plist.html(data);
@@ -60,7 +60,7 @@ $(document).ready(function() {
         plist.html('<h1>'+loading+'...</h1>');
         $("#fast_nerdz").hide();
         if($("#projectPostArrow").hasClass("icon-arrow-up-2")) $("#projectPostArrow").click();
-        $(".projlang").css('color','');
+        $(".projlang.active").removeClass("active");
         load = false;
         N.html.project.getHomePostList(0,function(data) {
             plist.html(data);
@@ -244,7 +244,7 @@ $(document).ready(function() {
 
     if(localStorage.getItem("autolang"))
     {
-      $("#nerdzlist").find("[data-lang='"+localStorage.getItem("autolang")+"']").click().css('color',$color);
+      $("#nerdzlist").find("[data-lang='"+localStorage.getItem("autolang")+"']").click();
       $("#profilePostArrow").click()
     }
     else

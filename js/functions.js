@@ -104,6 +104,7 @@ tags = function(btn) {
       isurl(content) ? link = content : title = content;
       if(!link) 
         link = prompt ("URL:", "");
+      if(link==null) return false;
       if(!isurl(link)) {
         alert("Invalid Link!"); 
         return false;

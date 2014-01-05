@@ -79,58 +79,6 @@ $(document).ready(function() {
       $("#projlist").toggle(400,function(){$("#projectPostArrow").toggleClass("icon-arrow-down-2").toggleClass("icon-arrow-up-2")});
     })
     
-    plist.on('click', ".yt_frame", function(e) {
-      e.preventDefault();
-      var vid = $(this).data("vid");
-      $.Dialog({
-        overlay: false,
-        shadow: true,
-        sysButtons: {btnClose:true,btnMax:true,btnMin:true},
-        icon: '<i class="icon-youtube"></i>',
-        title: 'Youtube Video',
-        draggable: true,
-        content: '',
-        overlayClickClose: false,
-        onShow: function(_dialog){
-          $(_dialog).appendTo($("body"));
-          $(".window-overlay").remove();
-          $.Dialog.content('<iframe style="width:100%; min-width:640px; min-height:480px;" src="//www.youtube.com/embed/'+vid+'" frameborder="0"></iframe>');
-          w = _dialog;
-          c = w.children(".content").eq(0);
-          w.data("old",[w.css("top"),w.css("left")].join("|"));
-          $(".btn-close").click(function(e){e.preventDefault();w.remove()});
-          $(".btn-min").click(function(e) {
-            e.preventDefault();
-            if(!w.hasClass("minimized"))
-            {
-              c.hide();
-              w.css({minHeight:"30px",height:"40px",width:"100px",top:"",bottom:"30px",left:"0px"}).addClass("minimized");
-              if(w.hasClass("maximized")) w.removeClass("maximized").addClass("maximize")
-            } else {
-              c.show();
-              ss = w.data("old").split("|");
-              w.hasClass("maximize") ? 
-                w.css({width:$(window).width(),height:$(window).height()-30,top:0,left:0,bottom:""}).removeClass("minimized") : 
-                w.css({width:624,height:517,top:ss[0],left:ss[1],bottom:""}).removeClass("minimized");
-            }
-          })
-          $(".btn-max").click(function(e) {
-            e.preventDefault();
-            c.show();
-            if(!w.hasClass("maximized"))
-            {
-              w.css({height:$(window).height()-30,width:"100%",top:"0px",left:"0px"}).addClass("maximized").removeClass("minimized").removeClass("maximize");
-              c.children().css("height",$(window).height()-70);
-            } else {
-              ss = w.data("old").split("|");
-              w.css({width:624,height:517,top:ss[0],left:ss[1]}).removeClass("maximized");
-              c.children().css("height",480);
-            }
-          });
-        }
-      });
-    });
-    
     $("#hptable").on("click",".show",function(){
       var pids = localStorage.getItem('hid').split("|").sort();
       pids.splice( $(this).data("i"), 1 );

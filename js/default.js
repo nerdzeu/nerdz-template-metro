@@ -94,9 +94,14 @@ $(document).ready(function() {
         title: 'Nerdz Metro Template',
         width: 500,
         padding: 10,
-        draggable: true,
-        content:  'NerdzMetro Theme by Dr.Jest<br>Based on work made by Sergey Pimenov <br />'+
-                  '<a target="_blank" href="https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE">@https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE</a>'
+        onShow: function(_dialog) {
+          _dialog.css("min-height","150px");
+          $.ajax({url:"/tpl/2/VERSION"}).done(function(d){
+            console.log(d);
+            _dialog.children(".content").html('NerdzMetro Theme by Dr.Jest. Version '+d+'<br>Based on work made by Sergey Pimenov <br />'+
+            '<a target="_blank" href="https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE">@https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE</a>');
+          })
+        }
       });
     });
     var append_theme = "";

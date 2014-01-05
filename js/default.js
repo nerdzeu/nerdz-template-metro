@@ -515,7 +515,7 @@ $(document).ready(function() {
                                       N.html[plist.data('type')].getPost({hpid: hpid}, function(o) {
                                             refto.html(o);
                                             refto.slideToggle("slow");
-                                            if(refto.data("hide").length) {
+                                            if(refto.data("hide")) {
                                               $(refto.find("div.small")[0]).prepend('<i title="'+refto.data("hide")+'" class="post_icons hide icon-cancel-2" data-postid="post'+hpid+'"></i>');
                                             }
                                       });

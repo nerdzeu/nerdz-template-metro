@@ -3,18 +3,20 @@ $(document).ready(function() {
 
     $("#stdfrm").on('submit',function(event) {
         event.preventDefault();
-         $("#pmessage").html(loading+'...');
+        var s = $(this).find("input[type=submit]").eq(0);
+        w = s.width();
+        s.width(s.parent().width()*.9).val(loading+'...').attr("disable",true).next().hide();
         N.json.profile.newPost({message: $("#frmtxt").val(), to: $(this).data('to') },function(data) {
             if(data.status == 'ok') {
                 $("#showpostlist").click();
                 $("#frmtxt").val('');
             }
             
-            $("#pmessage").html(data.message);
+            s.val(data.message).attr("disabled",false);
 
             setTimeout(function() {
-                        $("#pmessage").html('');
-                        },5000);
+              s.val(s.data("send")).width(w).next().show();
+            },1000);
         });
     });
 

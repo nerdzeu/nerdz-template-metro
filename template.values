@@ -10,6 +10,7 @@
 	// JS section
 	"js": {
 		"default": [
+                "js/functions.js",
                 "js/default.js",
                 "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.js",
                 "js/metro.min.js"

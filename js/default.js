@@ -1,23 +1,3 @@
-rgb2hsl = function(r, g, b) {
-  r /= 255;
-  g /= 255;
-  b /= 255;
-  var h, s, l,
-      max = Math.max(r, g, b),
-      min = Math.min(r, g, b),
-      d =  max - min;
-  if(max==r) 
-      h = ((g-b)/d)%6;
-  else if(max==g)
-      h = ((b-r)/d)+2;
-  else
-    h = ((r-g)/d)+2;
-  h *= 60;
-  if(!d) h = 0;
-  l = (max + min) / 2;
-  s = d ? d/(1-Math.abs(2*l-1)) : 0;
-  return [h, s, l];
-}
 $(document).ready(function() {
     var loading = $("#loadtxt").data('loading');
     $("body").append($('<br />')); 
@@ -75,8 +55,7 @@ $(document).ready(function() {
     ts = $("#theme-switcher");
     if(localStorage.getItem("metro-light")) 
       ts.attr("checked",true);
-    ts.parent().on("click", function(e){
-      e.preventDefault();
+    ts.parent().on("click", function(){
       if( ts.is(":disabled") ) return false;
       if( ts.is(':checked') ) {
         localStorage.removeItem("metro-light") 
@@ -91,6 +70,13 @@ $(document).ready(function() {
     $("#color-switcher").on("click",".tile", function() {
       if($(this).hasClass("selected")) return false;
       localStorage.setItem("metro-color",$(this).attr("title"));
+      setTimeout(function(){location.reload();},1000);
+    });
+    tp = $("#metro-tagpanel");
+    if(localStorage.getItem("no-tagpanel")) 
+      tp.attr("checked",false);
+    tp.on("change", function(e) {
+      ( tp.is(':checked') ) ? localStorage.removeItem("no-tagpanel") : localStorage.setItem("no-tagpanel", "1");
       setTimeout(function(){location.reload();},1000);
     });
     ns = $("#metro-notify");
@@ -414,37 +400,36 @@ $(document).ready(function() {
     });
 
     plist.on('click',".qu_ico",function() {
-        var area = $("#"+$(this).data('refto'));
-        area.val(area.val()+"[quote="+ $(this).data('hcid') +"|"+$(this).data('type')+"]");
-        area.focus();
+      var area = $("#"+$(this).data('refto'));
+      area.insertAtCaret("[quote="+ $(this).data('hcid') +"|"+$(this).data('type')+"]");
+      area.focus();
     });
 
     plist.on('click',".icon-remove",function(e) {
-        e.preventDefault();
-        var refto = $('#' + $(this).data('refto'));
-        var post = refto.html();
-        var hpid = $(this).data('hpid');
+      e.preventDefault();
+      var refto = $('#' + $(this).data('refto'));
+      var post = refto.html();
+      var hpid = $(this).data('hpid');
 
-          N.json[plist.data('type')].delPostConfirm({ hpid: hpid },function(m) {
-              if(m.status == 'ok') {
-                  refto.html('<div style="text-align:center">' + m.message + '<br /><span id="delPostOk' + hpid +'" style="cursor:pointer">YES</span>|<span id="delPostNo'+hpid+'" style="cursor:pointer">NO</span></div>');
-                  refto.on('click','#delPostOk'+hpid,function() {
-                        N.json[plist.data('type')].delPost({ hpid: hpid    },function(j) {
-                             if(j.status == 'ok') {
-                                  refto.hide();
-                             }
-                             else {
-                                  refto.html(j.message);
-                             }
-                        });
-                  });
-
-                  refto.on('click','#delPostNo'+hpid,function() {
-                        refto.html(post);
-                  });
+      N.json[plist.data('type')].delPostConfirm({ hpid: hpid },function(m) {
+        if(m.status == 'ok') {
+          refto.html('<div style="text-align:center">' + m.message + '<br /><span id="delPostOk' + hpid +'" style="cursor:pointer">YES</span>|<span id="delPostNo'+hpid+'" style="cursor:pointer">NO</span></div>');
+          refto.on('click','#delPostOk'+hpid,function() {
+            N.json[plist.data('type')].delPost({ hpid: hpid    },function(j) {
+             if(j.status == 'ok') {
+              refto.hide();
              }
-        });
+             else {
+              refto.html(j.message);
+             }
+            });
+          });
+          refto.on('click','#delPostNo'+hpid,function() {
+                refto.html(post);
+          });
+       }
     });
+  });
 
     plist.on('click',".icon-pencil",function(e) {
         e.preventDefault();

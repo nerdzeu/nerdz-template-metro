@@ -88,6 +88,7 @@ $(document).ready(function() {
         sysButtons: {btnClose:true,btnMax:true,btnMin:true},
         icon: '<i class="icon-youtube"></i>',
         title: 'Youtube Video',
+        draggable: true,
         content: '',
         overlayClickClose: false,
         onShow: function(_dialog){
@@ -256,39 +257,40 @@ $(document).ready(function() {
     
     $("#stdfrm").on('submit',function(e) {
         e.preventDefault();
-        $("#pmessage").html(loading+'...');
+        var s = $(this).find("input[type=submit]").eq(0);
+        w = s.width();
+        s.width(s.parent().width()*.9).val(loading+'...').attr("disable",true).next().hide();
         N.json.profile.newPost({message: $("#frmtxt").val(), to: 0 },function(data) {
             if(data.status == 'ok') {
                 $("#frmtxt").val('');
                 load = false;
                 if(lang == '*') {
-                    N.html.profile.getByLangHomePostList(0,lang,function(data) {
-                        plist.html(data);
-                        plist.data('type','profile');
-                        plist.data('mode','language');
-                        hideHidden();
-                        load = true;
-                    });
+                  N.html.profile.getByLangHomePostList(0,lang,function(data) {
+                    plist.html(data);
+                    plist.data('type','profile');
+                    plist.data('mode','language');
+                    hideHidden();
+                    load = true;
+                  });
                 }
                 else if(lang == 'usersifollow') {
-                    N.html.profile.getFollowedHomePostList(0,function(data) {
-                        plist.html(data);
-                        plist.data('type','profile');
-                        plist.data('mode','followed');
-                        hideHidden();
-                        load = true;
-                    });
+                  N.html.profile.getFollowedHomePostList(0,function(data) {
+                    plist.html(data);
+                    plist.data('type','profile');
+                    plist.data('mode','followed');
+                    hideHidden();
+                    load = true;
+                  });
                 }
                 else {
                     $("#profilePostList").click();
                 }
             }
-            
-            $("#pmessage").html(data.message);
+            s.val(data.message).attr("disabled",false);
 
             setTimeout(function() {
-                        $("#pmessage").html('');
-                        },5000);
+              s.val(s.data("send")).width(w).next().show();
+            },1000);
         });
     });
 

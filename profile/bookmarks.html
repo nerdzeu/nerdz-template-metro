@@ -8,17 +8,16 @@
       </div>
       <hr>
       {loop="list_a"}
-      <div class="row" id="tr{$key}">
+      <div class="row" id="tr{$key}" style="border-bottom: 1px #000 solid">
         <span class="span2"><a href="{$value.link_n}">{$value.name_n} [{$value.pid_n}]</a></span>
         <div class="nerdz_message span8">
           {$value.preview_n}
-          <i class="unbookmark icon-remove" style="margin-right:3px; float: right; cursor:pointer;" title="Unbookmark">&nbsp;</i>
+          <i class="unbookmark icon-remove" data-hpid="{$value.hpid_n}" style="margin-right:3px; float: right; cursor:pointer;" title="Unbookmark">&nbsp;</i>
         </div>
         <span class="span2 small">
             {$value.datetime_n}
         </span>
       </div>
-      <hr>
       {/loop}
     </div>
 

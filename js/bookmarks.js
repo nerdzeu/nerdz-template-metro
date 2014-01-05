@@ -24,16 +24,16 @@ $(document).ready(function() {
             location.replace(fixURL(location.href,$(this).attr('id')));
         });
 
-    $("#center_col").on('click',".unbookmark",function() {
+    $("#center_col").on('click',".unbookmark",function(e) {
+        e.preventDefault();
         var me = $(this);
         var tog = function(d) {
-            if(d.status == 'ok') {
-                $("#"+me.data('refto')).hide();
-            }
+          if(d.status == 'ok') {
+            me.parent().parent().remove();
+          }
         }
           
-          N.json[$("#center_col").data('type')].unbookmarkPost({hpid: $(this).data('hpid') },function(d) {tog(d);});
-
+        N.json[$("#center_col").data('type')].unbookmarkPost({hpid: $(this).data('hpid') },function(d) {tog(d);});
     });
 
     $("#footersearch").on('submit',function(e) {

@@ -140,32 +140,36 @@
               <input type="submit" data-send="{$nerdz_it}" value="{$nerdz_it}" style="width:45%;" class="place-right" />
               <input type="button" class="preview" data-refto="#frmtxt" style="width:45%; margin-right: 10%" value="{$preview}" /> 
             </span>
+        </form>
             <div class="tagpanel span9 no-margin" data-refto="frmtxt">
-              <a class="button" accesskey="a" data-c="url" title="Accesskey: a"><i class="icon-link"></i></a> &nbsp;
-              <a class="button" accesskey="c" data-c="code" title="Accesskey: c"><i class="icon-code"></i></a> &nbsp;
-              <a class="button" accesskey="q" data-c="quote" title="Accesskey: q"><i class="icon-right-quote"></i></a> &nbsp;
-              <a class="button" accesskey="n" data-c="spoiler" title="Accesskey: n">Spoiler</a> &nbsp;
-              <a class="button" accesskey="w" data-c="wiki" title="Accesskey: w"><i class="icon-wiki"></i></a> &nbsp;
-              <a class="button" accesskey="l" data-c="list" title="Accesskey: l"><i class="icon-list"></i></a> &nbsp;
-              <a class="button" data-tag="[img]{0}[/img]" accesskey="j" title="Accesskey: j"><i class="icon-pictures"></i></a> &nbsp;
-              <a class="button" data-tag="[yt]{0}[/yt]" accesskey="v" title="Accesskey: v"><i class="icon-youtube"></i></a> &nbsp;
-              <a class="button" data-tag="[b]{0}[/b]" accesskey="b" title="Accesskey: b"><b>B</b></a> &nbsp;
-              <a class="button" data-tag="[cur]{0}[/cur]" accesskey="i" title="Accesskey: i"><i>I</i></a> &nbsp;
-              <a class="button" data-tag="[u]{0}[/u]" accesskey="u" title="Accesskey: u"><u>U</u></a> &nbsp;
-              <a class="button" data-tag="[del]{0}[/del]" accesskey="d" title="Accesskey: d"><del>Del</del></a> &nbsp;
-              <a class="button" data-tag="[small]{0}[/small]" accesskey="s" title="Accesskey: s">&nbsp;<small>Small</small></a> &nbsp;
-              <a class="button" data-tag="[big]{0}[/big]" accesskey="t" title="Accesskey: t"><big>Big</big></a> &nbsp;
-              <a class="button" data-tag="[project]{0}[/project]" accesskey="p" title="Accesskey: p">Project</a> &nbsp;
-              <a class="button" data-tag="[gist]{0}[/gist]" accesskey="g" title="Accesskey: g"><i class="icon-github-2"></i></a> &nbsp;
-              <a class="button" data-tag="[m]{0}[/m]" accesskey="m" title="Accesskey: m">∫</a> &nbsp;
-              <a class="button" data-tag="[hr]" accesskey="h" title="Accesskey: h">hr</a> &nbsp;
+              <form id="img_ul" action="https://api.imgur.com/3/image" method="post" enctype="multipart/form-data" style="display: inline;">
+                <button id="img_ul_btn" title="Image Upload"><i class="icon-upload"></i></button> &nbsp;
+                <input type="file" accept="image/*" name="image" id="img_ul_file" style="display:none;">
+              </form>
+              <a class="button" accesskey="a" data-c="url" title="Accesskey: a"><i class="icon-link"></i></a> 
+              <a class="button" accesskey="c" data-c="code" title="Accesskey: c"><i class="icon-code"></i></a> 
+              <a class="button" accesskey="q" data-c="quote" title="Accesskey: q"><i class="icon-right-quote"></i></a> 
+              <a class="button" accesskey="n" data-c="spoiler" title="Accesskey: n">Spoiler</a> 
+              <a class="button" accesskey="w" data-c="wiki" title="Accesskey: w"><i class="icon-wiki"></i></a> 
+              <a class="button" accesskey="l" data-c="list" title="Accesskey: l"><i class="icon-list"></i></a> 
+              <a class="button" data-tag="[img]{0}[/img]" accesskey="j" title="Accesskey: j"><i class="icon-pictures"></i></a> 
+              <a class="button" data-tag="[yt]{0}[/yt]" accesskey="v" title="Accesskey: v"><i class="icon-youtube"></i></a> 
+              <a class="button" data-tag="[b]{0}[/b]" accesskey="b" title="Accesskey: b"><b>B</b></a> 
+              <a class="button" data-tag="[cur]{0}[/cur]" accesskey="i" title="Accesskey: i"><i>I</i></a> 
+              <a class="button" data-tag="[u]{0}[/u]" accesskey="u" title="Accesskey: u"><u>U</u></a> 
+              <a class="button" data-tag="[del]{0}[/del]" accesskey="d" title="Accesskey: d"><del>Del</del></a> 
+              <a class="button" data-tag="[small]{0}[/small]" accesskey="s" title="Accesskey: s"><small>Small</small></a> 
+              <a class="button" data-tag="[big]{0}[/big]" accesskey="t" title="Accesskey: t"><big>Big</big></a> 
+              <a class="button" data-tag="[project]{0}[/project]" accesskey="p" title="Accesskey: p">Project</a> 
+              <a class="button" data-tag="[gist]{0}[/gist]" accesskey="g" title="Accesskey: g"><i class="icon-github-2"></i></a> 
+              <a class="button" data-tag="[m]{0}[/m]" accesskey="m" title="Accesskey: m">∫</a> 
+              <a class="button" data-tag="[hr]" accesskey="h" title="Accesskey: h">hr</a> 
               <button type="button" class="info"><i class="icon-info-2"></i></button>
-              <span style="display: inline-block; width:30px">&nbsp;</span>
+              <span style="display: inline-block; width:30px"></span>
               <span class="seeall" title="All Tags">>></span>
             </div>
             <input type="button" class="smallest span1 notag no-margin" onclick="window.open('/bbcode.php')" value="BBCode" />
           </div>
-        </form>
       </div>
     {/if}
     <div id="postlist" data-type="profile" data-profileid="{$id_n}" data-location="profile" data-mode="std">

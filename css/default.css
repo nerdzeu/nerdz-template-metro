@@ -131,6 +131,9 @@ hr {
 .light .tagpanel .seeall {
   background-color: #FFF;
 }
+.tagpanel .button {
+  margin-right: 5px;
+}
 .tagpanel .button:hover {
   color: #555 !important;
 }
@@ -539,6 +542,9 @@ body.light  #footer_main {
 .yt_frame span, .img_frame span, .img_frame-extended span, #hposts:after
 {
   display: none;
+}
+.window.flat .caption {
+  color: #222;
 }
 .window .content {
   color: #222222 !important;

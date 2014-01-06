@@ -35,11 +35,12 @@
                   </label>
               </li>
               <li class="input-control switch" style="margin-bottom: 0px;">
-                  <label>
+                  <label style="display: inline-block">
                     <i class="icon-type"></i>TagPanel: &nbsp;&nbsp;
                     <input type="checkbox" id="metro-tagpanel" checked />
                     <span class="check"></span>
                   </label>
+                  <i class="icon-tools" style="float: right;padding: 7px;" id="tagpanel-custom"></i>
               </li>
               <li id="metro-info">
                 <i class="icon-info">Info</i>
@@ -144,7 +145,6 @@ $(document).on('submit',"#loginfrm",function(event) {
     event.preventDefault();
     var t = $("#loginbtn");
     N.json.login($(this).serialize(), function(r) {
-        console.log(r);
         var tmp = t.val();
         if(r.status == 'ok')
         {

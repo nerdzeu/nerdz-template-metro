@@ -125,8 +125,7 @@ $(document).ready(function() {
             hidden += "|"+pid;
             localStorage.setItem('hid',hidden);
         }
-        //auto lock
-        var lock = $("#post"+pid).find('img.imgunlocked');
+        var lock = $("#post"+pid).find('.icon-unlocked');
         if(lock.length)
         {
             lock.eq(0).click();
@@ -208,7 +207,7 @@ $(document).ready(function() {
         var s = $(this).find("input[type=submit]").eq(0);
         w = s.width();
         s.width(s.parent().width()*.9).val(loading+'...').attr("disable",true).next().hide();
-        N.json.profile.newPost({message: $("#frmtxt").val(), to: 0 },function(data) {
+        N.json.profile.newPost({message: $("#frmtxt").val().tag().autoLink(), to: 0 },function(data) {
             if(data.status == 'ok') {
                 $("#frmtxt").val('');
                 load = false;

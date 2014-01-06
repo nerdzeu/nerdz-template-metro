@@ -72,13 +72,65 @@ $(document).ready(function() {
       localStorage.setItem("metro-color",$(this).attr("title"));
       setTimeout(function(){location.reload();},1000);
     });
+    
     tp = $("#metro-tagpanel");
     if(localStorage.getItem("no-tagpanel")) 
       tp.attr("checked",false);
     tp.on("change", function(e) {
-      ( tp.is(':checked') ) ? localStorage.removeItem("no-tagpanel") : localStorage.setItem("no-tagpanel", "1");
-      setTimeout(function(){location.reload();},1000);
+      if( tp.is(':checked') ) 
+        localStorage.removeItem("no-tagpanel") 
+      else {
+        localStorage.setItem("no-tagpanel", "1");
+      }
+      TPUpdate();
     });
+    tc = $("#tagpanel-custom");
+    tc.on("click",function(event) {
+      event.stopPropagation();
+      $.Dialog({
+        shadow: true,
+        overlay: false,
+        icon: '<span class="icon-tools"></span>',
+        title: 'Metro Tagpanel Options',
+        width: 500,
+        draggable: true,
+        padding: 10,
+        onShow: function(_dialog) {
+          _dialog.css("width","450px");
+            var tp = $(".tagpanel"),
+          ch = tp.children("a");
+          var html = '<label class="input-control switch">TagPanel: &nbsp;&nbsp;<input type="checkbox" id="w-metro-tagpanel" checked /><span class="check"></span></label><br /><br /><div id="checkbox">'
+          ch = $(".tagpanel").children("a");
+          $l = localStorage.getItem("tagpanel-custom");
+          var label = function(name, index, checked) {
+            return '<label style="width: 200px" data-i="'+index+'" class="input-control switch">'+name+': &nbsp;&nbsp;<input type="checkbox" '+(checked?"checked":"")+' /><span class="check"></span></label>&nbsp;&nbsp;';
+          }
+          
+          html += label("Image Upload", 18, $l.charAt(18)=="0"?false:true )+"<br />";
+          for (i=0;i<ch.length;++i)
+            html += label( ch.eq(i).html(), i, $l.charAt(i)=="0"?false:true );
+            
+          html += '</div>';
+
+          _dialog.children(".content").html(html);
+                    
+          _dialog.on("change","#w-metro-tagpanel", function() {
+            $("#metro-tagpanel").click();
+            cb = $("#checkbox").find("input[type=checkbox]");
+            dis=!$(this).is(":checked"); 
+            $.each(cb, function() {$(this).attr("disabled",dis)});
+          }).on("change","#checkbox label", function() {
+            i = $(this).data("i");
+            $l = localStorage.getItem("tagpanel-custom");
+            b = (+$(this).children("input").eq(0).is(":checked"));
+            $n = $l.replaceAt(i, b)
+            localStorage.setItem("tagpanel-custom",$n);
+            TPUpdate();
+          })
+        }
+      });
+    });
+    
     ns = $("#metro-notify");
     if(localStorage.getItem("metro-no-notify")) 
       ns.attr("checked",false);
@@ -97,7 +149,6 @@ $(document).ready(function() {
         onShow: function(_dialog) {
           _dialog.css("min-height","150px");
           $.ajax({url:"/tpl/2/VERSION"}).done(function(d){
-            console.log(d);
             _dialog.children(".content").html('NerdzMetro Theme by Dr.Jest. Version '+d+'<br>Based on work made by Sergey Pimenov <br />'+
             '<a target="_blank" href="https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE">@https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE</a>');
           })
@@ -619,7 +670,7 @@ $(document).ready(function() {
         document.location.reload();
     });
 
-    $("#notify_list").on('click','.notref',function(e) {
+    $("body").on('click','.notref',function(e) {
         if (e.ctrlKey) return;
         e.preventDefault();
         var href = $(this).attr('href');

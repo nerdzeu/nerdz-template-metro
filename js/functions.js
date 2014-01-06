@@ -90,7 +90,35 @@ if (!String.prototype.format) {
 	};
 }
 
-var isurl = function(c) { if(!c) return false; return !!c.match(/(((ht|f)tps?:\/\/)?([a-z\-]+\.)*[\-\w]+(\.[a-z]{2,4})+(\/[\w\_\-\?\=\#&\.]*)*(?![a-z]))/i); };
+if (!String.prototype.tag) {
+  String.prototype.tag = function() {
+    return this.replace(/@@([\S ]+)@/g,"[user]$1[/user]").replace(/(^|[\s]+)@([\S]+)/g,"$1[user]$2[/user]")
+  };
+};
+
+if(!String.prototype.autoLink) {
+    String.prototype.autoLink = function() {
+    str=this;
+    var pattern = /(^|[\s]+)(((ht|f)tps?:\/\/)?([a-z\-]+\.)*[\-\w]+(\.[a-z]{2,4})+(\/[\w\_\-\?\=\#&\.]*)*(?![a-z]))/gi;
+    var out = str.replace(/(\[\S\])/g,"$1 ").replace(/(\[(img|url)\])[ ]+/g,"$1").replace(pattern, "$1[url]$2[/url]");
+    return out;
+  };
+}
+
+if(!String.prototype.isUrl) {
+  String.prototype.isUrl = function() {
+    if(!this) return false;
+    return !!this.match(/^(((ht|f)tps?:\/\/)?([a-z\-]+\.)*[\-\w]+(\.[a-z]{2,4})+(\/[\w\_\-\?\=\#&\.]*)*(?![a-z]))$/i);
+  }
+}
+
+if(!String.prototype.replaceAt) {
+  String.prototype.replaceAt = function(index, char) {
+    var a = this.split("");
+    a[index] = char;
+    return a.join("");
+  }
+}
 
 tags = function(btn) {
   var el = $(document.activeElement);
@@ -101,11 +129,11 @@ tags = function(btn) {
   switch( btn.data("c") ) {
     case "url":
       var link, title;
-      isurl(content) ? link = content : title = content;
+      content.isUrl() ? link = content : title = content;
       if(!link) 
         link = prompt ("URL:", "");
       if(link==null) return false;
-      if(!isurl(link)) {
+      if(!link.isUrl()) {
         alert("Invalid Link!"); 
         return false;
       }
@@ -181,14 +209,39 @@ tags = function(btn) {
   return false;
 }
 
-$(document).ready(function(){
-  if(localStorage.getItem("no-tagpanel")) {
-    $("<style>.tagpanel {display:none !important;}</style>").appendTo($("head"));
-    return;
-  } else {
-    $("<style>.notag {display:none !important; }</style>").appendTo($("head"));
+TPUpdate = function() {
+  var tp = $(".tagpanel"),
+      ch = tp.children("a");
+  if(!tp.length) return;
+
+  if(!localStorage.getItem("no-tagpanel"))
+  {
+    $(".notag").hide();
+    tp.show();
+    $("#tagpanel-custom").show();
+    if (undefined == localStorage.getItem("tagpanel-custom")) 
+      localStorage.setItem("tagpanel-custom","1111111111111111111");
+    $l = localStorage.getItem("tagpanel-custom");
+    ($l.charAt(18)=="1") ? $("#img_ul").show() : $("#img_ul").hide();
+    for(i=0;i<$l.length;++i)
+      ($l.charAt(i)=="1") ? ch.eq(i).show() : ch.eq(i).hide();
+    (tp.children("button").position().left > tp.width()-50) ? $(".seeall").show() : $(".seeall").hide()
   }
-  $(".tagpanel").on("click","a",function(e) {
+  else 
+  {
+    tp.hide();
+    $(".notag").show();
+    $("#tagpanel-custom").hide();
+  }
+}
+
+$(document).ready(function(){
+  TPUpdate();
+
+  var tp = $(".tagpanel");
+  if(!tp.length) return;
+  tp.on("click","a",function(e) {
+    if(localStorage.getItem("no-tagpanel")) return false;
     btn = $(this);
     if(btn.data("c")) return tags(btn);
     tag = btn.data("tag");
@@ -206,9 +259,10 @@ $(document).ready(function(){
       overlay: true,
       shadow: true,
       flat: true,
+      padding: 10,
       icon: '<i class="icon-info-2"></i>',
       title: 'TagPanel Info',
-      content: 'TagPanel allows you to easily insert tag while writing a post or a comment.<br />Tags can be inlaid by clicking on the matching button or by using the related <br />accesskey (see your browser\'s reference to know how). <br />Accesskey are shown while passing the cursor on a button.'
+      content: 'TagPanel allows you to easily insert tag while writing a post or a comment.<br />Tags can be inlaid by clicking on the matching button or by using the related <br />accesskey (see your browser\'s reference to know how). <br />Accesskey are shown while passing the cursor on a button. <br /> You can disable TagPanel, or just some button in Metro Preferences'
     });
   }).on("click",".seeall",function() {
     var e = $(this),
@@ -221,4 +275,49 @@ $(document).ready(function(){
       e.removeClass("l").text(">>");
     }
   });
+  
+  
+    $("#img_ul").on("click","#img_ul_btn",function(e) {
+      e.preventDefault();
+      var f = $("#img_ul_file");
+      if(f.is(":hidden"))
+      {
+        f.show(200);
+      } else {
+        if(f.val()) f.trigger("upload");
+        else f.hide(200);
+      }
+    }).on("submit",function(e){
+      e.preventDefault();
+      f = $("#img_ul_file");
+    });
+    $("#img_ul_file").on("upload",function() {
+      if ( this.files && this.files[0] ) {
+        var FR= new FileReader();
+        FR.onload = function(e) {
+          $("#img_ul_btn").html("Uploading...");
+          $.ajax({
+            url: 'https://api.imgur.com/3/image',
+            method: 'POST',
+            headers: {
+              Authorization: 'Client-ID 6a5400948b3b376',
+              Accept: 'application/json'
+            },
+            data: {
+              image: e.target.result.replace(/.*,/, ''),
+              type: 'base64'
+            },
+            success: function(result) {
+              $("#frmtxt").insertAtCaret( "[img]"+result.data.link+"[/img]" );
+              $("#img_ul_btn").html('<i class="icon-upload"></i>');
+              $("#img_ul_file").val("").hide(200);
+            },
+            error: function(result) {
+              $("#img_ul_btn").html(result);
+            }
+          }); 
+        };       
+        FR.readAsDataURL( this.files[0] );
+      }
+    })
 });

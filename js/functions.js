@@ -92,16 +92,15 @@ if (!String.prototype.format) {
 
 if (!String.prototype.tag) {
   String.prototype.tag = function() {
-    return this.replace(/@@([\S ]+)@/g,"[user]$1[/user]").replace(/(^|[\s]+)@([\S]+)/g,"$1[user]$2[/user]")
+    return this.replace(/(?!\[(?:img|url|code|gist|yt|youtube|noparse)[^\]]*?\])(^|\s+)@@(?:\s+)?([\S ]+)@(?![^\[]*?\[\/(img|url|code|gist|yt|youtube|noparse)\])/g,"$1[user]$2[/user]")
+               .replace(/(?!\[(?:img|url|code|gist|yt|youtube|noparse)[^\]]*?\])(^|\s+)@([\S]+)(?![^\[]*?\[\/(img|url|code|gist|yt|youtube|noparse)\])/g,"$1[user]$2[/user]")
   };
 };
 
 if(!String.prototype.autoLink) {
     String.prototype.autoLink = function() {
-    str=this;
-    var pattern = /(^|[\s]+)(((ht|f)tps?:\/\/)?([a-z\-]+\.)*[\-\w]+(\.[a-z]{2,4})+(\/[\w\_\-\?\=\#&\.]*)*(?![a-z]))/gi;
-    var out = str.replace(/(\[\S\])/g,"$1 ").replace(/(\[(img|url)\])[ ]+/g,"$1").replace(pattern, "$1[url]$2[/url]");
-    return out;
+    var pattern = /(?!\[(?:img|url|code|gist|yt|youtube|noparse)[^\]]*?\])(^|\s+)(((ht|f)tps?:\/\/)?([a-z\-]+\.)*[\-\w]+(\.[a-z]{2,4})+(\/[\w\_\-\?\=\#&\.]*)*(?![a-z]))(?![^\[]*?\[\/(img|url|code|gist|yt|youtube|noparse)\])/gi;
+    return this.replace(pattern, "$1[url]$2[/url]").replace(/\[(\/)?noparse\]/gi,"");
   };
 }
 
@@ -262,7 +261,7 @@ $(document).ready(function(){
       padding: 10,
       icon: '<i class="icon-info-2"></i>',
       title: 'TagPanel Info',
-      content: 'TagPanel allows you to easily insert tag while writing a post or a comment.<br />Tags can be inlaid by clicking on the matching button or by using the related accesskey (see your browser\'s reference to know how). <br />Accesskey are shown while passing the cursor on a button. <br /> You can disable TagPanel, or just some button in Metro Preferences. <br />Metro TagPanel also provide a method to easily tag a friend in your post and comments by typing @user or @@user with spaces@. Also autolink markdown has been implemented.<br/> Note this is an experimental feature, and you can enable or disable by opening your browser javascript console and writing <br /><input type="text" value="localStorage.setItem(\'no-autolink\',\'1\')"> to disable and <br /><input type="text" value="localStorage.removeItem(\'no-autolink\')"> to re-enable it.',
+      content: 'TagPanel allows you to easily insert tag while writing a post or a comment.<br />Tags can be inlaid by clicking on the matching button or by using the related accesskey (see your browser\'s reference to know how). <br />Accesskeys are shown while passing the cursor on a button. <br /> You can disable TagPanel, or just hide a button in Metro Preferences. <br />Metro TagPanel also provides a method to easily tag a friend in your posts and comments by typing <b>@user</b> or <b>@@user with spaces@</b>. Also automatic links markdown has been implemented.<br/> AutoTag and AutoLink will not parse code included in [img], [url], [code], [gist], [youtube] and [yt]. <br /> If you don\'t want some part of your message to be parsed you can include it between the [noparse][/noparse] tags. This will affect both autoTag and autoLink <br /> <i>Note</i>: AutoLink is an experimental feature, and you can enable or disable by opening your browser\'s javascript console and writing <br /><input type="text" value="localStorage.setItem(\'no-autolink\',\'1\')"> to disable and <br /><input type="text" value="localStorage.removeItem(\'no-autolink\')"> to re-enable it.',
       onShow: function(_dialog) { _dialog.css("max-width","450px"); }
     });
   }).on("click",".seeall",function() {

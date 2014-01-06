@@ -273,7 +273,8 @@ $(document).ready(function() {
     });
 
     $(".preview").on('click',function(){
-        var txt = $($(this).data('refto')).val();
+        var txt = $($(this).data('refto')).val().tag();
+        if(undefined==localStorage.getItem("no-autolink")) txt = txt.autoLink();
         if(undefined != txt && txt != '') {
             window.open('/preview.php?message='+encodeURIComponent(txt));
         }
@@ -294,7 +295,8 @@ $(document).ready(function() {
     plist.on('click','.preview',function(){
         var txtarea = $($(this).data('refto'));
         txtarea.val(txtarea.val()+' '); //workaround
-        var txt = txtarea.val();
+        var txt = txtarea.val().tag();
+        if(undefined==localStorage.getItem("no-autolink")) txt = txt.autoLink();
         txtarea.val($.trim(txtarea.val()));
         if(undefined != txt && $.trim(txt) != '') {
             window.open('/preview.php?message='+encodeURIComponent(txt));

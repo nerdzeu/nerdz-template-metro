@@ -15,8 +15,9 @@ $(document).ready(function() {
        {
            news = '0';
        }
-
-       N.json.project.newPost({message: $("#frmtxt").val().tag().autoLink(), to: $(this).data('to'), news: news },function(data) {
+        var message = $("#frmtxt").val().tag();
+        if(undefined==localStorage.getItem("no-autolink")) message = message.autoLink();
+       N.json.project.newPost({message: message, to: $(this).data('to'), news: news },function(data) {
           if(data.status == 'ok') {
               $("#showpostlist").click();
               $("#frmtxt").val('');

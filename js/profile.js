@@ -6,7 +6,9 @@ $(document).ready(function() {
         var s = $(this).find("input[type=submit]").eq(0);
         w = s.width();
         s.width(s.parent().width()*.9).val(loading+'...').attr("disable",true).next().hide();
-        N.json.profile.newPost({message: $("#frmtxt").val().tag().autoLink(), to: $(this).data('to') },function(data) {
+        var message = $("#frmtxt").val().tag();
+        if(undefined==localStorage.getItem("no-autolink")) message = message.autoLink();
+        N.json.profile.newPost({message: message, to: $(this).data('to') },function(data) {
             if(data.status == 'ok') {
                 $("#showpostlist").click();
                 $("#frmtxt").val('');

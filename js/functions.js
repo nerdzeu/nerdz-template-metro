@@ -262,7 +262,8 @@ $(document).ready(function(){
       padding: 10,
       icon: '<i class="icon-info-2"></i>',
       title: 'TagPanel Info',
-      content: 'TagPanel allows you to easily insert tag while writing a post or a comment.<br />Tags can be inlaid by clicking on the matching button or by using the related <br />accesskey (see your browser\'s reference to know how). <br />Accesskey are shown while passing the cursor on a button. <br /> You can disable TagPanel, or just some button in Metro Preferences'
+      content: 'TagPanel allows you to easily insert tag while writing a post or a comment.<br />Tags can be inlaid by clicking on the matching button or by using the related accesskey (see your browser\'s reference to know how). <br />Accesskey are shown while passing the cursor on a button. <br /> You can disable TagPanel, or just some button in Metro Preferences. <br />Metro TagPanel also provide a method to easily tag a friend in your post and comments by typing @user or @@user with spaces@. Also autolink markdown has been implemented.<br/> Note this is an experimental feature, and you can enable or disable by opening your browser javascript console and writing <br /><input type="text" value="localStorage.setItem(\'no-autolink\',\'1\')"> to disable and <br /><input type="text" value="localStorage.removeItem(\'no-autolink\')"> to re-enable it.',
+      onShow: function(_dialog) { _dialog.css("max-width","450px"); }
     });
   }).on("click",".seeall",function() {
     var e = $(this),
@@ -300,7 +301,7 @@ $(document).ready(function(){
             url: 'https://api.imgur.com/3/image',
             method: 'POST',
             headers: {
-              Authorization: 'Client-ID 6a5400948b3b376',
+              Authorization: 'Client-ID 6839f3040ee175c',
               Accept: 'application/json'
             },
             data: {

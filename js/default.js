@@ -339,7 +339,9 @@ $(document).ready(function() {
           hcid = last ? last.data('hcid') : 0;
         }
         error.html (loading);
-        N.json[plist.data('type')].addComment ({ hpid: hpid, message: $(this).find('textarea').eq(0).val() }, function(d) {
+        var message = $("#frmtxt").val().tag();
+        if(undefined==localStorage.getItem("no-autolink")) message = message.autoLink();
+        N.json[plist.data('type')].addComment ({ hpid: hpid, message: message }, function(d) {
             if(d.status == 'ok')
             {
                 if(hcid && last)

@@ -421,7 +421,7 @@ $(document).ready(function() {
               ss = w.data("old").split("|");
               w.hasClass("maximize") ? 
                 w.css({width:$(window).width(),height:$(window).height()-30,top:0,left:0,bottom:""}).removeClass("minimized") : 
-                w.css({width:624,height:517,top:ss[0],left:ss[1],bottom:""}).removeClass("minimized");
+                w.css({width:656,height:517,top:ss[0],left:ss[1],bottom:""}).removeClass("minimized");
             }
           })
           $(".btn-max").click(function(e) {
@@ -433,7 +433,7 @@ $(document).ready(function() {
               c.children().css("height",$(window).height()-70);
             } else {
               ss = w.data("old").split("|");
-              w.css({width:624,height:517,top:ss[0],left:ss[1]}).removeClass("maximized");
+              w.css({width:656,height:517,top:ss[0],left:ss[1]}).removeClass("maximized");
               c.children().css("height",480);
             }
           });

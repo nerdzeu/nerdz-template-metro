@@ -556,7 +556,7 @@ $(document).ready(function() {
         var form = function(fid,hpid,message,edlang,prev) {
                     return  '<form style="margin-bottom:40px" id="' +fid+ '" data-hpid="'+hpid+'">' +
                             '<textarea id="'+fid+'abc" autofocus style="width:100%; height:125px">' +message+ '</textarea><br />' +
-                            '<input type="submit" value="' + edlang +'" style="float: right; margin-top:5px" />' +
+                            '<input type="submit" value="' + edlang +'" style="float: right; margin-top:5px; max-height: 26px !important" />' +
                             '<button type="button" style="float:right; margin-top: 5px; margin-right: 10px;" class="preview" data-refto="#'+fid+'abc">'+prev+'</button>'+
                             '<button type="button" style="float:left; margin-top:5px; margin-right: 10px;" onclick="window.open(\'/bbcode.php\')">BBCode</button>' +
                             '<button type="button" style="float:left; margin-top:5px" class="cancel">Cancel</button>' +

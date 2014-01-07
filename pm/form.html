@@ -1,25 +1,51 @@
-<form id="convfrm" class="grid fluid">
+<form id="convfrm">
     <div class="row">
-      <div class="span1">
-          {$to}
-      </div>
-      <div class="span6">
-          <input type="text" autofocus name="to" id="to" tabindex="1"/>
-      </div>
+    <div class="span1">
+        {$to}
     </div>
-    <div class="row">
-      <div class="span11">
-          {$message}
-          <br />
-          <textarea style="width:100%;height:150px" name="message" id="message" tabindex="2"></textarea>
-          <br />
-      </div>
+    <div class="span6">
+        <input type="text" autofocus name="to" id="to"/>
     </div>
-    <div class="row">
-      <div class="span1"><button type="button" style="float:left; margin-top:5px" onclick="window.open('/bbcode.php')" tabindex="5">BBCode</button></div>
-      <div class="span8"><span id="res"></span></div>
-      <div class="span1"><button type="button" style="float:right; margin-top: 5px" class="preview" data-refto="#message" tabindex="4">{$preview}</button></div>
-      <div class="span1"><input type="submit" style="float:right; margin-top:5px" value="{$send}" tabindex="3"/></div>
-    </div>
+  </div>
+  <div class="row">  
+    {$message}
+    <br />
+    <textarea name="message" id="frmtxt"></textarea>
+  </div>
+  <div class="row thin">
+    <span class="span3 place-right">
+      <input type="submit" data-send="{$nerdz_it}" value="{$nerdz_it}" style="width:45%;" class="place-right" />
+      <input type="button" class="preview" data-refto="#frmtxt" style="width:45%; margin-right: 10%" value="{$preview}" /> 
+    </span>
 </form>
+    <div class="tagpanel span9 no-margin" data-refto="frmtxt">
+      <form id="img_ul" action="https://api.imgur.com/3/image" method="post" enctype="multipart/form-data" style="display: inline;">
+        <button id="img_ul_btn" title="Image Upload"><i class="icon-upload"></i></button> &nbsp;
+        <input type="file" accept="image/*" name="image" id="img_ul_file" style="display:none;">
+      </form>
+      <a class="button" accesskey="a" data-c="url" title="Accesskey: a"><i class="icon-link"></i></a> 
+      <a class="button" accesskey="c" data-c="code" title="Accesskey: c"><i class="icon-code"></i></a> 
+      <a class="button" accesskey="q" data-c="quote" title="Accesskey: q"><i class="icon-right-quote"></i></a> 
+      <a class="button" accesskey="n" data-c="spoiler" title="Accesskey: n">Spoiler</a> 
+      <a class="button" accesskey="w" data-c="wiki" title="Accesskey: w"><i class="icon-wiki"></i></a> 
+      <a class="button" accesskey="l" data-c="list" title="Accesskey: l"><i class="icon-list"></i></a> 
+      <a class="button" data-tag="[img]{0}[/img]" accesskey="j" title="Accesskey: j"><i class="icon-pictures"></i></a> 
+      <a class="button" data-tag="[yt]{0}[/yt]" accesskey="v" title="Accesskey: v"><i class="icon-youtube"></i></a> 
+      <a class="button" data-tag="[b]{0}[/b]" accesskey="b" title="Accesskey: b"><b>B</b></a> 
+      <a class="button" data-tag="[cur]{0}[/cur]" accesskey="i" title="Accesskey: i"><i>I</i></a> 
+      <a class="button" data-tag="[u]{0}[/u]" accesskey="u" title="Accesskey: u"><u>U</u></a> 
+      <a class="button" data-tag="[del]{0}[/del]" accesskey="d" title="Accesskey: d"><del>Del</del></a> 
+      <a class="button" data-tag="[small]{0}[/small]" accesskey="s" title="Accesskey: s"><small>Small</small></a> 
+      <a class="button" data-tag="[big]{0}[/big]" accesskey="t" title="Accesskey: t"><big>Big</big></a> 
+      <a class="button" data-tag="[project]{0}[/project]" accesskey="p" title="Accesskey: p">Project</a> 
+      <a class="button" data-tag="[gist]{0}[/gist]" accesskey="g" title="Accesskey: g"><i class="icon-github-2"></i></a> 
+      <a class="button" data-tag="[m]{0}[/m]" accesskey="m" title="Accesskey: m">∫</a> 
+      <a class="button" data-tag="[hr]" accesskey="h" title="Accesskey: h">hr</a> 
+      <button type="button" class="info"><i class="icon-info-2"></i></button>
+      <span style="display: inline-block; width:30px"></span>
+      <span class="seeall" title="All Tags">>></span>
+    </div>
+    <input type="button" class="smallest span1 notag no-margin" onclick="window.open('/bbcode.php')" value="BBCode" />
+  </div>
+</div>
 <br /><br />

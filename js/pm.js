@@ -2,48 +2,54 @@ $(document).ready(function() {
     var c_from, c_to;
     var loadtxt = $("#loadtxt").data('loading')+'...';
     $("#content").on('submit',"#convfrm",function(e) {
-        e.preventDefault();
-        $("#res").html(loadtxt);
-        var pattern = "div[id^='pm']";
-        var mess = $("#conversation").find(pattern);
-        var last = null;
-        var pmid = 0;
-
-        if(mess.length) {
-            last = mess.length > 1 ? mess.eq (mess.length - 2) : null; // request every message if cnum < 2.
-            pmid = last ? last.data('pmid') : 0;
+      e.preventDefault();
+      var s = $(this).find("input[type=submit]").eq(0);
+      w = s.width()-5;
+      s.width(s.parent().width()*.9).val(loadtxt).attr("disable",true).next().hide();
+      var pattern = "div[id^='pm']";
+      var mess = $("#conversation").find(pattern);
+      var last = null;
+      var pmid = 0;
+      if(mess.length) {
+          last = mess.length > 1 ? mess.eq (mess.length - 2) : null;
+          pmid = last ? last.data('pmid') : 0;
+      }
+      var m = $("#frmtxt").val();
+      if(undefined==localStorage.getItem("no-autolink")) m = m.autoLink();
+      N.json.pm.send({ to: $("#to").val(), message: m },function(d) {
+        if(d.status == 'ok') {
+          $("#frmtxt").val('');
+          if(pmid) {
+            N.html.pm.getConversationAfterPmid({ from: c_from, to: c_to, pmid: pmid }, function(d) {
+              var newPms = $('<div>' + d + '</div>').find (pattern), internalCounter = mess.length, lastPm = mess.last();
+              if (mess.length > 1) {
+                mess.eq (mess.length - 1).remove();
+                internalCounter--;
+              }
+              if (lastPm.data ('pmid') == newPms.last().data ('pmid')) {
+                lastPm.remove();
+                internalCounter--;
+              }
+              while ((internalCounter + newPms.length) > ((($(".more_btn").data ('counter') || 0) + 1) * 10))
+              {
+                mess.first().remove();
+                mess = $("#conversation").find (pattern);
+                internalCounter--;
+              }
+              $("#convfrm").before (d);
+            });
+          }
+          else {
+            N.html.pm.getConversation({ from: c_from, to: c_to, start: 0, num: 10 },function(data) {
+              $("#conversation").html(data);
+            });
+          }
         }
-        N.json.pm.send({ to: $("#to").val(), message: $("#message").val() },function(d) {
-                $('#res').html(d.message);
-                if(d.status == 'ok') {
-                    $("#message").val('');
-                    if(pmid) {
-                        N.html.pm.getConversationAfterPmid({ from: c_from, to: c_to, pmid: pmid }, function(d) {
-                            var newPms = $('<div>' + d + '</div>').find (pattern), internalCounter = mess.length, lastPm = mess.last();
-                            if (mess.length > 1) {
-                                mess.eq (mess.length - 1).remove();
-                                internalCounter--;
-                            }
-                            if (lastPm.data ('pmid') == newPms.last().data ('pmid')) {
-                                lastPm.remove();
-                                internalCounter--;
-                            }
-                            while ((internalCounter + newPms.length) > ((($(".more_btn").data ('counter') || 0) + 1) * 10))
-                            {
-                                mess.first().remove();
-                                mess = $("#conversation").find (pattern);
-                                internalCounter--;
-                            }
-                            $("#convfrm").before (d);
-                        });
-                    }
-                    else {
-                        N.html.pm.getConversation({ from: c_from, to: c_to, start: 0, num: 10 },function(data) {
-                            $("#conversation").html(data);
-                        });
-                    }
-                }
-        });
+        s.val(d.message).attr("disabled",false);
+        setTimeout(function() {
+          s.val(s.data("send")).width(w).next().show();
+        },1000);
+      });
     });
 
     var c = $("#content");
@@ -52,26 +58,27 @@ $(document).ready(function() {
     $("#form").click(function() {
         c.html(loadtxt);
         N.html.pm.getForm(function(data) {
-            c.html(data);
+          c.html(data);
+          TPLoad();
         });
         location.hash="write";
     });
     $("#inbox").click(function() {
         c.html(loadtxt);
         N.html.pm.getInbox(function(data) {
-            c.html(data);
-            if(newpm)
-            {
-                setTimeout(function() { c.find('.getconv:first').click();},500);
-                newpm = false;
-                var count = $("#pmcounter");
-                var cval = parseInt(count.html());
-                if(!isNaN(cval) && cval != 0) {
-                    count.html(cval -1);
-                }
+          c.html(data);
+          if(newpm)
+          {
+            setTimeout(function() { c.find('.getconv:first').click();},500);
+            newpm = false;
+            var count = $("#pmcounter");
+            var cval = parseInt(count.html());
+            if(!isNaN(cval) && cval != 0) {
+              count.html(cval -1);
             }
+          }
+          TPLoad();
         });
-        location.hash="inbox";
     });
     
     c.on('click',".delete",function(e) {
@@ -89,16 +96,17 @@ $(document).ready(function() {
     });
         
     c.on('click',".getconv",function(e) {
-        var conv = $("#conversation");
-        conv.html(loadtxt);
-        e.preventDefault();
-        c_from =  $(this).data('from');
-        c_to = $(this).data('to');
-        N.html.pm.getConversation({ from: c_from, to: c_to, start: 0, num: 10 },function(data) {
-            conv.html(data);
-            window.location.hash = 'message';
-            $("#message").focus();
-        });
+      var conv = $("#conversation");
+      conv.html(loadtxt);
+      e.preventDefault();
+      c_from =  $(this).data('from');
+      c_to = $(this).data('to');
+      N.html.pm.getConversation({ from: c_from, to: c_to, start: 0, num: 10 },function(data) {
+        conv.html(data);
+        window.location.hash = 'message';
+        TPLoad();
+        $("#frmtxt").focus();
+      });
     });
 
     c.on('click','.preview',function(){
@@ -160,15 +168,12 @@ $(document).ready(function() {
         });
     });
 
-    setTimeout(function() {
-        if(window.location.hash == '#new') {
-            window.location.hash = '';
-            newpm = true;
-            $("#inbox").click();
-        }
-        if(location.hash=="#write") $("#form").click();
-        if(location.hash=="#inbox") $("#inbox").click();
-        location.hash="";
-    },500);
 
+    if(window.location.hash == '#new') {
+      newpm = true;
+      $("#inbox").click();
+    }
+    else if(location.hash=="#write") $("#form").click();
+    else $("#inbox").click();
+    location.hash="";
 });

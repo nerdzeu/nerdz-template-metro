@@ -1,5 +1,4 @@
-{if="$needmorebtn_b"}
-<div class="center">
+<div class="center comment_btns" {if="!$needmorebtn_b"}style="display:none"{/if}>
   <span class="size3" style="display:inline-block;">
     <a href="#" class="more_btn" data-localization="{$more_msgs}" onclick="return false;">{$more_msgs}</a>
   </span>
@@ -10,9 +9,7 @@
     <a href="#" class="all_comments_btn" data-localization="{$every_comment}" onclick="return false;">{$every_comment}</a>
   </span>
 </div>
-{else}
-  <span style="display: none" class="commentcount">{$commentcount_n}</span>
-{/if}
+<span style="display: none" class="commentcount">{$commentcount_n}</span>
 <div class="comments">
 {loop="list_a"}
   <div id="{$value.uid_n}" data-hcid="{$value.hcid_n}" class="singlecomment">
@@ -54,7 +51,7 @@
     <form style="overflow:hidden; width:auto" class="frmcomment" data-hpid="{$hpid_n}" class="grid fluid">
       <div class="row thin">
         <div class="span12">
-          <textarea id="commentto{$hpid_n}" name="message" style="width: 100%; height: 60px"></textarea>
+          <textarea id="commentto{$hpid_n}" name="message"></textarea>
         </div>
       </div>
       <div class="row thin">

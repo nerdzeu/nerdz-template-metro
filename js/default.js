@@ -6,14 +6,14 @@ $(document).ready(function() {
     if(!localStorage.getItem("metro-color")) 
       localStorage.setItem("metro-color","default");
     $color = "#4390DF";
-    $colors = {"default":"#4390DF","lime":"#a4c400","amber":"#F0A30A"};
+    $colors = {"default":"#4390DF","lime":"#a4c400","amber":"#F0A30A", "red":"#e51400", "steel":"#555555"};
     var mc = localStorage.getItem("metro-color");
     if (mc!="default")
     {
       $color = $colors[mc];
       var rgb = $("<span>").css("background-color",$color).css("background-color").replace(/[^0-9,]/g,"").split(",");
       var hsl = rgb2hsl(rgb[0],rgb[1],rgb[2]);
-      $lighter = ["hsl("+hsl[0], hsl[1]*100+"%", Math.floor(hsl[2]*150)+"%)"].join(",");
+      $lighter = ["hsl("+hsl[0], hsl[1]*100+"%", Math.floor(hsl[2]*120)+"%)"].join(",");
       var html = ('.news .nerdz_date, .news .post_icons, a, #profilePostArrow, #projectPostArrow, .spoiler > span, .question {'+
                   '  color: %color%;'+
                   '}'+
@@ -42,29 +42,27 @@ $(document).ready(function() {
     for(col in $colors)
       $("<div>").attr("class","tile tiny").html('<div class="tile-content icon"><i class="icon-record" style="color:'+$colors[col]+';"></i></div>')
                 .attr("title",col).addClass( mc==col?"selected":"" ).appendTo($("#color-switcher"));
-                
-    if (localStorage.getItem("metro-light"))
+
+    ts = $("#theme-switcher");               
+    if (localStorage.getItem("metro-theme"))
     {
-      $(".sidebar").addClass("light")
-      $(".navigation-bar").removeClass("dark").addClass("light")
-      $("body").addClass("light")
+      if(localStorage.getItem("metro-theme")=="light")
+      {
+        $(".sidebar").addClass("light")
+        $(".navigation-bar").removeClass("dark").addClass("light")
+      }
+      ts.children("#"+localStorage.getItem("metro-theme")).addClass("selected");
+      $("body").addClass(localStorage.getItem("metro-theme"))
     }
+    else 
+      ts.children("#dark").addClass("selected");
+
     $("#pref-metro").on("click", function(event) {
       event.stopPropagation();
     });
-    ts = $("#theme-switcher");
-    if(localStorage.getItem("metro-light")) 
-      ts.attr("checked",true);
-    ts.parent().on("click", function(){
-      if( ts.is(":disabled") ) return false;
-      if( ts.is(':checked') ) {
-        localStorage.removeItem("metro-light") 
-        ts.attr("checked",false);
-      } else {
-        localStorage.setItem("metro-light", "1");
-        ts.attr("checked",true);
-      }
-      ts.attr("disabled",true);
+    ts.on("click", ".tile", function(){
+      if($(this).hasClass("selected")) return false;
+      localStorage.setItem("metro-theme",$(this).attr("id"));
       setTimeout(function(){location.reload();},1000);
     })
     $("#color-switcher").on("click",".tile", function() {
@@ -86,6 +84,7 @@ $(document).ready(function() {
     });
     tc = $("#tagpanel-custom");
     tc.on("click",function(event) {
+      if(!$(".tagpanel").length) return false;
       event.stopPropagation();
       $.Dialog({
         shadow: true,
@@ -182,7 +181,14 @@ $(document).ready(function() {
     if($.inArray(location.pathname,[ '/bbcode.php','/terms.php','/faq.php','/stats.php','/rank.php','/preferences.php', '/informations.php', '/preview.php' ]) != -1) {
            $("#footersearch").remove();
        };
-
+    
+    $("body").on("focus", "textarea", function(e) {
+      $(this).height(0).height( this.scrollHeight );
+    }).on("keyup", "textarea", function(e) {
+      $(this).height(0).height( this.scrollHeight );
+      $(this).css("overflow", ( this.scrollHeight > parseInt($(this).css("max-height")) ) ? "auto" : "hidden" );
+    })
+    
     $("#footersearch").on('submit',function(e) {
         e.preventDefault();
         var plist = $("#postlist");
@@ -191,13 +197,11 @@ $(document).ready(function() {
         if(qs == '') {
             return false;
         }
-
         var manageResponse = function(d)
         {
             plist.html(d);
             sessionStorage.setItem('searchLoad', "1"); 
         };
-
         if(plist.data('type') == 'project')
         {
             if(plist.data('location') == 'home')
@@ -346,41 +350,39 @@ $(document).ready(function() {
         N.json[plist.data('type')].addComment ({ hpid: hpid, message: message }, function(d) {
             if(d.status == 'ok')
             {
-                if(hcid && last)
-                {
-                    N.html[plist.data('type')].getCommentsAfterHcid ({ hpid: hpid, hcid: hcid }, function(d) {
-                        t = $("<div>").html(d);
-                        var cmnum = t.children().eq(0).remove().html(),
-                            newComments = t.children().eq(0).children();
-                            internalLengthPointer = comments.length,
-                            lastComment = comments.last();
-                        t.remove();
-                        if (comments.length > 1) {
-                            comments.eq(comments.length - 1).remove();
-                            internalLengthPointer--;
-                        }
-                        if (lastComment.data ('hcid') == newComments.last().data ('hcid')) {
-                            lastComment.remove();
-                            internalLengthPointer--;
-                        }
-                        var n = internalLengthPointer + newComments.length,
-                            mc = form.parent().find ('.more_btn').data('morecount'),
-                            toshow = (mc?mc:0 + 1) * 10;
-                        if(n>0) comments.slice(0,n-toshow).remove();
-                        if(n>9) refto.find(".more_btn").show();
-                        clist.append(newComments);
-                        form.find('textarea').val ('');
-                        error.html('');
-                        $("#post"+hpid).find(".icon-comments-4").eq(0).text(cmnum);
-                    });
-                }
-                else
-                {
-                    N.html[plist.data('type')].getComments( { hpid: hpid, start: 0, num: 10 },function(d) {
-                        refto.html(d);
-                        error.html('');
-                    });
-                }
+              if(hcid && last)
+              {
+                  N.html[plist.data('type')].getCommentsAfterHcid ({ hpid: hpid, hcid: hcid }, function(d) {
+                    t = $("<div>").html(d);
+                    var cmnum = t.children(".commentcount").eq(0).remove().html(),
+                        newComments = t.children(".comments").eq(0).children(),
+                        lastComment = comments.last();
+                    lastComment.remove()
+                    var internalLengthPointer = comments.length-1;
+                    var n = internalLengthPointer + newComments.length,
+                        mc = form.parent().find ('.more_btn').data('morecount'),
+                        toshow = (mc?mc:0 + 1) * 10;
+                    if(n>toshow) 
+                    {
+                      comments.slice(0,n-toshow).remove();
+                      refto.children(".comment_btns").eq(0).show();
+                    }
+                    if(cmnum>20) refto.find(".all_comments_btn").parent().eq(0).show();
+                    clist.append(newComments);
+                    form.find('textarea').val ('');
+                    error.html('');
+                    $("#post"+hpid).find(".icon-comments-4").eq(0).text(cmnum);
+                  });
+              }
+              else
+              {
+                  N.html[plist.data('type')].getComments( { hpid: hpid, start: 0, num: 10 },function(d) {
+                      refto.html(d);
+                      var cmnum = $("<div>").html(d).children(".commentcount").eq(0).remove().html();
+                      $("#post"+hpid).find(".icon-comments-4").eq(0).text(cmnum);
+                      error.html('');
+                  });
+              }
             }
             else
             {
@@ -421,7 +423,7 @@ $(document).ready(function() {
               ss = w.data("old").split("|");
               w.hasClass("maximize") ? 
                 w.css({width:$(window).width(),height:$(window).height()-30,top:0,left:0,bottom:""}).removeClass("minimized") : 
-                w.css({width:624,height:517,top:ss[0],left:ss[1],bottom:""}).removeClass("minimized");
+                w.css({width:656,height:517,top:ss[0],left:ss[1],bottom:""}).removeClass("minimized");
             }
           })
           $(".btn-max").click(function(e) {
@@ -433,7 +435,7 @@ $(document).ready(function() {
               c.children().css("height",$(window).height()-70);
             } else {
               ss = w.data("old").split("|");
-              w.css({width:624,height:517,top:ss[0],left:ss[1]}).removeClass("maximized");
+              w.css({width:656,height:517,top:ss[0],left:ss[1]}).removeClass("maximized");
               c.children().css("height",480);
             }
           });
@@ -446,7 +448,8 @@ $(document).ready(function() {
     plist.on('click',".showcomments",function(e) {
         e.preventDefault();
         var hpid = $(this).data ('hpid'),
-            refto = $('#' + $(this).data('refto'));
+            refto = $('#' + $(this).data('refto')),
+            count = $(this).children().eq(0);
         if(refto.html() == '')
         {
             refto.html(loading+'...');
@@ -456,6 +459,7 @@ $(document).ready(function() {
                 num: 10
             }, function (res) {
                 refto.html (res);
+                count.html( refto.children(".commentcount").html() );
                 if (document.location.hash == '#last')
                     refto.find ('.frmcomment textarea[name=message]').focus();
                 else if (document.location.hash)
@@ -471,7 +475,7 @@ $(document).ready(function() {
     plist.on ('click', '.more_btn', function() {
         var moreBtn     = $(this),
             commentList = moreBtn.parents ("div[id^=\"commentlist\"]"),
-            clist    = commentList.children(".comments").eq(0),
+            clist       = commentList.children(".comments").eq(0),
             hpid        = /^post(\d+)$/.exec (commentList.parents ("div[id^=\"post\"]").attr ("id"))[1],
             intCounter  = moreBtn.data ("morecount") || 0;
         if (moreBtn.data ("inprogress") === "1") return;
@@ -479,12 +483,12 @@ $(document).ready(function() {
         N.html[plist.data ('type')].getComments ({ hpid: hpid, start: intCounter + 1, num: 10 }, function (r) {
             moreBtn.data ("inprogress", "0").data ("morecount", ++intCounter).text (moreBtn.data ("localization"));
             var _ref = $("<div>" + r + "</div>");
-            clist.html(_ref.children().eq(1).html()+clist.html());
+            clist.html(_ref.children(".comments").eq(0).html()+clist.html());
             if (intCounter == 1)
               commentList.find (".scroll_bottom_btn").parent().show();
             if ($.trim (r) == "" || _ref.find (".nerdz_from").length < 10 || (10 * (intCounter + 1)) == _ref.find (".commentcount:eq(0)").html())
             {
-              commentList.find (".all_comments_btn").hide();
+              commentList.find (".all_comments_btn").parent().hide();
               moreBtn.parent().hide();
             }
         });
@@ -554,7 +558,8 @@ $(document).ready(function() {
                             '<textarea id="'+fid+'abc" autofocus style="width:100%; height:125px">' +message+ '</textarea><br />' +
                             '<input type="submit" value="' + edlang +'" style="float: right; margin-top:5px" />' +
                             '<button type="button" style="float:right; margin-top: 5px; margin-right: 10px;" class="preview" data-refto="#'+fid+'abc">'+prev+'</button>'+
-                            '<button type="button" style="float:left; margin-top:5px" onclick="window.open(\'/bbcode.php\')">BBCode</button>' +
+                            '<button type="button" style="float:left; margin-top:5px; margin-right: 10px;" onclick="window.open(\'/bbcode.php\')">BBCode</button>' +
+                            '<button type="button" style="float:left; margin-top:5px" class="cancel">Cancel</button>' +
                             '</form>';
                     };
             N.json[plist.data('type')].getPost({hpid: hpid},function(d) {
@@ -584,7 +589,16 @@ $(document).ready(function() {
                                       alert(d.message);
                                  }
                       });
-                 });
+                }).on("click",".cancel", function() {
+                  refto.slideToggle("slow");
+                  N.html[plist.data('type')].getPost({hpid: hpid}, function(o) {
+                        refto.html(o);
+                        refto.slideToggle("slow");
+                        if(refto.data("hide")) {
+                          $(refto.find("div.small")[0]).prepend('<i title="'+refto.data("hide")+'" class="post_icons hide icon-cancel-2" data-postid="post'+hpid+'"></i>');
+                        }
+                  });
+                });
             });
     });
 
@@ -597,7 +611,7 @@ $(document).ready(function() {
             }
         }
           
-          if($(this).data('silent')) { //nei commenti
+          if($(this).data('silent')) {
               N.json[plist.data('type')].reNotifyFromUserInPost({ hpid: $(this).data('hpid'), from: $(this).data('silent') },function(d) {tog(d);});
           }
           else {

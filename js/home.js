@@ -40,7 +40,8 @@ $(document).ready(function() {
         fixHeights();
     };
     
-    $("#profilePostList").on("click",function(){
+    $("#profilePostList").on("click",function(e){
+      e.preventDefault();
       N.html.profile.getHomePostList(0,function(data) {
         plist.html('<h1>'+loading+'...</h1>');
         $("#fast_nerdz").show();
@@ -56,19 +57,20 @@ $(document).ready(function() {
       });
     })
     
-    $("#projectPostList").on('click',function() {
-        plist.html('<h1>'+loading+'...</h1>');
-        $("#fast_nerdz").hide();
-        if($("#projectPostArrow").hasClass("icon-arrow-up-2")) $("#projectPostArrow").click();
-        $(".projlang.active").removeClass("active");
-        load = false;
-        N.html.project.getHomePostList(0,function(data) {
-            plist.html(data);
-            plist.data('type','project');
-            plist.data('mode','std');
-            hideHidden();
-            load = true;
-        });
+    $("#projectPostList").on('click',function(e) {
+      e.preventDefault();
+      plist.html('<h1>'+loading+'...</h1>');
+      $("#fast_nerdz").hide();
+      if($("#projectPostArrow").hasClass("icon-arrow-up-2")) $("#projectPostArrow").click();
+      $(".projlang.active").removeClass("active");
+      load = false;
+      N.html.project.getHomePostList(0,function(data) {
+          plist.html(data);
+          plist.data('type','project');
+          plist.data('mode','std');
+          hideHidden();
+          load = true;
+      });
     });
     
     $("#profilePostArrow").click(function() {

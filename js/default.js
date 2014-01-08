@@ -726,5 +726,20 @@ $(document).ready(function() {
         }
         pc.css('color',val == 0 || isNaN(val) ? $color : '#FF0000');
     },200);
+});
 
+
+$(window).on('beforeunload', function() {
+  t = $("textarea");
+  for (ta in t)
+  {
+    val = $("textarea")[ta].value || "";
+    if ( val != "")
+    {
+      $("textarea").eq(ta).focus();
+      return "The post is not been sent: \n"+val+"\n";
+    }
+  }
+  if($("#img_ul_file").val() != "")
+    return "Image you selected is not been uploaded yet";
 });

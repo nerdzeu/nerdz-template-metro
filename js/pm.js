@@ -4,8 +4,11 @@ $(document).ready(function() {
     $("#content").on('submit',"#convfrm",function(e) {
       e.preventDefault();
       var s = $(this).find("input[type=submit]").eq(0);
-      w = s.width()-5;
+      w = s.parent().width()*.3;
       s.width(s.parent().width()*.9).val(loadtxt).attr("disable",true).next().hide();
+      if( $("#img_ul_file").val() != "" && $("#img_ul_file").is(":visible") )
+        if( !confirm("The image you selected was not uploaded still. Do you want to send the message anyway?") )
+          return s.val(s.data("send")).width(w).next().width(w).show();
       var pattern = "div[id^='pm']";
       var mess = $("#conversation").find(pattern);
       var last = null;
@@ -47,7 +50,7 @@ $(document).ready(function() {
         }
         s.val(d.message).attr("disabled",false);
         setTimeout(function() {
-          s.val(s.data("send")).width(w).next().show();
+          s.val(s.data("send")).width(w).next().width(w).show();
         },1000);
       });
     });

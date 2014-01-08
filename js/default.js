@@ -14,7 +14,7 @@ $(document).ready(function() {
       var rgb = $("<span>").css("background-color",$color).css("background-color").replace(/[^0-9,]/g,"").split(",");
       var hsl = rgb2hsl(rgb[0],rgb[1],rgb[2]);
       $lighter = ["hsl("+hsl[0], hsl[1]*100+"%", Math.floor(hsl[2]*130)+"%)"].join(",");
-      var html = ('.news .nerdz_date, .news .post_icons, a, .spoiler > span, .question {'+
+      var html = ('.news .nerdz_date, .news .post_icons, a, .spoiler > span, .question, #profilePostArrow, #projectPostArrow {'+
                   '  color: %color%;'+
                   '}'+
                   '.active {'+
@@ -26,16 +26,19 @@ $(document).ready(function() {
                   '.img_frame:after, .yt_frame:after {'+
                   '  border-top: 28px solid %color%;'+
                   '}'+
-                  '.window > .caption, .sidebar li a:hover {'+
-                  '  background-color: %color% !important;'+
+                  '.window > .caption {'+
+                  '  background-color: %color%;'+
+                  '}'+
+                  '.sidebar li a:hover {'+
+                  '  background-color: %lighter% !important;'+
                   '}'+
                   '.nerdz_message > div.compressed'+
                   '{'+
                   '  box-shadow: inset 0 -30px 30px -30px %color%;'+
                   '}'+
-                  '.link:hover, a:hover, #profilePostArrow, #projectPostArrow {'+
-                  ' color: '+$lighter+';'+
-                  '}').replace(/\%color\%/g,$color);
+                  '.link:hover, a:hover {'+
+                  ' color: %lighter%;'+
+                  '}').replace(/\%color\%/g,$color).replace(/\%lighter\%/, $lighter);
       $('<style type="text/css">').html(html).appendTo(_h);
       $("body").addClass( mc );
     }

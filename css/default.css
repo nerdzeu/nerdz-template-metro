@@ -393,9 +393,8 @@ i:before { padding: 2px; }
   display: none; 
 }
 .nerdz-code-title {
-  cursor: pointer;
-  float:left;
   clear: both;
+  padding: 0px 5px 0px;
 }
 /** SPOILER **/
 .spoiler {

@@ -60,11 +60,30 @@ $(document).ready(function() {
     $("#pref-metro").on("click", function(event) {
       event.stopPropagation();
     });
+    
+    $("#code-theme-switcher").on("change", function(e) {
+      if( !$("#code-theme-switcher").is(':checked') ) 
+        localStorage.removeItem("code-light-theme") 
+      else 
+        localStorage.setItem("code-light-theme", "1");
+  
+      setTimeout(function(){location.reload();},1000);
+    });
+    var append_theme = "";
+    if (undefined == localStorage.getItem("code-light-theme"))
+    {
+      append_theme = "?skin=sons-of-obsidian";
+      $("body").addClass("has-dark-theme");
+    }
+    else $("#code-theme-switcher").attr("checked",true);
+    $("<script>").attr("type","text/javascript").attr("src",'https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.js'+append_theme).appendTo(_h)
+    
     ts.on("click", ".tile", function(){
       if($(this).hasClass("selected")) return false;
       localStorage.setItem("metro-theme",$(this).attr("id"));
       setTimeout(function(){location.reload();},1000);
     })
+    
     $("#color-switcher").on("click",".tile", function() {
       if($(this).hasClass("selected")) return false;
       localStorage.setItem("metro-color",$(this).attr("title"));
@@ -154,16 +173,6 @@ $(document).ready(function() {
         }
       });
     });
-    var append_theme = "";
-    if (localStorage.getItem ("has-dark-theme") == 'yep')
-    {
-      append_theme = "?skin=sons-of-obsidian";
-      $("body").addClass("has-dark-theme");
-    }
-    var prettify = document.createElement ("script");
-    prettify.type = "text/javascript";
-    prettify.src  = 'https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.js' + append_theme;
-    _h.append (prettify);
 
     $("#notifycounter").on('click',function(e) {
       e.preventDefault();
@@ -681,11 +690,6 @@ $(document).ready(function() {
             }
         }
         N.json[plist.data('type')].unbookmarkPost({hpid: $(this).data('hpid') },function(d) {tog(d);});
-    });
-
-    plist.on ('click', '.nerdz-code-title', function() {
-        localStorage.setItem ('has-dark-theme', ( localStorage.getItem ('has-dark-theme') == 'yep' ? 'nope' : 'yep' ));
-        document.location.reload();
     });
 
     $("body").on('click','.notref',function(e) {

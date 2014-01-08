@@ -23,19 +23,19 @@
       </div>
     </div>
     {if="$canshowmenu_b"}
-    <div class="row smallest center pointer">
-      <div class="span3 offset1" id="profilepm">
+    <div class="row center pointer">
+      <div class="button smallest span3 offset1" id="profilepm">
         {$pm}
       </div>
       {if="$canifollow_b"}
-        <div class="span4" id="follow" data-id="{$id_n}">{$follow}</div>
+        <span class="button smallest span4" id="follow" data-id="{$id_n}">{$follow}</span>
       {else}
-        <div class="span4" id="unfollow" data-id="{$id_n}">{$unfollow}</div>
+        <span class="button smallest span4" id="unfollow" data-id="{$id_n}">{$unfollow}</span>
       {/if}
       {if="$caniblacklist_b"}
-        <div class="span4" id="blacklist" data-id="{$id_n}">Blacklist</div>
+        <div class="button smallest span4" id="blacklist" data-id="{$id_n}">Blacklist</div>
       {else}
-        <div class="span4" id="unblacklist" data-id="{$id_n}">Unblacklist</div>
+        <div class="button smallest span4" id="unblacklist" data-id="{$id_n}">Unblacklist</div>
       {/if}
       </tr>
     </div>

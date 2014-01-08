@@ -32,13 +32,13 @@ $(document).ready(function() {
                   '.sidebar li a:hover {'+
                   '  background-color: %lighter% !important;'+
                   '}'+
-                  '.nerdz_message > div.compressed'+
+                  '.more'+
                   '{'+
-                  '  box-shadow: inset 0 -30px 30px -30px %color%;'+
+                  '  box-shadow: 0px -10px 10px 0px %color%;'+
                   '}'+
                   '.link:hover, a:hover {'+
                   ' color: %lighter%;'+
-                  '}').replace(/\%color\%/g,$color).replace(/\%lighter\%/, $lighter);
+                  '}').replace(/\%color\%/g,$color).replace(/\%lighter\%/g, $lighter);
       $('<style type="text/css">').html(html).appendTo(_h);
       $("body").addClass( mc );
     }
@@ -740,6 +740,6 @@ $(window).on('beforeunload', function() {
       return "The post is not been sent: \n"+val+"\n";
     }
   }
-  if($("#img_ul_file").val() != "")
+  if($("#img_ul_file").length && $("#img_ul_file").val() != "")
     return "Image you selected is not been uploaded yet";
 });

@@ -9,15 +9,15 @@
           {/if}
           </a>
       </div>
-      <div class="row smallest center">
+      <div class="row center">
         {if="$canshowmenu_b"}
             <div class="span5 offset1">
               <div class="g-plusone" data-size="small" data-count="1" data-href="http://www.nerdz.eu/{$name4link_n}"></div>
             </div>
           {if="$canifollow_b"}
-            <span class="span5" id="follow" data-id="{$id_n}">{$follow}</span>
+            <span class="button small span5" id="follow" data-id="{$id_n}">{$follow}</span>
           {else}
-            <span class="span5" id="unfollow" data-id="{$id_n}">{$unfollow}</span>
+            <span class="button small span5" id="unfollow" data-id="{$id_n}">{$unfollow}</span>
           {/if}
         {else}
           <div class="span10 offset1">

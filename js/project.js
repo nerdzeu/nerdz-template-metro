@@ -4,11 +4,11 @@ $(document).ready(function() {
     $("#stdfrm").on('submit',function(event) {
       event.preventDefault();
       var s = $(this).find("input[type=submit]").eq(0);
-      w = s.parent().width()*.3;
+      w = s.width();
       s.width(s.parent().width()*.9).val(loading+'...').attr("disable",true).next().hide();
       if( $("#img_ul_file").val() != "" && $("#img_ul_file").is(":visible") )
         if( !confirm("The image you selected was not uploaded still. Do you want to send the message anyway?") )
-          return s.val(s.data("send")).width(w).next().width(w).show();
+          return s.val(s.data("send")).width(w).next().show();
     var news = $("#sendnews");
     if(news.length)
     {
@@ -29,7 +29,7 @@ $(document).ready(function() {
       s.val(data.message).attr("disabled",false);
 
       setTimeout(function() {
-        s.val(s.data("send")).width(w).next().width(w).show();
+        s.val(s.data("send")).width(w).next().show();
       },1000);
     });
   });

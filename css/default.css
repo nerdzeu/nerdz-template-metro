@@ -17,6 +17,12 @@ body.black {
 .black h1, .black h2, .black h3, .black h4, .black h5, .black h6, .black .sidebar li {
   color: #FFF;
 }
+.black .sidebar > ul ul {
+  background-color: #000;
+}
+.black .sidebar > ul ul li:hover {
+  background-color: #aaa;
+}
 aside {
   overflow: hidden;
 }

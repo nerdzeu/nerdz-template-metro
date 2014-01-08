@@ -9,7 +9,7 @@
         {$one_per_line}
       </i>
     </span>
-    <textarea class="span8" name="interests" rows="8">
+    <textarea class="span8" name="interests">
         {loop="interests_a"}
             {$value}&#13;
         {/loop}
@@ -22,7 +22,7 @@
           {$biography_sub}
       </i>
     </span>
-    <textarea class="span8" name="biography" rows="8">
+    <textarea class="span8" name="biography">
       {$biography_n}
     </textarea>
   </div>
@@ -33,7 +33,7 @@
           {$one_per_line}
       </i>
     </span>
-    <textarea name="quotes" rows="8" class="span8">
+    <textarea name="quotes" class="span8">
         {loop="quotes_a"}
             {$value}&#13;&#10;
         {/loop}
@@ -43,11 +43,11 @@
     <span class="span2 offset1">
       {$website}:
     </span>
-      <input type="text" name="website" value="{$website_n}" class="span3" />
+      <input type="text" name="website" value="{$website_n}" class="span3" placeholder="{$insert_url}" />
     <span class="span2">
       {$github}:
     </span>
-      <input type="text" name="github" value="{$github_n}" class="span3" />
+      <input type="text" name="github" value="{$github_n}" class="span3" placeholder="{$insert_url}" />
   </div>
   <div class="row thin">
     <span class="span2 offset1">
@@ -61,13 +61,13 @@
   </div>
   <div class="row thin">
     <span class="span2 offset1">
-      {$facebook}:<br /><i class="small">{$insert_url}</i>
+      {$facebook}:
     </span>
-      <input type="text" name="facebook" value="{$facebook_n}" class="span3" />
+      <input type="text" name="facebook" value="{$facebook_n}" class="span3"  placeholder="{$insert_url}"/>
     <span class="span2">
-      {$twitter}:<br /><i class="small">{$insert_url}</i>
+      {$twitter}:
     </span>
-      <input type="text" name="twitter" value="{$twitter_n}" class="span3" />
+      <input type="text" name="twitter" value="{$twitter_n}" class="span3" placeholder="{$insert_url}" />
   </div>
   <div class="row thin">
     <span class="span2 offset1">
@@ -82,11 +82,8 @@
   <div class="row thin">
     <span class="span2 offset1">
       {$user_script}: [<a href="/faq.php#q19" onclick="window.open(this.href); return false;">?</a>]
-      <br /><i class="small">
-        {$insert_url}
-      </i>
     </span>
-      <input type="text" name="userscript" value="{$userscript_n}" class="span3" />
+      <input type="text" name="userscript" value="{$userscript_n}" class="span3"  placeholder="{$insert_url}"/>
     <span class="span2">
       {$date_format}:
     </span>

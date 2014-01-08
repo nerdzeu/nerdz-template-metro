@@ -730,6 +730,7 @@ $(document).ready(function() {
 
 
 $(window).on('beforeunload', function() {
+  if(location.href.match(/preferences\.php/)) return;
   t = $("textarea");
   for (ta in t)
   {
@@ -740,6 +741,6 @@ $(window).on('beforeunload', function() {
       return "The post is not been sent: \n"+val+"\n";
     }
   }
-  if($("#img_ul_file").length && $("#img_ul_file").val() != "")
+  if($("#img_ul_file").length && $("#img_ul_file").val() != "" )
     return "Image you selected is not been uploaded yet";
 });

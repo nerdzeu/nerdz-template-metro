@@ -157,7 +157,8 @@ hr {
   color: #555 !important;
 }
 .preview {
-  padding: 4px 4px !important;
+  padding-left: 4px !important;
+  padding-right: 4px !important;
 }
 
 /** POSTLIST **/
@@ -357,25 +358,25 @@ i:before { padding: 2px; }
   margin-left: 10px;
 }
 /** CODE **/
-.nerdz-code-wrapper {
+div.nerdz-code-wrapper {
   background-color: #eee; 
   color: #222;
   margin: .5%;
   max-width: 97%; 
   padding: 0px;
 }
-.has-dark-theme .nerdz-code-wrapper {
+.has-dark-theme div.nerdz-code-wrapper {
   background-color: #000; 
   color: #eee; 
 }
-.nerdz-code-wrapper a:after {
+div.nerdz-code-wrapper > a:after {
   content: "\e00f";
   font-family: iconFont;
   font-size: 9pt;
   font-weight: normal;
   padding-right: 2px;
 }
-.nerdz-code-wrapper:before {
+div.nerdz-code-wrapper:before {
   clear: both;
   float: left;
   text-align: left;
@@ -386,7 +387,7 @@ i:before { padding: 2px; }
   font-weight: normal;
   padding-right: 2px;
 }
-.nerdz-code-wrapper:after {
+div.nerdz-code-wrapper:after {
   float: right;
   content: "\e0b6";
   font-family: iconFont;
@@ -409,10 +410,10 @@ i:before { padding: 2px; }
 }
 /** SPOILER **/
 .spoiler {
-  float: left;
   outline: 1px #AFAFAF solid;
-  width: 97%;
-  margin: 3px;
+  width: 95%;
+  margin: 5px 3px 10px;
+  padding: 1px;
 }
 .spoiler > div { 
   clear: both;
@@ -421,7 +422,6 @@ i:before { padding: 2px; }
   display:none;
 }
 .spoiler > span {
-  float: left;
   clear: both;
   display: block;
   text-decoration: none;

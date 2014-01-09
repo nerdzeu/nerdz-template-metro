@@ -252,6 +252,9 @@ textarea {
   max-height: 400px;
   resize:none;
 }
+.light textarea {
+  border:  #ccc solid 1px;
+}
 .projlang, .selectlang, .more{ 
   cursor: pointer;
 }

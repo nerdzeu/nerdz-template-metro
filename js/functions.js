@@ -319,3 +319,26 @@ TPLoad = function() {
     }
   })
 };
+
+$(function () {
+    var scroll_timer;
+    var displayed = false;
+    var $m = $('#totop');
+    var $w = $(window);
+    $w.scroll(function () {
+        window.clearTimeout(scroll_timer);
+        scroll_timer = window.setTimeout(function () {
+            if($w.scrollTop() <= 420)
+            {
+                displayed = false;
+                $m.fadeOut(500);
+            }
+            else if(displayed == false)
+            {
+                displayed = true;
+                $m.stop(true, true).fadeIn().click(function () { $m.fadeOut(500); });
+            }
+        }, 100);
+    });
+    $m.click(function(){$w.scrollTop(0);});
+});

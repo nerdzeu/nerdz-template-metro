@@ -130,21 +130,24 @@ var form = '<form id="loginfrm">'+
            '  <div class="center">'+
            '    <input type="submit" class="button primary" id="loginbtn" value="{$login}" />'+
            '  </div>'+
-           '  <input type="hidden" value="{$tok_n}" name="tok" /><br /><br />'+
+           '  <input type="hidden" value="{$tok_n}" name="tok" /><br />'+
+           '  <div class="center"><a href="/reset.php" target="_blank">{$FORGOT_PASSWORD}</a><br /></div>'+
            '</form>';
 $("#login").on('click', function(){
+  location.hash = "login";
   $.Dialog({
     overlay: true,
     shadow: true,
     flat: true,
     icon: '<i class="icon-key"></i>',
     title: '{$login}',
-    padding: 10,
+    padding: 30,
     content: '',
     onShow: function(_dialog){
       var content = _dialog.children('.content');
       content.html(form);
-    }
+    },
+    onClose: function() { location.hash=""; }
   });
 });
 $(document).on('submit',"#loginfrm",function(event) {
@@ -168,6 +171,7 @@ $(document).on('submit',"#loginfrm",function(event) {
         }
     });
 });
+if(location.hash=="#login") $("#login").click();
 </script>
 {/if}
 <div id="loadtxt" data-loading="{$loading}"></div>

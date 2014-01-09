@@ -13,7 +13,7 @@
                 "js/functions.js",
                 "js/default.js",
                 "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.js",
-                "js/metro.min.js"
+                "js/metro.js"
                 ],
 		"home": "js/home.js",
     "preferences": "js/preferences.js",

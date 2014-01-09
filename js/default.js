@@ -197,8 +197,13 @@ $(document).ready(function() {
     $("body").on("focus", "textarea", function(e) {
       $(this).height(0).height( this.scrollHeight );
     }).on("keyup", "textarea", function(e) {
+      $("body").scrollHeight = this.scrollTop ;
       $(this).height(0).height( this.scrollHeight );
       $(this).css("overflow", ( this.scrollHeight > parseInt($(this).css("max-height")) ) ? "auto" : "hidden" );
+    }).on("keydown", "textarea", function(e) {
+      if( e.ctrlKey && (e.keyCode == 10 || e.keyCode == 13) ) {
+        $(this).parent().trigger('submit');
+      }
     })
     
     $("#footersearch").on('submit',function(e) {
@@ -295,12 +300,6 @@ $(document).ready(function() {
             window.open('/preview.php?message='+encodeURIComponent(txt));
         }
     });
-    
-    $("textarea").on('keydown', function(e) {
-        if( e.ctrlKey && (e.keyCode == 10 || e.keyCode == 13) ) {
-            $(this).parent().trigger('submit');
-        }
-    });
 
     var plist = $("#postlist");
 
@@ -316,12 +315,6 @@ $(document).ready(function() {
         txtarea.val($.trim(txtarea.val()));
         if(undefined != txt && $.trim(txt) != '') {
             window.open('/preview.php?message='+encodeURIComponent(txt));
-        }
-    });
-
-    plist.on('keydown',"textarea", function(e) {
-        if( e.ctrlKey && (e.keyCode == 10 || e.keyCode == 13) ) {
-            $(this).parent().trigger('submit');
         }
     });
 
@@ -707,6 +700,8 @@ $(document).ready(function() {
         }
     });
     
+    TPLoad();
+
     var curpm = localStorage.getItem("curpm") ? parseInt(localStorage.getItem("curpm")) : 0;
     setInterval(function() {
         var nc = $("#notifycounter"), val = parseInt(nc.html());

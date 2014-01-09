@@ -4,8 +4,9 @@ $(document).ready(function() {
     $("#stdfrm").on('submit',function(event) {
       event.preventDefault();
       var s = $(this).find("input[type=submit]").eq(0);
+      if(s.attr("disabled")=="disabled") return false;
       w = s.width();
-      s.width(s.parent().width()*.9).val(loading+'...').attr("disable",true).next().hide();
+      s.width(s.parent().width()*.9).val(loading+'...').attr("disabled","disabled").next().hide();
       if( $("#img_ul_file").val() != "" && $("#img_ul_file").is(":visible") )
         if( !confirm("The image you selected was not uploaded still. Do you want to send the message anyway?") )
           return s.val(s.data("send")).width(w).next().show();
@@ -26,10 +27,10 @@ $(document).ready(function() {
         $("#frmtxt").val('');
       }
 
-      s.val(data.message).attr("disabled",false);
+      s.val(data.message);
 
       setTimeout(function() {
-        s.val(s.data("send")).width(w).next().show();
+        s.val(s.data("send")).attr("disabled",false).width(w).next().show();
       },1000);
     });
   });

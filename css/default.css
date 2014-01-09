@@ -159,6 +159,8 @@ hr {
 .preview {
   padding-left: 4px !important;
   padding-right: 4px !important;
+  margin-right: 5%;
+  width: 45%;
 }
 
 /** POSTLIST **/

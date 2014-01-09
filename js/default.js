@@ -197,7 +197,7 @@ $(document).ready(function() {
     $("body").on("focus", "textarea", function(e) {
       $(this).height(0).height( this.scrollHeight );
     }).on("keyup", "textarea", function(e) {
-      $("body").scrollHeight = this.scrollTop ;
+      $("body").scrollTop = this.scrollTop ;
       $(this).height(0).height( this.scrollHeight );
       $(this).css("overflow", ( this.scrollHeight > parseInt($(this).css("max-height")) ) ? "auto" : "hidden" );
     }).on("keydown", "textarea", function(e) {

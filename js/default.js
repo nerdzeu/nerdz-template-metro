@@ -717,7 +717,7 @@ $(document).ready(function() {
           if(nw>0)
           {
             N.html.getNotifications(function(d) {
-              nn = d.children().length;
+              nn = $("<div>").html(d).children().length;
               nn==1?
               $.Notify.show(d) :
               $.Notify.show('<a href="#" onclick="$(\'#notifycounter\').click()">'+N.getLangData().NEW_NOTIFICATIONS.format(nn)+'</a>');

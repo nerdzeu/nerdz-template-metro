@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    var loading = $("#loadtxt").data('loading');
+    var loading = N.getLangData().LOADING;
+    
     $("body").append($('<br />')); 
     $("iframe").attr("scrolling","no");
     _h = $("head");
@@ -170,8 +171,7 @@ $(document).ready(function() {
         onShow: function(_dialog) {
           _dialog.css("min-height","150px");
           $.ajax({url:"/tpl/2/VERSION"}).done(function(d){
-            _dialog.children(".content").html('NerdzMetro Theme by Dr.Jest. Version '+d+'<br>Based on work made by Sergey Pimenov <br />'+
-            '<a target="_blank" href="https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE">@https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE</a>');
+            _dialog.children(".content").html("<a href='https://github.com/nerdzeu/nerdz.eu/commit/{1}' target='_blank'> Nerdz, Last Commit {1} </a> <br />NerdzMetro Theme by Dr.Jest. Version {0} <br /> Barely based on work made by<a href='https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE' target='_blank'> Sergey Pimenov </a>".format(d, Nversion));
           })
         }
       });
@@ -399,23 +399,25 @@ $(document).ready(function() {
         plist.on('click', ".yt_frame", function(e) {
       e.preventDefault();
       var vid = $(this).data("vid");
-      $.Dialog({
+      d = $.Dialog({
         overlay: false,
         shadow: true,
         sysButtons: {btnClose:true,btnMax:true,btnMin:true},
         icon: '<i class="icon-youtube"></i>',
         title: 'Youtube Video',
         draggable: true,
+        height:520,
+        width: 656,
         content: '',
         overlayClickClose: false,
+        onClose: function() { $(document).unbind("keyup.yt"); },
         onShow: function(_dialog){
           $(_dialog).appendTo($("body"));
           $(".window-overlay").remove();
-          $.Dialog.content('<iframe style="width:100%; min-width:640px; min-height:480px;" src="//www.youtube.com/embed/'+vid+'" frameborder="0"></iframe>');
+          $.Dialog.content('<iframe width="640" height="480" src="//www.youtube.com/embed/'+vid+'" seamless></iframe>');
           w = _dialog;
           c = w.children(".content").eq(0);
           w.data("old",[w.css("top"),w.css("left")].join("|"));
-          $(".btn-close").click(function(e){e.preventDefault();w.remove()});
           $(".btn-min").click(function(e) {
             e.preventDefault();
             if(!w.hasClass("minimized"))
@@ -444,12 +446,14 @@ $(document).ready(function() {
               c.children().css("height",480);
             }
           });
+          $(document).on("keyup.yt",function(e){
+             var code = e.keyCode ? e.keyCode : e.which;
+             if(code==27) $.Dialog.close(d);
+          });
         }
       });
     });
     
-
-
     plist.on('click',".showcomments",function(e) {
         e.preventDefault();
         var hpid = $(this).data ('hpid'),
@@ -457,13 +461,13 @@ $(document).ready(function() {
             count = $(this).children().eq(0);
         if(refto.html() == '')
         {
-            refto.html(loading+'...');
+            refto.html(loading+'...').show();
             N.html[plist.data ('type')].getComments ({
                 hpid: hpid,
                 start: 0,
                 num: 10
             }, function (res) {
-                refto.html (res);
+                refto.hide().html(res).slideDown();
                 count.html( refto.children(".commentcount").html() );
                 if (document.location.hash == '#last')
                     refto.find ('.frmcomment textarea[name=message]').focus();
@@ -473,7 +477,7 @@ $(document).ready(function() {
         }
         else
         {
-            refto.html('');
+            refto.slideUp(function(){refto.html('')});
         }
     });
 
@@ -486,7 +490,7 @@ $(document).ready(function() {
         if (moreBtn.data ("inprogress") === "1") return;
         moreBtn.data ("inprogress", "1").text (loading + "...");
         N.html[plist.data ('type')].getComments ({ hpid: hpid, start: intCounter + 1, num: 10 }, function (r) {
-            moreBtn.data ("inprogress", "0").data ("morecount", ++intCounter).text (moreBtn.data ("localization"));
+            moreBtn.data ("inprogress", "0").data ("morecount", ++intCounter).text (N.getLangData().MORE_COMMENTS);
             var _ref = $("<div>" + r + "</div>");
             clist.html(_ref.children(".comments").eq(0).html()+clist.html());
             if (intCounter == 1)
@@ -515,7 +519,7 @@ $(document).ready(function() {
         btn.data ("working", "1").text (loading + "...");
         moreBtn.data ("inprogress", "1");
         N.html[plist.data ('type')].getComments ({ hpid: hpid, forceNoForm: true }, function (res) {
-            btn.data ("working", "0").text(btn.data ("localization")).parent().hide();
+            btn.data ("working", "0").text(N.getLangData().EVERY_COMMENT).parent().hide();
             commentList.find (".scroll_bottom_btn").show();
             moreBtn.hide().data ("morecount", Math.ceil (parseInt ($("<div>").html(res).find (".commentcount").html()) / 10));
             commentList.children(".comments").eq(0).html(res);
@@ -536,11 +540,12 @@ $(document).ready(function() {
 
       N.json[plist.data('type')].delPostConfirm({ hpid: hpid },function(m) {
         if(m.status == 'ok') {
-          refto.html('<div style="text-align:center">' + m.message + '<br /><span id="delPostOk' + hpid +'" style="cursor:pointer">YES</span>|<span id="delPostNo'+hpid+'" style="cursor:pointer">NO</span></div>');
+          refto.html('<div style="text-align:center">' + m.message + '<br /><span id="delPostOk' + hpid +'" style="cursor:pointer">'+N.getLangData().YES+'</span>|<span id="delPostNo'+hpid+'" style="cursor:pointer">'+N.getLangData().NO+'</span></div>');
           refto.on('click','#delPostOk'+hpid,function() {
-            N.json[plist.data('type')].delPost({ hpid: hpid    },function(j) {
+            N.json[plist.data('type')].delPost({ hpid: hpid },function(j) {
              if(j.status == 'ok') {
-              refto.hide();
+              refto.remove();
+              if(plist.data("singlepost")) location.href="/";
              }
              else {
               refto.html(j.message);
@@ -548,7 +553,7 @@ $(document).ready(function() {
             });
           });
           refto.on('click','#delPostNo'+hpid,function() {
-                refto.html(post);
+            refto.html(post);
           });
        }
     });
@@ -557,19 +562,18 @@ $(document).ready(function() {
     plist.on('click',".icon-pencil",function(e) {
         e.preventDefault();
         var refto = $('#' + $(this).data('refto')), hpid = $(this).data('hpid');
-        var editlang = $(this).attr("title");
-        var form = function(fid,hpid,message,edlang,prev) {
+        var form = function(fid, hpid, message) {
                     return  '<form style="margin-bottom:40px" id="' +fid+ '" data-hpid="'+hpid+'">' +
                             '<textarea id="'+fid+'abc" autofocus style="width:100%; height:125px">' +message+ '</textarea><br />' +
-                            '<input type="submit" value="' + edlang +'" style="float: right; margin-top:5px; max-height: 26px !important" />' +
-                            '<button type="button" style="float:right; margin-top: 5px; margin-right: 10px;" class="preview" data-refto="#'+fid+'abc">'+prev+'</button>'+
+                            '<input type="submit" value="' + N.getLangData().EDIT +'" style="float: right; margin-top:5px; max-height: 26px !important" />' +
+                            '<button type="button" style="float:right; margin-top: 5px; margin-right: 10px;" class="preview" data-refto="#'+fid+'abc">'+N.getLangData().PREVIEW+'</button>'+
                             '<button type="button" style="float:left; margin-top:5px; margin-right: 10px;" onclick="window.open(\'/bbcode.php\')">BBCode</button>' +
-                            '<button type="button" style="float:left; margin-top:5px" class="cancel">Cancel</button>' +
+                            '<button type="button" style="float:left; margin-top:5px" class="cancel">'+N.getLangData().CANCEL+'</button>' +
                             '</form>';
                     };
             N.json[plist.data('type')].getPost({hpid: hpid},function(d) {
                  var fid = refto.attr('id') + 'editform';
-                 refto.html(form(fid,hpid,d.message,editlang,$(".preview").val()));
+                 refto.html(form(fid,hpid,d.message));
 
                  $('#'+fid).on('submit',function(e) {
                       e.preventDefault();
@@ -702,10 +706,27 @@ $(document).ready(function() {
     
     TPLoad();
 
+    var curnot = localStorage.getItem("curnot") ? parseInt(localStorage.getItem("curnot")) : 0;
     var curpm = localStorage.getItem("curpm") ? parseInt(localStorage.getItem("curpm")) : 0;
     setInterval(function() {
         var nc = $("#notifycounter"), val = parseInt(nc.html());
         nc.css('color',val == 0 || isNaN(val) ? $color : '#FF0000');
+        if(!isNaN(val) && val != curnot && !localStorage.getItem("metro-no-notify"))
+        {
+          nw = val - curnot;
+          if(nw>0)
+          {
+            N.html.getNotifications(function(d) {
+              nn = d.children().length;
+              nn==1?
+              $.Notify.show(d) :
+              $.Notify.show('<a href="#" onclick="$(\'#notifycounter\').click()">'+N.getLangData().NEW_NOTIFICATIONS.format(nn)+'</a>');
+              $("#notifyaudio")[0].play();
+            },true);
+          }
+          curnot = val;
+          localStorage.setItem("curnot",curnot);
+        }
         var pc = $("#pmcounter");
         val = parseInt(pc.html());
         if(!isNaN(val) && val != curpm && !localStorage.getItem("metro-no-notify")) 
@@ -713,16 +734,17 @@ $(document).ready(function() {
           nw = val-curpm;
           if(nw>0)
           {
-            $.Notify.show('<a href="/pm.php#new" class="notref">You have '+nw+' new message'+(nw>1?"s":"")+'!</a>');
+            nw==1 ?
+            $.Notify.show('<a href="/pm.php#new" class="notref">'+N.getLangData().NEW_MESSAGE+'!</a>') : 
+            $.Notify.show('<a href="/pm.php#new" class="notref">'+N.getLangData().NEW_MESSAGES.format(nw)+'!</a>');
             $("#notifyaudio")[0].play();
           }
           curpm = val;
-          localStorage.setItem("curpm",curpm);
+          localStorage.setItem("curpm",val);
         }
         pc.css('color',val == 0 || isNaN(val) ? $color : '#FF0000');
     },200);
 });
-
 
 $(window).on('beforeunload', function() {
   if(location.href.match(/preferences\.php/)) return;
@@ -733,9 +755,9 @@ $(window).on('beforeunload', function() {
     if ( val != "")
     {
       $("textarea").eq(ta).focus();
-      return "The post is not been sent: \n"+val+"\n";
+      return N.getLangData().POST_NOT_SENT+": \n"+val+"\n";
     }
   }
   if($("#img_ul_file").length && $("#img_ul_file").val() != "" )
-    return "Image you selected is not been uploaded yet";
+    return N.getLangData().IMG_UPLOADING_2;
 });

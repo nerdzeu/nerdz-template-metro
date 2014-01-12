@@ -47,7 +47,7 @@
           </div>
           <div class="row thin">
             <span class="span3 place-right">
-              <input type="submit" data-send="{$nerdz_it}" value="{$nerdz_it}" style="width:45%;" class="place-right" />
+              <input type="submit" value="{$nerdz_it}" style="width:45%;" class="place-right" />
               <input type="button" class="preview" data-refto="#frmtxt" value="{$preview}" /> 
             </span>
         </form>
@@ -122,7 +122,7 @@
     </ul>
     <br />
   {/if}
-    <div style="text-align: center;cursor:pointer;" id="hposts" onclick="$('#hptable').toggle()">Hidden Posts</div>
+    <div style="text-align: center;cursor:pointer;" id="hposts" onclick="$('#hptable').toggle()">{$hidden_posts}</div>
     <ul id="hptable"><li style="text-align: center">None</li></ul>
   </nav>
 </div>

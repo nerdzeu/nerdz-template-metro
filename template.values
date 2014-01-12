@@ -1,5 +1,4 @@
 {
-	// CSS section
 	"css": {
 		"default": [
                 "css/metro.css",
@@ -7,15 +6,23 @@
                 ],
         "faq": "css/faq.css"
 	},
-	// JS section
 	"js": {
 		"default": [
                 "js/functions.js",
                 "js/default.js",
                 "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.js",
-                "js/metro.js"
-                ],
-		"home": "js/home.js",
+                "js/metro.js",
+                {
+                  "lang": [ "LOADING", "BACK_TO_THE_TOP", "MORE_COMMENTS", "EVERY_COMMENT", "NEW_MESSAGE", "EDIT", "PREVIEW", "CANCEL", "YES", "NO", "NERDZ_IT", "IMG_UPLOADING", "IMG_UPLOADING_2", "POST_NOT_SENT" ]
+                }
+              ],
+		"home":   [
+                "js/home.js",
+                {
+                  "lang": [ "EXPAND" ],
+                  "outputVersion": true
+                }
+              ],
     "preferences": "js/preferences.js",
 		"profile": "js/profile.js",
 		"project": "js/project.js",
@@ -23,7 +30,7 @@
 		"userslist": "js/userslist.js",
 		"projectslist": "js/projectslist.js",
 		"bookmarks": "js/bookmarks.js",
-        "reset": "js/reset.js",
+    "reset": "js/reset.js",
 		"share": "js/share.js"
 	},
     "langs": {

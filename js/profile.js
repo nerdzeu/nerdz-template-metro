@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var loading = $("#loadtxt").data('loading'); //il div è nell'header
+    var loading = N.getLangData().LOADING;
 
     $("#stdfrm").on('submit',function(event) {
       event.preventDefault();
@@ -8,8 +8,8 @@ $(document).ready(function() {
       w = s.width();
       s.width(s.parent().width()*.9).val(loading+'...').attr("disabled","disabled").next().hide();
       if( $("#img_ul_file").val() != "" && $("#img_ul_file").is(":visible") )
-        if( !confirm("The image you selected was not uploaded still. Do you want to send the message anyway?") )
-          return s.val(s.data("send")).width(w).next().show();
+        if( !confirm(N.getLangData().IMG_UPLOADING) )
+          return s.val(N.getLangData().NERDZ_IT).attr("disabled",false).width(w).next().show();
       var message = $("#frmtxt").val().tag();
       if(undefined==localStorage.getItem("no-autolink")) message = message.autoLink();
       N.json.profile.newPost({message: message, to: $(this).data('to') },function(data) {
@@ -21,7 +21,7 @@ $(document).ready(function() {
           s.val(data.message);
 
           setTimeout(function() {
-            s.val(s.data("send")).attr("disabled",false).width(w).next().show();
+            s.val(N.getLangData().NERDZ_IT).attr("disabled",false).width(w).next().show();
           },1000);
       });
     });
@@ -49,7 +49,7 @@ $(document).ready(function() {
         var me = $(this);
         var plist = $("#postlist");
         oldPlist = plist.html();
-        plist.html('<form id="blfrm">Motivation: <textarea style="width:100%; height:60px" id="blmot"></textarea><br /><input type="submit" value="Blacklist" /></form>');
+        plist.html('<form id="blfrm">'+N.getLangData().MOTIVATION+': <textarea style="width:100%; height:60px" id="blmot"></textarea><br /><input type="submit" value="Blacklist" /></form>');
         plist.on('submit','#blfrm',function(event) {
             event.preventDefault();
             me.html('...');
@@ -78,34 +78,33 @@ $(document).ready(function() {
         if(oldPlist == "") {
             me.html('...');
             N.html.pm.getForm(function(data) {
-                oldPlist = $("#postlist").html();
-                $("#postlist").html(data);
+                oldPlist = $("#fast_nerdz").html();
+                $("#fast_nerdz").html(data);
                 $("#to").val($("#username").html());
-                $("#fast_nerdz").hide();
+                $("#postlist").hide();
+                TPLoad();
             });
         }
         else
         {
             me.html(txt);
-            $("#fast_nerdz").show();
-            $("#postlist").html(oldPlist);
+            $("#fast_nerdz").html(old);
+            $("#postlist").show();
             oldPlist = "";
         }
     });
 
-    $("#postlist").on('submit',"#convfrm",function(e) { //per i pm
+    $("#fast_nerdz").on('submit',"#convfrm",function(e) { //per i pm
         e.preventDefault();
-        $("#res").html('...');
         N.json.pm.send({
             tok: $(this).data('tok'),
             to: $("#to").val(),
-            message: $("#message").val(),
+            message: $("#frmtxt").val().tag().autoLink(),
             },function(d) {
-                $('#res').html(d.message);
                 if(d.status == 'ok') {
                     setTimeout(function() {
-                        $("#fast_nerdz").show();
-                        $("#postlist").html(oldPlist);
+                        $("#fast_nerdz").html(oldPlist);
+                        $("#postlist").show();
                     },500);
                 }
         });

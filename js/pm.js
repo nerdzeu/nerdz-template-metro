@@ -1,6 +1,6 @@
 $(document).ready(function() {
     var c_from, c_to;
-    var loadtxt = $("#loadtxt").data('loading')+'...';
+    var loadtxt = N.getLangData().LOADING;
     $("#content").on('submit',"#convfrm",function(e) {
       e.preventDefault();
       var s = $(this).find("input[type=submit]").eq(0);
@@ -8,8 +8,8 @@ $(document).ready(function() {
       w = s.parent().width()*.3;
       s.width(s.parent().width()*.9).val(loadtxt).attr("disabled","disabled").next().hide();
       if( $("#img_ul_file").val() != "" && $("#img_ul_file").is(":visible") )
-        if( !confirm("The image you selected was not uploaded still. Do you want to send the message anyway?") )
-          return s.val(s.data("send")).width(w).next().width(w).show();
+        if( !confirm(N.getLangData().IMG_UPLOADING) )
+          return s.val(N.getLangData().SEND).attr("disabled",false).width(w).next().show();
       var pattern = "div[id^='pm']";
       var mess = $("#conversation").find(pattern);
       var last = null;
@@ -51,7 +51,7 @@ $(document).ready(function() {
         }
         s.val(d.message);
         setTimeout(function() {
-          s.val(s.data("send")).attr("disabled",false).width(w).next().width(w).show();
+          s.val(N.getLangData().SEND).attr("disabled",false).width(w).next().show();
         },1000);
       });
     });

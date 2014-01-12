@@ -1,6 +1,6 @@
 $(document).ready(function() {
     var plist = $("#postlist");
-    var loading = $("#loadtxt").data('loading'); 
+    var loading = N.getLangData().LOADING; 
     var lang = null; 
     var load = false; 
     plist.html('<h1>'+loading+'...</h1>');
@@ -10,9 +10,9 @@ $(document).ready(function() {
             var el = $(this).find('div:first');
             if ((el.height() >= 200 || el.find ('.gistLoad').length > 0) && !el.attr('data-parsed'))
             {
-                el.addClass("compressed");
+                el.height(200).css("overflow","hidden");
                 var n = el.next();
-                n.prepend ('<p class="more">&gt;&gt;' + n.data ('expand') + '&lt;&lt;</p>');
+                n.prepend ('<p class="more">&gt;&gt;' + N.getLangData().EXPAND + '&lt;&lt;</p>');
             }
             el.attr('data-parsed','1');
         });
@@ -35,16 +35,16 @@ $(document).ready(function() {
             }
           }
           if(html=="") return;
-          $("#hptable").html(html)
+          $("#hptable").hide().html(html).show(500)
         }
         fixHeights();
     };
-    
+ 
     $("#profilePostList").on("click",function(e){
       e.preventDefault();
       N.html.profile.getHomePostList(0,function(data) {
         plist.html('<h1>'+loading+'...</h1>');
-        $("#fast_nerdz").show();
+        $("#fast_nerdz").show(500);
         if($("#profilePostArrow").hasClass("icon-arrow-up-2")) $("#profilePostArrow").click();
         $(".selectlang.active").removeClass("active");
         localStorage.removeItem("autolang");
@@ -60,7 +60,7 @@ $(document).ready(function() {
     $("#projectPostList").on('click',function(e) {
       e.preventDefault();
       plist.html('<h1>'+loading+'...</h1>');
-      $("#fast_nerdz").hide();
+      $("#fast_nerdz").fadeOut(500);
       if($("#projectPostArrow").hasClass("icon-arrow-up-2")) $("#projectPostArrow").click();
       $(".projlang.active").removeClass("active");
       load = false;
@@ -88,13 +88,13 @@ $(document).ready(function() {
       for(key in pids)
         hid += pids[key]+"|";
       hid = hid.substr(0,hid.length-1);
-      $($(this).data("id")).show(0,function(){ 
+      $($(this).data("id")).show(500,function(){ 
         $.each($(this).find(".img_frame>img"),function(){$(this).css("margin-top", (117-$(this).height())/2)})
       });
       localStorage.setItem("hid",hid);
       if(hid=="") 
         localStorage.removeItem("hid");
-      $(this).parent().remove();
+      $(this).parent().hide(500,function(){$(this).remove();});
     })
                 
     plist.on('click',".spoiler",function(){
@@ -109,7 +109,7 @@ $(document).ready(function() {
     
     plist.on('click','.more',function() {
         var me = $(this), par = me.parent(), jenk = par.prev();
-        jenk.removeClass("compressed")
+        jenk.animate({ height: jenk[0].scrollHeight }, 500, function() { $(this).height("auto") } );
         me.slideUp ('slow', function() {
             me.remove();
         });
@@ -117,7 +117,7 @@ $(document).ready(function() {
 
     plist.on('click',".icon-cancel-2",function() {
         var pid = $(this).data('postid');
-        $("#"+pid).hide();
+        $("#"+pid).hide(500, hideHidden);
         var hidden = localStorage.getItem('hid');
         if(hidden == null) {
             localStorage.setItem('hid',pid);
@@ -132,7 +132,6 @@ $(document).ready(function() {
         {
             lock.eq(0).click();
         }
-        hideHidden();
     });
 
     $(".selectlang").on('click',function() {
@@ -144,7 +143,7 @@ $(document).ready(function() {
         load = false;
         if(lang == 'usersifollow')
         {
-            $("#fast_nerdz").show();
+            $("#fast_nerdz").fadeIn();
             N.html.profile.getFollowedHomePostList(0,function(data) {
                 plist.html(data);
                 plist.data('type','profile');
@@ -175,7 +174,7 @@ $(document).ready(function() {
     });
 
     $(".projlang").on('click',function() {
-        $("#fast_nerdz").hide();
+        $("#fast_nerdz").hide(100);
         plist.html('<h1>'+loading+'...</h1>');
         lang = $(this).data('lang');
         $(".projlang").removeClass('active');
@@ -212,7 +211,7 @@ $(document).ready(function() {
         s.width(s.parent().width()*.9).val(loading+'...').attr("disabled","disabled").next().hide();
         if( $("#img_ul_file").val() != "" && $("#img_ul_file").is(":visible") )
           if( !confirm("The image you selected was not uploaded still. Do you want to send the message anyway?") )
-            return s.val(s.data("send")).width(w).next().show();
+            return s.val(N.getLangData().NERDZ_IT).width(w).next().show();
         var message = $("#frmtxt").val().tag();
         if(undefined==localStorage.getItem("no-autolink")) message = message.autoLink();
         N.json.profile.newPost({message: message, to: 0 },function(data) {
@@ -244,7 +243,7 @@ $(document).ready(function() {
             s.val(data.message);
 
             setTimeout(function() {
-              s.val(s.data("send")).attr("disabled",false).width(w).next().show();
+              s.val(N.getLangData().NERDZ_IT).attr("disabled",false).width(w).next().show();
             },1000);
         });
     });

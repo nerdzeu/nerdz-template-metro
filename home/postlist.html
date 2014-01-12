@@ -8,7 +8,10 @@
             {$value.message_n}
             <hr />
             <div class="small">
-                <a href="/{$value.to4link_n}{$value.pid_n}">Link</a>
+                <a href="/{$value.to4link_n}{$value.pid_n}"><i class="post_icons icon-link" style="float:left;"></i></a>
+                <a href="#" class="showcomments" data-hpid="{$value.hpid_n}" data-refto="commentlist{$value.hpid_n}">
+                     <i class="post_icons icon-comments-4" title="{$comments}" style="float:left">{$value.postcomments_n}</i>
+                </a>
                 <i title="{$hide}" class="post_icons hide icon-cancel-2" data-postid="post{$value.hpid_n}"></i>
             </div>
         </div>
@@ -31,8 +34,8 @@
             <div>
               {$value.message_n}
             </div>
-            <div style="clear:both; padding-top: 5px" class="small" data-expand="{$expand}">
-                <a href="/{$value.to4link_n}{$value.pid_n}" class="post_link"><i class="post_icons icon-link" style="float:left;"></i></a>&nbsp;&nbsp;
+            <div style="clear:both; padding-top: 5px" class="small">
+                <a href="/{$value.to4link_n}{$value.pid_n}"><i class="post_icons icon-link" style="float:left;"></i></a>&nbsp;&nbsp;
                 <a href="#" class="showcomments" data-hpid="{$value.hpid_n}" data-refto="commentlist{$value.hpid_n}">
                      <i class="post_icons icon-comments-4" title="{$comments}" style="float:left">{$value.postcomments_n}</i>
                 </a>
@@ -73,9 +76,10 @@
             </div>
         </div>
         <div>
+    {/if}
             <script type="application/javascript">var lnk{$value.hpid_n} = "/{$value.to4link_n}{$value.pid_n}";</script>
             <div id="commentlist{$value.hpid_n}" style="width:65%;margin-top:1%; margin-bottom:15px"></div>
         </div>
-    {/if}
+
     </div>
 {/loop}

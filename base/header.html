@@ -2,7 +2,7 @@
 <header id="site_title">
   <nav class="navigation-bar dark">
     <nav class="navigation-bar-content">
-      <a class="element" href="/home.php" accesskey="h">NERDZ</a>
+      <a class="element" href="/home.php" accesskey="h"><h3 style="margin: 0px; padding: 2px;line-height:12px">NERDZ</h3></a>
       <div class="element-divider"></div>
       <div class="element">
         <a class="dropdown-toggle" id="welcome" href="#">{$welcome}, {$myusername_n} &nbsp;&nbsp;</a>
@@ -13,7 +13,7 @@
             <a class="dropdown-toggle" href="#"><i class="icon-tools"></i>{$preferences} Metro</a>
             <ul class="dropdown-menu pointer" data-role="dropdown" data-pos="right">
               <li class="input-control switch" style="float:left;">
-                <i class="icon-ruler">Theme:</i><br />
+                <i class="icon-ruler">{$theme}:</i><br />
                 <span id="theme-switcher" style="float:left; margin-left: 20px; padding: 3px; width:100%; overflow: auto;">
                   <div class="tile tiny" style="background-color: #3D3D3D" title="Metro Dark" id="dark"></div>
                   <div class="tile tiny" style="background-color: #ddd;" title="Metro Light" id="light"></div>
@@ -22,7 +22,7 @@
               </li>
               <li class="input-control switch" style="margin-bottom: 0px;">
                 <label>
-                  <i class="icon-code"></i>Code Theme: &nbsp; <i class="icon-lamp" title="Dark"></i>
+                  <i class="icon-code"></i>{$CODE_THEME}: &nbsp; <i class="icon-lamp" title="Dark"></i>
                   <input type="checkbox" id="code-theme-switcher">
                   <span class="check"></span>
                   <i class="icon-lamp-2" title="Light"></i>
@@ -35,7 +35,7 @@
               </li>
               <li class="input-control switch" style="margin-bottom: 0px;">
                   <label>
-                    <i class="icon-alarm-2"></i>Notifications: &nbsp;&nbsp;
+                    <i class="icon-alarm-2"></i>{$notifications}: &nbsp;&nbsp;
                     <input type="checkbox" id="metro-notify" checked />
                     <span class="check"></span>
                   </label>
@@ -49,7 +49,7 @@
                   <i class="icon-tools" style="float: right;padding: 7px;" id="tagpanel-custom"></i>
               </li>
               <li id="metro-info">
-                <i class="icon-info">Info</i>
+                <i class="icon-info">{$informations}</i>
               </li>
               <li onclick="window.open('http://github.com/DrJest/nerdzTemplateMetroNerdz')">
                 <i class="icon-github-2">GitHub</i>
@@ -62,13 +62,14 @@
       <a class="element place-right" style="padding-left:30px; padding-right: 30px" href="/pm.php" accesskey="m" id="gotopm">
         <i title="{$pm}" class="icon-mail" id="pmcounter" accesskey="q"></i>
       </a>
-      <div class="element-divider place-right">&nbsp;</div>
-      <a class="element place-right" href="/feed.php?project=1">
-        <i title="Feed Project" class="icon-feed"></i>
-      </a>
-      <a href="/feed.php" class="element place-right">
-        <i title="Feed Posts" class="icon-feed"></i>
-      </a>
+      <div class="element-divider place-right"></div>
+      <div class="element place-right">
+        <i title="Feeds" id="feeds" class="icon-feed dropdown-toggle"> RSS</i>
+        <ul class="dropdown-menu" data-role="dropdown" style="z-index: 1001; min-width: 140px;" data-pos="left">
+          <li><a href="/feed.php" target="_blank"><i title="Feed Posts" class="icon-user"> {$users} </i></a></li>
+          <li><a href="/feed.php?project=1" target="_blank"><i title="Feed Projects" class="icon-user"> {$projects} </i></a></li>
+        </ul>
+      </div>
       <div class="element-divider place-right"></div>
     </nav>
   </nav>
@@ -87,7 +88,7 @@
         <a class="dropdown-toggle" href="#"><i class="icon-tools"></i>{$preferences} Metro</a>
         <ul class="dropdown-menu pointer" id="metro-pref" data-role="dropdown" data-pos="right">
           <li>
-            <i class="icon-ruler">Tema:</i>
+            <i class="icon-ruler">{$theme}:</i>
             <select id="theme-switcher" style="margin-left: 1.5em">
               <option value="dark">Dark</option>
               <option value="light">Light</option>
@@ -99,7 +100,7 @@
             </span>
           </li>
           <li id="metro-info">
-            <i class="icon-info">Info</i>
+            <i class="icon-info">{$informations}</i>
           </li>
           <li onclick="window.open('http://github.com/DrJest/nerdzTemplateMetroNerdz')">
             <i class="icon-github-2">GitHub</i>
@@ -174,5 +175,4 @@ $(document).on('submit',"#loginfrm",function(event) {
 if(location.hash=="#login") $("#login").click();
 </script>
 {/if}
-<div id="loadtxt" data-loading="{$loading}"></div>
 <div class="grid fluid">

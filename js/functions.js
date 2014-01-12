@@ -90,17 +90,30 @@ if (!String.prototype.format) {
 	};
 }
 
+REformat = function (str) { 
+  return new RegExp("(?!\\[(?:img|url|code|gist|yt|youtube|noparse)[^\\]]*?\\])"+str+"(?![^\\[]*?\\[\\/(img|url|code|gist|yt|youtube|noparse)\\])","gi");
+}
+
 if (!String.prototype.tag) {
   String.prototype.tag = function() {
-    return this.replace(/(?!\[(?:img|url|code|gist|yt|youtube|noparse)[^\]]*?\])(^|\s+)@@(?:\s+)?([\S ]+)@(?![^\[]*?\[\/(img|url|code|gist|yt|youtube|noparse)\])/g,"$1[user]$2[/user]")
-               .replace(/(?!\[(?:img|url|code|gist|yt|youtube|noparse)[^\]]*?\])(^|\s+)@([\S]+)(?![^\[]*?\[\/(img|url|code|gist|yt|youtube|noparse)\])/g,"$1[user]$2[/user]")
+    return this.replace(REformat("(^|\\s+)@@(?:\\s+)?([\\S ]+)@"),"$1[user]$2[/user]")
+               .replace(REformat("(^|\\s+)@([\\S]+)"),"$1[user]$2[/user]")
   };
 };
 
 if(!String.prototype.autoLink) {
     String.prototype.autoLink = function() {
-    var pattern = /(?!\[(?:img|url|code|gist|yt|youtube|noparse)[^\]]*?\])(^|\s+)((((ht|f)tps?:\/\/)|[www])([a-z\-]+\.)*[\-\w]+(\.[a-z]{2,4})+(\/[\w\_\-\?\=\#&\.]*)*(?![a-z]))(?![^\[]*?\[\/(img|url|code|gist|yt|youtube|noparse)\])/gi;
-    return this.replace(pattern, "$1[url]$2[/url]").replace(/\[(\/)?noparse\]/gi,"");
+    str=this;
+    var pattern = REformat("(^|\\s+)((((ht|f)tps?:\\/\\/)|[www])([a-z\\-]+\\.)*[\\-\\w]+(\\.[a-z]{2,4})+(\\/[\\w\\_\\-\\?\\=\\#&\\.\\(\\)]*)*(?![a-z]))");
+    urls = this.match(pattern)
+    for (i in urls)
+    {
+      if(urls[i].match(/\.(png|gif|jpg|jpeg)$/))
+        str = str.replace(urls[i],"[img]"+(urls[i].match(/(^|\s+)https?:\/\//)?"":"http://")+urls[i]+"[/img]");
+      if(urls[i].match(/youtube\.com|https?:\/\/youtu\.be/))
+        str = str.replace(urls[i],"[yt]"+$.trim(urls[i])+"[/yt]");
+    }
+    return str.replace(pattern, "$1[url]$2[/url]").replace(/\[(\/)?noparse\]/gi,"").replace(REformat("<3"),"♥");
   };
 }
 
@@ -293,7 +306,7 @@ TPLoad = function() {
     if ( this.files && this.files[0] ) {
       var FR= new FileReader();
       FR.onload = function(e) {
-        $("#img_ul_btn").html("Uploading...");
+        $("#img_ul_btn").html(N.getLangData().UPLOADING);
         $.ajax({
           url: 'https://api.imgur.com/3/image',
           method: 'POST',
@@ -340,5 +353,5 @@ $(function () {
             }
         }, 100);
     });
-    $m.click(function(){$w.scrollTop(0);});
+    $m.click(function(){$("body").animate({scrollTop:"0px"},1000)});
 });

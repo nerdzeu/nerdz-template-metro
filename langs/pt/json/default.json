@@ -219,5 +219,22 @@
     "EXPAND": "Expandir",
     "EVERY_COMMENT": "Todos os coment\u00e1rios",
     "EVERY_MSG": "Todos os posts",
-    "USER_MENU": "menu do usu\u00e1rio"
+    "USER_MENU": "menu do usu\u00e1rio",
+    "BACK_TO_THE_TOP": "Back to top",
+    "HIDDEN_POSTS": "Hidden Posts",
+    "UPLOADING": "Uploading...",
+    "IMG_UPLOADING": "The image you selected was not uploaded still. Do you want to send the message anyway?",
+    "IMG_UPLOADING_2": "The image you selected was not uploaded still.",
+    "MOTIVATION": "Motivation",
+    "POST_NOT_SENT": "The following post has not been sent:",
+    "NEW_MESSAGE": "You have 1 new message",
+    "NEW_MESSAGES": "You have {0} new messages",
+    "NEW_NOTIFICATIONS": "You have {0} new n",
+    "CANCEL": "Cancel",
+    "METRO_SETTINGS": "Metro Settings",
+    "THEME": "Theme",
+    "CODE_THEME": "Code Theme",
+    "NOTIFICATIONS": "Notifications",
+    "PROJECT": "Project",
+    "NO": "No"
 }

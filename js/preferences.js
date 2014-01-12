@@ -1,16 +1,16 @@
 $(document).ready(function() {
   
-  var loading = $("#loadtxt").data('loading');
+  var loading = N.getLangData().LOADING;
   var c = $("#content");
   $(".tile .tile-status").css("top","0px");
   $("#prefbar").on("click",".tile",function(event) {
       event.preventDefault();
       c.html(loading);
-      $("#prefbar").addClass("compact");
+      $("#prefbar").animate({height:"130px"},function(){$(this).addClass("compact").height("")});
       $(".selected").removeClass("selected");
       $(this).addClass("selected");
       N.html.post('/pages/preferences/'+ $(this).attr("id") +'.html.php',{},function(data) {
-          c.html(data);
+          c.hide().html(data).slideDown("slow");
       });
   });
 

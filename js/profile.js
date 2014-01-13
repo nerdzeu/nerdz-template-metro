@@ -88,7 +88,7 @@ $(document).ready(function() {
         else
         {
             me.html(txt);
-            $("#fast_nerdz").html(old);
+            $("#fast_nerdz").html(oldPlist);
             $("#postlist").show();
             oldPlist = "";
         }

@@ -396,7 +396,7 @@ $(document).ready(function() {
         });
     });
     
-        plist.on('click', ".yt_frame", function(e) {
+    plist.on('click', ".yt_frame", function(e) {
       e.preventDefault();
       var vid = $(this).data("vid");
       d = $.Dialog({
@@ -412,39 +412,25 @@ $(document).ready(function() {
         overlayClickClose: false,
         onClose: function() { $(document).unbind("keyup.yt"); },
         onShow: function(_dialog){
-          $(_dialog).appendTo($("body"));
-          $(".window-overlay").remove();
-          $.Dialog.content('<iframe width="640" height="480" src="//www.youtube.com/embed/'+vid+'" seamless></iframe>');
+          $.Dialog.content('<iframe style="min-width:640px; min-height:480px; width: 100%; height:auto" src="//www.youtube.com/embed/'+vid+'" seamless></iframe>');
           w = _dialog;
           c = w.children(".content").eq(0);
-          w.data("old",[w.css("top"),w.css("left")].join("|"));
           $(".btn-min").click(function(e) {
             e.preventDefault();
             if(!w.hasClass("minimized"))
             {
-              c.hide();
-              w.css({minHeight:"30px",height:"40px",width:"100px",top:"",bottom:"30px",left:"0px"}).addClass("minimized");
+              w.addClass("minimized");
               if(w.hasClass("maximized")) w.removeClass("maximized").addClass("maximize")
             } else {
-              c.show();
-              ss = w.data("old").split("|");
-              w.hasClass("maximize") ? 
-                w.css({width:$(window).width(),height:$(window).height()-30,top:0,left:0,bottom:""}).removeClass("minimized") : 
-                w.css({width:656,height:517,top:ss[0],left:ss[1],bottom:""}).removeClass("minimized");
+              w.hasClass("maximize") && w.addClass("maximized");
+              w.removeClass("maximize").removeClass("minimized");
             }
           })
           $(".btn-max").click(function(e) {
             e.preventDefault();
-            c.show();
-            if(!w.hasClass("maximized"))
-            {
-              w.css({height:$(window).height()-30,width:"100%",top:"0px",left:"0px"}).addClass("maximized").removeClass("minimized").removeClass("maximize");
-              c.children().css("height",$(window).height()-70);
-            } else {
-              ss = w.data("old").split("|");
-              w.css({width:656,height:517,top:ss[0],left:ss[1]}).removeClass("maximized");
-              c.children().css("height",480);
-            }
+            w.removeClass("minimized").removeClass("maximize");
+            w.toggleClass("maximized");
+            c.children().css("height",w.height()-30);
           });
           $(document).on("keyup.yt",function(e){
              var code = e.keyCode ? e.keyCode : e.which;
@@ -719,8 +705,8 @@ $(document).ready(function() {
             N.html.getNotifications(function(d) {
               nn = $("<div>").html(d).children().length;
               nn==1?
-              $.Notify.show(d) :
-              $.Notify.show('<a href="#" onclick="$(\'#notifycounter\').click()">'+N.getLangData().NEW_NOTIFICATIONS.format(nn)+'</a>');
+                $.Notify.show(d, function(){N.html.getNotifications($.noop(),false)}) :
+                $.Notify.show('<a href="#" onclick="">'+N.getLangData().NEW_NOTIFICATIONS.format(nn)+'</a>', function(){$('#notifycounter').click();});
               $("#notifyaudio")[0].play();
             },true);
           }
@@ -734,9 +720,7 @@ $(document).ready(function() {
           nw = val-curpm;
           if(nw>0)
           {
-            nw==1 ?
-            $.Notify.show('<a href="/pm.php#new" class="notref">'+N.getLangData().NEW_MESSAGE+'!</a>') : 
-            $.Notify.show('<a href="/pm.php#new" class="notref">'+N.getLangData().NEW_MESSAGES.format(nw)+'!</a>');
+            $.Notify.show('<a style="cursor:pointer">'+(nw==1?N.getLangData().NEW_MESSAGE : N.getLangData().NEW_MESSAGES.format(nw) )+'!</a>', function() {$("#gotopm").click()});
             $("#notifyaudio")[0].play();
           }
           curpm = val;

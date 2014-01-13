@@ -579,6 +579,24 @@ body.light  #footer_main {
 .img_frame.img_frame-extended:before, .img_frame.img_frame-extended:after {
   display: none;
 }
+.window.maximized {
+  top: 0px !important;
+  left: 0px !important;
+  width:100% !important;
+  height: 100% !important;
+}
+.window.minimized {
+  height: 30px !important;
+  min-height: 30px !important;
+  min-width: 200px !important;
+  width: 200px !important;
+  top: auto !important;
+  bottom: 30px !important;
+  left: 0px  !important;
+}
+.window.minimized .content {
+  display: none;
+}
 .yt_frame span, .img_frame span, .img_frame-extended span, #hposts:after
 {
   display: none;
@@ -608,6 +626,9 @@ p {
 }
 .active {
   color: #4390DF !important;
+}
+.navigation-bar.dark h3 {
+  color: #eee;
 }
 /** SCROLLBARS WEBKIT **/
 ::-webkit-scrollbar {
@@ -704,102 +725,5 @@ p {
   background-position: 0px -38px;
 }
 ::-webkit-scrollbar-button:vertical:increment:disabled {
-  background-position: 0px -57px;
-}
-/** SCROLLBARS FIREFOX **/
-::-moz-scrollbar {
-  background-color: #F0F0F0;
-  width: 19px;
-  height: 19px;
-}
-::-moz-scrollbar-thumb {
-  background-color: #cdcdcd;
-  border: 3px solid #f0f0f0;
-}
-::-moz-scrollbar-thumb:hover {
-  background-color: #dadada;
-}
-::-moz-scrollbar-thumb:active {
-  background-color: #606060;
-}
-::-moz-scrollbar-thumb:disabled {
-  background-color: #f9f9f9;
-}
-::-moz-scrollbar-corner {
-  background-color: #f0f0f0;
-}
-::-moz-scrollbar-button {
-  background-color: #f0f0f0;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAByCAYAAAA/IqNPAAAB80lEQVR42u2YW66EMAxDaXbGTlgaO2Fpnd87qC+7vili4r+RGOcoVMHptoVC/6s08tBxHPk8z6QoeBxH/vu75psQo1m4Uagu2N1oBg6BaoKVoFg4FGrbts0Yoxa0AqrYsZYRWoSFqnasZoS+wplOG3qOvOCMKe4BJxma7nNsNVwoFAq9PlqvGKiGBETmOelHvPdnJL6wcIYWR6FYOEM6w0IxcGn0wCpTwYiXy5YkX3iVe6U8KKo2cdnCq7y7YM7nYyd/KBQK/US0zjnnlJJkMOacvwZuzTchRrNwo1BdsLvRDBwC1QQrQbFwKFQ1WveMWtAKqGLHWkZoERaqu4zcjdBXONNpQ8+RF5wxxT3gXNOkbI6thguFQqHXR+sVA9WQgMg8J/2I9/6MxBcWztDiKBQLZ0hnWCgGLo0eWGUqGPFy2ZLkC69yr5QHRdUmLlt4lXcXzPl87OQPhUKhn4jW13Xlfd8lg/G6rq+BW/NNiNEs3ChUF+xuNAOHQDXBSlAsHApVjdY9oxa0AqrYsZYRWoSF6i4jdyP0Fc502tBz5AVnTHEPONc0KZtjq+FCoVDo9dF6xVB1m7oonCHJlY0wzIfcmKIoFANnaHEWCoUzpDOzUAhcGj2oyrgy4uWyvsk3ceXCK0+wqisC2SauvFSJOB16oj703wh+vho0mAAAAABJRU5ErkJggg==);
-  background-repeat: no-repeat;
-}
-::-moz-scrollbar-button:hover {
-  background-color: #dadada;
-}
-::-moz-scrollbar-button:active {
-  background-color: #606060;
-}
-::-moz-scrollbar-button:disabled {
-  background-color: #f9f9f9;
-}
-
-::-moz-scrollbar-button:vertical {
-  width: 19px;
-  height: 19px;
-}
-::-moz-scrollbar-button:horizontal {
-  width: 19px;
-  height: 19px;
-}
-
-::-moz-scrollbar-button:horizontal:decrement {
-  background-position: -19px 0px;
-}
-::-moz-scrollbar-button:horizontal:increment {
-  background-position: -19px -19px;
-}
-::-moz-scrollbar-button:vertical:decrement {
-  background-position: 0px 0px;
-}
-::-moz-scrollbar-button:vertical:increment {
-  background-position: 0px -19px;
-}
-
-::-moz-scrollbar-button:horizontal:decrement:hover {
-  background-position: -19px -38px;
-}
-::-moz-scrollbar-button:horizontal:increment:hover {
-  background-position: -19px -57px;
-}
-::-moz-scrollbar-button:vertical:decrement:hover {
-  background-position: 0px -38px;
-}
-::-moz-scrollbar-button:vertical:increment:hover {
-  background-position: 0px -57px;
-}
-
-::-moz-scrollbar-button:horizontal:decrement:active {
-  background-position: -19px -76px;
-}
-::-moz-scrollbar-button:horizontal:increment:active {
-  background-position: -19 -95px;
-}
-::-moz-scrollbar-button:vertical:decrement:active {
-  background-position: 0px -76px;
-}
-::-moz-scrollbar-button:vertical:increment:active {
-  background-position: 0px -95px;
-}
-
-::-moz-scrollbar-button:horizontal:decrement:disabled {
-  background-position: -19px -38px;
-}
-::-moz-scrollbar-button:horizontal:increment:disabled {
-  background-position: -19px -57px;
-}
-::-moz-scrollbar-button:vertical:decrement:disabled {
-  background-position: 0px -38px;
-}
-::-moz-scrollbar-button:vertical:increment:disabled {
   background-position: 0px -57px;
 }

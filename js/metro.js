@@ -1022,7 +1022,8 @@ Date.prototype.format = function (c, a) {
             height: "auto",
             style: !1,
             position: "right",
-            timeout: 5E3
+            timeout: 5E3,
+            click: false
         }, d);
         var e = a || c("<div/>").addClass("metro notify-container").appendTo("body");
         a = e;
@@ -1036,6 +1037,7 @@ Date.prototype.format = function (c, a) {
             "" != d.content && void 0 != d.content && c("<div/>").addClass("content").html(d.content).appendTo(f);
             "auto" != d.width && f.css("min-width", d.width);
             "auto" != d.height && f.css("min-height", d.height);
+            d.click && $.isFunction(d.click) && f.click(d.click);
             f.hide().appendTo(e).fadeIn("slow");
             b.push(f);
             setTimeout(function () {
@@ -1044,6 +1046,12 @@ Date.prototype.format = function (c, a) {
         }
     };
     c.Notify.show = function (a, b) {
+      $.isFunction(b) ?
+        c.Notify({
+            content: a,
+            click: b
+        })
+      :
         c.Notify({
             content: a,
             caption: b

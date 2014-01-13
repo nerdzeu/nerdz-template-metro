@@ -51,7 +51,7 @@ $(document).ready(function() {
         }
         s.val(d.message);
         setTimeout(function() {
-          s.val(N.getLangData().SEND).attr("disabled",false).width(w).next().show();
+          s.val(N.getLangData().NERDZ_IT).attr("disabled",false).width(w).next().show();
         },1000);
       });
     });
@@ -172,12 +172,13 @@ $(document).ready(function() {
         });
     });
 
-
-    if(window.location.hash == '#new') {
-      newpm = true;
-      $("#inbox").click();
-    }
-    else if(location.hash=="#write") $("#form").click();
-    else $("#inbox").click();
-    location.hash="";
+    setTimeout(function() {
+      if(window.location.hash == '#new') {
+        newpm = true;
+        $("#inbox").click();
+      }
+      else if(location.hash=="#write") $("#form").click();
+      else $("#inbox").click();
+      location.hash="";
+    },500 );
 });

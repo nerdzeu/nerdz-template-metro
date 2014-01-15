@@ -341,7 +341,7 @@ $(function () {
     $w.scroll(function () {
         window.clearTimeout(scroll_timer);
         scroll_timer = window.setTimeout(function () {
-            if($w.scrollTop() <= 420)
+            if($w.scrollTop() <= 700)
             {
                 displayed = false;
                 $m.fadeOut(500);
@@ -353,5 +353,5 @@ $(function () {
             }
         }, 100);
     });
-    $m.click(function(){$("body").animate({scrollTop:"0px"},1000)});
+    $m.click(function(){$("body,html").animate({scrollTop:0},1000)});
 });

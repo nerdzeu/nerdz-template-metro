@@ -453,12 +453,13 @@ $(document).ready(function() {
                 start: 0,
                 num: 10
             }, function (res) {
-                refto.hide().html(res).slideDown();
-                count.html( refto.children(".commentcount").html() );
-                if (document.location.hash == '#last')
+                refto.hide().html(res).slideDown(function() {
+                  if (document.location.hash == '#last')
                     refto.find ('.frmcomment textarea[name=message]').focus();
-                else if (document.location.hash)
-                    $(document).scrollTop ($(document.location.hash).offset().top);
+                  else if (document.location.hash)
+                    $(document).scrollTop ($(document.location.hash).offset().top);  
+                });
+                count.html( refto.children(".commentcount").html() );
             });
         }
         else

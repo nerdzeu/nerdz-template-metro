@@ -197,9 +197,9 @@ $(document).ready(function() {
     $("body").on("focus", "textarea", function(e) {
       $(this).height(0).height( this.scrollHeight );
     }).on("keyup", "textarea", function(e) {
-      $("body").scrollTop = this.scrollTop ;
       $(this).height(0).height( this.scrollHeight );
       $(this).css("overflow", ( this.scrollHeight > parseInt($(this).css("max-height")) ) ? "auto" : "hidden" );
+      $("body, html").scrollTop($(this).offset().top+20);
     }).on("keydown", "textarea", function(e) {
       if( e.ctrlKey && (e.keyCode == 10 || e.keyCode == 13) ) {
         $(this).parent().trigger('submit');
@@ -326,7 +326,12 @@ $(document).ready(function() {
           N.json[plist.data('type')].delComment({ hcid: $(this).data('hcid') },function(d) {
             if(d.status == 'ok')
             {
+                var clist = refto.parent();
                 refto.remove();
+                if( !clist.children().length ) {
+                  sc.click();
+                  setTimeout(function(){sc.click},600);
+                }
             }
             else
             {
@@ -363,6 +368,10 @@ $(document).ready(function() {
                         newComments = t.children(".comments").eq(0).children(),
                         lastComment = comments.last();
                     lastComment.remove()
+                    if(cmnum<internalLengthPointer) {
+                      $("#post"+hpid).find(".icon-comments-4").eq(0).click();
+                      return;
+                    }
                     var internalLengthPointer = comments.length-1;
                     var n = internalLengthPointer + newComments.length,
                         mc = form.parent().find ('.more_btn').data('morecount'),

@@ -35,6 +35,9 @@ aside ul  {
 .nerdz_comments, .frmcomment { 
   margin-left: 30px; 
 }
+.nerdz_comments > div {
+  max-width: 95%;
+}
 #main {
   margin-top: 0px;
 }
@@ -129,6 +132,12 @@ hr {
 }
 #prefbar.compact:hover {
   height: 130px;
+}
+ol {
+  color: #eee;
+}
+.light ol {
+  color: #222;
 }
 /** TAGPANEL **/
 .tagpanel {
@@ -323,11 +332,11 @@ i:before { padding: 2px; }
 /** QUOTE **/
 .quote, .qu_main{
   display: block;
-  margin: 15px;
-  max-width: 95%;
-  outline: #999999 solid 3px;
+  margin: 5px;
+  outline: #999999 solid 2px;
   border-radius: 2px;
-  padding: 3px 3px 1em;
+  padding: 2px 2px 1em;
+  position: relative;
 }
 .quote:before, .qu_main:before {
   float: left;
@@ -335,16 +344,19 @@ i:before { padding: 2px; }
   font-family: iconFont;
   font-size: 9pt;
   font-weight: normal;
-  padding-left: 2px;
+  padding: 2px;
 }
 .quote:after, .qu_main:after {
   clear: both;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
   float: right;
   content: "\e164";
   font-family: iconFont;
   font-size: 9pt;
   font-weight: normal;
-  padding-right: 2px;
+  padding: 2px;
 }
 .quote span img, .qu_main span img {
   display: none;
@@ -356,7 +368,7 @@ i:before { padding: 2px; }
 .quote > *:first-child:before{
   clear:both;
   font-weight: bold;
-  content: "Quote ";
+  content: "Quote: ";
   margin-left: 10px;
 }
 /** CODE **/

@@ -74,12 +74,12 @@ $(document).ready(function() {
     });
 
     $("#profilepm").on('click',function() {
-        var me = $(this), txt = me.html();
+        var me = $(this), txt = N.getLangData().PM;
         if(oldPlist == "") {
             me.html('...');
             N.html.pm.getForm(function(data) {
                 oldPlist = $("#fast_nerdz").html();
-                $("#fast_nerdz").html(data);
+                $("#fast_nerdz").lenght ? $("#fast_nerdz").html(data) : $("#center_col").prepend($("<div>").attr("id","fast_pm").html(data));
                 $("#to").val($("#username").html());
                 $("#postlist").hide();
                 TPLoad();
@@ -88,13 +88,13 @@ $(document).ready(function() {
         else
         {
             me.html(txt);
-            $("#fast_nerdz").html(oldPlist);
+            $("#fast_nerdz").lenght ? $("#fast_nerdz").html(oldPlist) : $("#fast_pm").remove();
             $("#postlist").show();
             oldPlist = "";
         }
     });
 
-    $("#fast_nerdz").on('submit',"#convfrm",function(e) { //per i pm
+    $("#center_col").on('submit',"#convfrm",function(e) { //per i pm
         e.preventDefault();
         N.json.pm.send({
             tok: $(this).data('tok'),

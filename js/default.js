@@ -383,7 +383,7 @@ $(document).ready(function() {
                     }
                     if(cmnum>20) refto.find(".all_comments_btn").parent().eq(0).show();
                     clist.append(newComments);
-                    form.find('textarea').val ('');
+                    form.find('textarea').val ('').height(0);
                     error.html('');
                     $("#post"+hpid).find(".icon-comments-4").eq(0).text(cmnum);
                   });

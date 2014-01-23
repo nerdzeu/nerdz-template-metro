@@ -199,7 +199,7 @@ $(document).ready(function() {
     }).on("keyup", "textarea", function(e) {
       $(this).height(0).height( this.scrollHeight );
       $(this).css("overflow", ( this.scrollHeight > parseInt($(this).css("max-height")) ) ? "auto" : "hidden" );
-      $("body, html").scrollTop($(this).offset().top+20);
+      $("body, html").scrollTop($(this).offset().top-20);
     }).on("keydown", "textarea", function(e) {
       if( e.ctrlKey && (e.keyCode == 10 || e.keyCode == 13) ) {
         $(this).parent().trigger('submit');

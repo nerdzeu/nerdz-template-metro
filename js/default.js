@@ -462,7 +462,7 @@ $(document).ready(function() {
                 start: 0,
                 num: 10
             }, function (res) {
-                refto.hide().html(res).slideDown(function() {
+                refto.hide().html(res).slideDown("slow", function() {
                   if (document.location.hash == '#last')
                     refto.find ('.frmcomment textarea[name=message]').focus();
                   else if (document.location.hash)
@@ -473,7 +473,7 @@ $(document).ready(function() {
         }
         else
         {
-            refto.slideUp(function(){refto.html('')});
+            refto.slideUp("slow", function(){refto.html('')});
         }
     });
 

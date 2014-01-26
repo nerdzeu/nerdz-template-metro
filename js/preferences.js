@@ -32,7 +32,7 @@ $(document).ready(function() {
   }).on("submit","#edprofrm", function(e){
     e.preventDefault();
     var r = $("#res");
-    r.html($("#loadtxt").data('loading'));
+    r.html(N.getLangData().LOADING);
     N.json.post('/pages/preferences/profile.html.json.php',$(this).serialize(), function(data) {
       r.html(data.message);
     });
@@ -44,21 +44,21 @@ $(document).ready(function() {
     });
   }).on("click",".manage",function(e){
     e.preventDefault();
-    $("#cont").html($("#loadtxt").data('loading'));
+    $("#cont").html(N.getLangData().LOADING);
     N.html.post('/pages/preferences/projects.html.html.php',{id: $(this).data('id')},function(data) {
       $("#cont").html(data);
     });
   }).on("submit","#edprojform",function(e){
     e.preventDefault();
     var r = $("#res");
-    r.html($("#loadtxt").data('loading'));
+    r.html(N.getLangData().LOADING);
     N.json.post('/pages/preferences/projects.html.html.json.php?action=update',$(this).serialize(), function(data) {
       r.html(data.message);
     });
   }).on("submit","#delprojfrm",function(e){
     e.preventDefault();
     var r = $("#res2");
-    r.html($("#loadtxt").data('loading'));
+    r.html(N.getLangData().LOADING);
     N.json.post('/pages/preferences/projects.html.html.json.php?action=del',$(this).serialize(), function(data) {
       r.html(data.message);
       if(data.status == 'ok') {

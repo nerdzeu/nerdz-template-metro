@@ -185,6 +185,7 @@
     "OWNER": "Owner",
     "CREATE_PROJECT_DESCR": "Completing the form below, you'll create a project. Then you can manage you project in Preferences => Projects.\nAdding members, a goal and much more",
     "PROJECT_INFO": "Project info",
+    "PROJECT": "Project",
     "LANGUAGE": "Language",
     "LANGUAGE_DESCR": "Choose the language you want to use for descriptions, menus and text on NERDZ",
     "LANGUAGE_DESCR1": "Your language (and the default language of the posts in your homepage)",
@@ -235,6 +236,6 @@
     "THEME": "Theme",
     "CODE_THEME": "Code Theme",
     "NOTIFICATIONS": "Notifications",
-    "PROJECT": "Project",
-    "NO": "No"
+    "NO": "No",
+    "NO_PROJECTS": "You don't have any project"
 }

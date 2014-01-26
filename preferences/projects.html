@@ -20,19 +20,7 @@
         <button class="manage" data-id="{$value.id_n}" class="span1">{$manage}</button>
       </div>
     {else}
-      Yu don't have any project
+      You don't have any project
     {/loop}
   </div>
 </div>
-
-<script type="application/javascript">
-$(document).ready(function() {
-    $(".manage").on('click',function(e){
-        e.preventDefault();
-        $("#cont").html($("#loadtxt").data('loading'));
-        N.html.post('/pages/preferences/projects.html.html.php',{id: $(this).data('id')},function(data) {
-            $("#cont").html(data);
-        });
-    });
-});
-</script>

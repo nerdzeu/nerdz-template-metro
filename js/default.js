@@ -195,11 +195,10 @@ $(document).ready(function() {
        };
     
     $("body").on("focus", "textarea", function(e) {
-      $(this).height(0).height( this.scrollHeight );
+      $(this).height(0).height(this.scrollHeight).css("overflow", ( this.scrollHeight > parseInt($(this).css("max-height")) ) ? "auto" : "hidden" );
     }).on("keyup", "textarea", function(e) {
-      $(this).height(0).height( this.scrollHeight );
-      $(this).css("overflow", ( this.scrollHeight > parseInt($(this).css("max-height")) ) ? "auto" : "hidden" );
-      $("body, html").scrollTop($(this).offset().top-20);
+      $(this).height(0).height(this.scrollHeight).css("overflow", ( this.scrollHeight > parseInt($(this).css("max-height")) ) ? "auto" : "hidden" );
+      while ( $("body").innerHeight()+$("html").scrollTop() - ($(this).offset().top +  $(this).height()) <= 35 ) $("html").scrollTop($("html").scrollTop()+16);
     }).on("keydown", "textarea", function(e) {
       if( e.ctrlKey && (e.keyCode == 10 || e.keyCode == 13) ) {
         $(this).parent().trigger('submit');

@@ -69,6 +69,7 @@ new function($) {
   $.fn.insertAtCaret = function (text) {
     var el = $($(this).get(0));
     if(!(el.is("textarea")||el.is("input"))) return false;
+    el.focus();
     var content = el.val();
 		var position = el.getCursorPosition();
     var sel = el.selectedText();
@@ -319,7 +320,7 @@ TPLoad = function() {
             type: 'base64'
           },
           success: function(result) {
-            $("#frmtxt").insertAtCaret( "[img]"+result.data.link+"[/img]" );
+            $("#frmtxt").insertAtCaret( "[img]"+result.data.link.replace("http:","https:")+"[/img]" );
             $("#img_ul_btn").html('<i class="icon-upload"></i>');
             $("#img_ul_file").val("").hide(200);
           },

@@ -197,9 +197,7 @@ tags = function(btn) {
       el.setCursorPosition(pos+9);
       break;
     case "list":
-      var fg = prompt ("List Type: a|A|i|I|1 \n Default: 1", "");
-      if (fg == null || fg == "") 
-        fg="1";
+      var fg = prompt ("List Type: a|A|i|I|1", "");
       var list =  new Array();
       while(1) {
       li = prompt ("List Item:", "");
@@ -207,7 +205,7 @@ tags = function(btn) {
       else list.push(li);
       }
       if(!list.length) return;
-      var code = '[list type="'+fg+'"]'+"\n";
+      var code = (fg == null || fg == "") ? "[list]" : '[list type="'+fg+'"]'+"\n";
       for (i in list) {
         tmp = "[*] "+list[i]+"\n";
         code +=tmp;

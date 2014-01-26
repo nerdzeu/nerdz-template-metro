@@ -103,8 +103,9 @@ $(document).ready(function() {
             },function(d) {
                 if(d.status == 'ok') {
                     setTimeout(function() {
-                        $("#fast_nerdz").html(oldPlist);
+                        $("#fast_nerdz").length ? $("#fast_nerdz").html(oldPlist) : $("#fast_pm").remove();
                         $("#postlist").show();
+                        $("#profilepm").text(N.getLangData().PM)
                     },500);
                 }
         });

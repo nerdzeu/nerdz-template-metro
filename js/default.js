@@ -320,21 +320,22 @@ $(document).ready(function() {
     plist.on('click',".delcomment",function() {
         var refto = $('#' + $(this).data('refto'));
         sc = refto.parents("div[id^=\"post\"]").eq(0).find(".icon-comments-4");
-        sc.html(parseInt(sc.html())-1);
+
         refto.html(loading+'...');
           N.json[plist.data('type')].delComment({ hcid: $(this).data('hcid') },function(d) {
             if(d.status == 'ok')
             {
-                var clist = refto.parent();
-                refto.remove();
-                if( !clist.children().length ) {
-                  sc.click();
-                  setTimeout(function(){sc.click},600);
-                }
+              var clist = refto.parent();
+              refto.remove();
+              if( !clist.children().length ) {
+                sc.click();
+                setTimeout(function(){sc.click},600);
+              }
+              sc.html(parseInt(sc.html())-1);
             }
             else
             {
-                refto.html(d.message);
+              refto.html(d.message);
             }
         });
     });
@@ -380,7 +381,7 @@ $(document).ready(function() {
                       comments.slice(0,n-toshow).remove();
                       refto.children(".comment_btns").eq(0).show();
                     }
-                    if(cmnum>20) refto.find(".all_comments_btn").parent().eq(0).show();
+                    if(cmnum>20) refto.find(".all_comments_btn").eq(0).show();
                     clist.append(newComments);
                     form.find('textarea').val ('').height(0);
                     error.html('');
@@ -485,22 +486,22 @@ $(document).ready(function() {
         if (moreBtn.data ("inprogress") === "1") return;
         moreBtn.data ("inprogress", "1").text (loading + "...");
         N.html[plist.data ('type')].getComments ({ hpid: hpid, start: intCounter + 1, num: 10 }, function (r) {
-            moreBtn.data ("inprogress", "0").data ("morecount", ++intCounter).text (N.getLangData().MORE_COMMENTS);
+            moreBtn.data ("inprogress", "0").data ("morecount", ++intCounter).html(N.getLangData().MORE_COMMENTS);
             var _ref = $("<div>" + r + "</div>");
             clist.html(_ref.children(".comments").eq(0).html()+clist.html());
             if (intCounter == 1)
-              commentList.find (".scroll_bottom_btn").parent().show();
+              commentList.find (".scroll_bottom_btn").show();
             if ($.trim (r) == "" || _ref.find (".nerdz_from").length < 10 || (10 * (intCounter + 1)) == _ref.find (".commentcount:eq(0)").html())
             {
-              commentList.find (".all_comments_btn").parent().hide();
-              moreBtn.parent().hide();
+              commentList.find (".all_comments_btn").hide();
+              moreBtn.hide();
             }
         });
     });
 
     plist.on ('click', '.scroll_bottom_btn', function() {
         var cList = $(this).parents().eq(2);
-        $("html, body").animate ({ scrollTop: cList.find (".singlecomment:nth-last-child(2)").offset().top }, function() {
+        $("html").animate ({ scrollTop: cList.find (".singlecomment:nth-last-child(2)").offset().top }, function() {
             cList.find (".frmcomment textarea").focus();
         });
     });
@@ -514,9 +515,9 @@ $(document).ready(function() {
         btn.data ("working", "1").text (loading + "...");
         moreBtn.data ("inprogress", "1");
         N.html[plist.data ('type')].getComments ({ hpid: hpid, forceNoForm: true }, function (res) {
-            btn.data ("working", "0").text(N.getLangData().EVERY_COMMENT).parent().hide();
+            btn.data ("working", "0").text(N.getLangData().EVERY_COMMENT).hide();
             commentList.find (".scroll_bottom_btn").show();
-            moreBtn.hide().data ("morecount", Math.ceil (parseInt ($("<div>").html(res).find (".commentcount").html()) / 10));
+            moreBtn.data ("morecount", Math.ceil (parseInt ($("<div>").html(res).find (".commentcount").html()) / 10)).hide();
             commentList.children(".comments").eq(0).html(res);
         });
     });

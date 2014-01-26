@@ -9,6 +9,7 @@ $(document).ready(function() {
       $("#prefbar").animate({height:"130px"},function(){$(this).addClass("compact").height("")});
       $(".selected").removeClass("selected");
       $(this).addClass("selected");
+      location.hash = $(this).attr("id");
       N.html.post('/pages/preferences/'+ $(this).attr("id") +'.html.php',{},function(data) {
           c.hide().html(data).slideDown("slow");
       });
@@ -117,5 +118,5 @@ $(document).ready(function() {
       }
     });
   });
-
+  if(location.hash) $(location.hash).click();
 });

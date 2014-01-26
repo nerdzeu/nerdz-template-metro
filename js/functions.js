@@ -354,5 +354,5 @@ $(function () {
             }
         }, 100);
     });
-    $m.click(function(){$("body,html").animate({scrollTop:0},1000)});
+    $m.click(function(){$("html").animate({scrollTop:0},1000)});
 });

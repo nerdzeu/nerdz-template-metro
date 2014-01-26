@@ -79,6 +79,11 @@ hr {
   font-size: 10pt;
   color: #4390df;
 }
+.scroll_bottom_btn, .all_comments_btn, .more_btn {
+  display: inline-block;
+  padding: 5px;
+  width: 30%;
+}
 .tile.tiny {
   height: 28px;
   width: 28px;

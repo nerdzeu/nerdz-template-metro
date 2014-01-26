@@ -138,10 +138,10 @@ hr {
 #prefbar.compact:hover {
   height: 130px;
 }
-ol {
+ul, ol {
   color: #eee;
 }
-.light ol {
+.light ol, .light ul {
   color: #222;
 }
 /** TAGPANEL **/

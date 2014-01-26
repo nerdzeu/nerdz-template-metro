@@ -79,7 +79,7 @@ $(document).ready(function() {
             me.html('...');
             N.html.pm.getForm(function(data) {
                 oldPlist = $("#fast_nerdz").html();
-                $("#fast_nerdz").lenght ? $("#fast_nerdz").html(data) : $("#center_col").prepend($("<div>").attr("id","fast_pm").html(data));
+                $("#fast_nerdz").length ? $("#fast_nerdz").html(data) : $("#center_col").prepend($("<div>").attr("id","fast_pm").html(data));
                 $("#to").val($("#username").html());
                 $("#postlist").hide();
                 TPLoad();

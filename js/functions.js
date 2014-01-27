@@ -105,7 +105,7 @@ if (!String.prototype.tag) {
 if(!String.prototype.autoLink) {
     String.prototype.autoLink = function() {
     str=this;
-    var pattern = REformat("(^|\\s+)((((ht|f)tps?:\\/\\/)|[www])([a-z\\-]+\\.)*[\\-\\w]+(\\.[a-z]{2,4})+(\\/[\\w\\_\\-\\?\\=\\#&\\.\\(\\)]*)*(?![a-z]))");
+    var pattern = REformat("(^|\\s+)((((ht|f)tps?:\\/\\/)|[www])([a-z\\-]+\\.)*[\\-\\w]+(\\.[a-z]{2,4})+(\\/[\+%:\\w\\_\\-\\?\\=\\#&\\.\\(\\)]*)*(?![a-z]))");
     urls = this.match(pattern)
     for (i in urls)
     {

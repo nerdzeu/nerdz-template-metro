@@ -202,8 +202,6 @@
             
             $("#showpostlist").click();
             
-            {ignore} Autoload vecchi post allo scrolldown {/ignore}
-
             $(window).scroll(function() {
                 if($(this).scrollTop()+200 >= ( $(document).height() - $(this).height() ) )
                 {
@@ -248,9 +246,9 @@
     </script>
 {else}
     <script type="application/javascript">
-    $(document).ready(function() {
-            $(".showcomments").click();
-    });
+      $(document).ready(function() {
+        $(".showcomments").click();
+      });
     </script>
 {/if}
 </div>

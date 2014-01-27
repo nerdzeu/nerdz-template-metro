@@ -220,7 +220,11 @@ body.light .nerdz_date a {
 .nerdz_message > div.small {
   margin-right: -3px; 
 }
-
+#unblacklist {
+  padding-right: 0px;
+  padding-left: 0px;
+  text-align: center;
+}
 .news {
   border: 3px solid #4390df;
   padding: 5px;
@@ -373,7 +377,7 @@ i:before { padding: 2px; }
 .quote > *:first-child:before{
   clear:both;
   font-weight: bold;
-  content: "Quote: ";
+  content: "Quote ~ ";
   margin-left: 10px;
 }
 /** CODE **/

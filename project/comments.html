@@ -4,8 +4,9 @@
     <a href="#" class="all_comments_btn" onclick="return false;">{$every_comment}</a>
 </div>
 <span style="display: none" class="commentcount">{$commentcount_n}</span>
+<div class="comments">
 {loop="list_a"}
-<div id="{$value.uid_n}" data-hcid="{$value.hcid_n}" class="singlecomment">
+  <div id="{$value.uid_n}" data-hcid="{$value.hcid_n}" class="singlecomment">
     <a href="/{$value.from4link_n}" style="vertical-align:top">
         <img src="{$value.gravatarurl_n}?s=30#" alt="{$value.from_n}" height="30" width="30" onerror="this.src = '{$onerrorimgurl_n}'" style="float:left; padding-right:2px; padding-top: 3px" />
     </a>
@@ -22,7 +23,7 @@
                     <i class="icon-unlocked" data-hpid="{$value.hpid_n}" data-silent="{$value.fromid_n}" title="{$not_recv_notify}"></i>
                 {/if}
             {/if}
-            <i class="qu_ico icon-comments" data-hcid="{$value.hcid_n}" data-type="p" data-refto="commentto{$value.hpid_n}"></i>
+            <i class="qu_ico icon-comments" data-hcid="{$value.hcid_n}" data-type="u" data-refto="commentto{$value.hpid_n}"></i>
         </span>
     </div>
     <div class="nerdz_comments" style="width:auto">
@@ -32,8 +33,9 @@
         {$value.message_n}
     </div>
     <script type="application/javascript">$("#nd{$value.uid_n}{$value.hcid_n}").attr("href",(typeof(lnk{$hpid_n})=="undefined"?document.location.pathname:lnk{$hpid_n})+"#{$value.uid_n}");</script>
-</div>
+  </div>
 {/loop}
+</div>
 {if="$showform_b"}
     <div style="width:33px; float:left; ">
         <a href="/{$currentuserprofile_n}" style="vertical-align:top">

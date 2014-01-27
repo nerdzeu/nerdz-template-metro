@@ -49,18 +49,23 @@ $(document).ready(function() {
         var me = $(this);
         var plist = $("#postlist");
         oldPlist = plist.html();
-        plist.html('<form id="blfrm">'+N.getLangData().MOTIVATION+': <textarea style="width:100%; height:60px" id="blmot"></textarea><br /><input type="submit" value="Blacklist" /></form>');
-        plist.on('submit','#blfrm',function(event) {
-            event.preventDefault();
-            me.html('...');
-            N.json.profile.blacklist({
-                    id: me.data('id'),
-                    motivation: $("#blmot").val()
-                },function(d) {
-                    me.html(d.message);
-                    plist.html(oldPlist);
-                    me.off('click');
-            });
+        $("#stdfrm").hide();
+        plist.html('<form id="blfrm">'+N.getLangData().MOTIVATION+': <textarea style="width:100%; height:60px" id="blmot"></textarea><br /><input type="submit" class="place-right" value="Blacklist" /><input type="button" class="cancel" value="'+N.getLangData().CANCEL+'" /></form>');
+        $("#blfrm").on('submit',function(event) {
+          event.preventDefault();
+          me.html('...');
+          N.json.profile.blacklist({
+              id: me.data('id'),
+              motivation: $("#blmot").val()
+            },function(d) {
+              me.html(d.message);
+              plist.html(d.message);
+              me.off('click');
+          });
+        }).on("click",".cancel",function() {
+          me.html("Blacklist");
+          plist.html(oldPlist);
+          $("#stdfrm").show();
         });
     });
 
@@ -75,22 +80,24 @@ $(document).ready(function() {
 
     $("#profilepm").on('click',function() {
         var me = $(this), txt = N.getLangData().PM;
-        if(oldPlist == "") {
-            me.html('...');
-            N.html.pm.getForm(function(data) {
-                oldPlist = $("#fast_nerdz").html();
-                $("#fast_nerdz").length ? $("#fast_nerdz").html(data) : $("#center_col").prepend($("<div>").attr("id","fast_pm").html(data));
-                $("#to").val($("#username").html());
-                $("#postlist").hide();
-                TPLoad();
-            });
+        if(!$("#fast_pm").length) {
+          me.html('...');
+          N.html.pm.getForm(function(data) {
+            oldPlist = $("#fast_nerdz").html();
+            $("#fast_nerdz").html("");
+            $("#postlist").hide();
+            $("#center_col").prepend($("<div>").attr("id","fast_pm").html(data));
+            $("#to").val($("#username").html());
+            TPLoad();
+          });
         }
         else
         {
-            me.html(txt);
-            $("#fast_nerdz").lenght ? $("#fast_nerdz").html(oldPlist) : $("#fast_pm").remove();
-            $("#postlist").show();
-            oldPlist = "";
+          me.html(txt);
+          $("#fast_nerdz").html(oldPlist);
+          $("#postlist").show();
+          $("#fast_pm").remove();
+          TPLoad();
         }
     });
 
@@ -102,8 +109,10 @@ $(document).ready(function() {
             message: $("#frmtxt").val().tag().autoLink(),
             },function(d) {
                 if(d.status == 'ok') {
+                    $("#fast_pm").html(d.message);
                     setTimeout(function() {
-                        $("#fast_nerdz").length ? $("#fast_nerdz").html(oldPlist) : $("#fast_pm").remove();
+                        $("#fast_nerdz").html(oldPlist);
+                        $("#fast_pm").remove();
                         $("#postlist").show();
                         $("#profilepm").text(N.getLangData().PM)
                     },500);

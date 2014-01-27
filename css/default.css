@@ -220,6 +220,9 @@ body.light .nerdz_date a {
 .nerdz_message > div.small {
   margin-right: -3px; 
 }
+.nerdz_message .quote {
+  max-width: 97%;
+}
 #unblacklist {
   padding-right: 0px;
   padding-left: 0px;
@@ -433,10 +436,10 @@ div.nerdz-code-wrapper:after {
 }
 /** SPOILER **/
 .spoiler {
-  outline: 1px #AFAFAF solid;
-  width: 95%;
+  border: 1px #AFAFAF solid;
+  width: 97%;
   margin: 5px 3px 10px;
-  padding: 1px;
+  padding: 2px;
 }
 .spoiler > div { 
   clear: both;
@@ -451,6 +454,7 @@ div.nerdz-code-wrapper:after {
   background-color: #eeeeee;
   color: #4390df;
   padding-left: 10px;
+  margin: 0;
   width: 100%;
 }
 .spoiler > span:before {
@@ -466,6 +470,7 @@ div.nerdz-code-wrapper:after {
 }
 .spoiler.expanded > span:before {
   transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
   margin-left: -4px;
 }
 /** FOOTER **/

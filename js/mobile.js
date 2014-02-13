@@ -5,16 +5,11 @@ $(document).ready(function() {
   $("#feeds").parent().remove();
   $(".navigation-bar-content").eq(0).prepend( $("<div>").addClass("element").append($("#notifycounter").attr("style","")) );
   $("#footersearch").prependTo($("#left_col"));
-  //$("#left_col, #right_col, #center_col").appendTo($("#body"));
-  //$("#center_col").addClass("grid fluid");
-  //$("#site_title").next().remove();
   $("#footer_main").remove();
   $("#right_col").prepend($(".dropdown-menu").eq(0).removeClass("dropdown-menu"));
   $("#welcome").parent().remove();
   $("#center_col").height(screen.height-50);
-  $("#site_title").css({maxWidth:screen.width,width:"100%"});
   $("h3").eq(0).parent().html('<a href="/"><i class="icon-home"></i></a>');
-//impedisce il sovrapporsi degli slide
   var moving = 0;
   if(!!$("#left_col").length) 
   {

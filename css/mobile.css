@@ -89,9 +89,3 @@ body, html {
 .sidebar * {
   max-width: 99%;
 }
-/** clear sidebars **/
-::-webkit-scrollbar {
-  height: auto !important;
-  width: auto !important;
-  background: none;
-}

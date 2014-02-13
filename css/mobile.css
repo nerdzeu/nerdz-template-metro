@@ -1,0 +1,87 @@
+html, body {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 10px !important;
+}
+#center_col {
+  width: 99% !important;
+  margin: 0px !important;
+  position: absolute;
+  left: 0px;
+  top: 50px;
+  z-index: 1000;
+  background-color: #3D3D3D;
+  padding: 0px 0.2% 0px 0.8%;
+}
+body, html {
+  overflow-x: hidden;
+}
+ #left_col, #right_col {
+  display: none;
+  z-index: 100;
+  position: fixed;
+  top: 50px; 
+  width:70% !important;
+}
+#gotopm {
+  padding-left: 15px !important; 
+  padding-right: 15px !important;
+}
+.element-divider {
+  display:none !important;
+}
+.navigation-bar-content .place-right {
+  float: left !important;
+}
+#right_col {
+  right: 0px;
+}
+#left_col {
+  left: 0px;
+}
+#title_left, #title_right {
+  cursor: pointer;
+}
+#notify_list {
+  position: fixed;
+  width:100% !important;
+  top: 50px;
+  left: 0px;
+  height: auto;
+  font-size: 120%;
+  z-index: 1001;
+}
+.notify {
+  text-align: left;
+ }
+#notifycounter {
+  cursor: pointer;
+}
+#site_title {
+  position: fixed !important;
+  top:0px;
+  left:0px;
+  width: 100%;
+  z-index: 1001;
+}
+#content {
+  margin-top: 50px;
+}
+#form {
+  position: absolute;
+  top: 0px;
+  right: 55%;
+}
+#inbox {
+  position: absolute;
+  top: 0px;
+  left: 55%;
+}
+#prefbar {
+  height: auto !important;
+}
+.sidebar {
+  overflow: auto;
+  padding-bottom: 50px;
+  height:100%;
+}

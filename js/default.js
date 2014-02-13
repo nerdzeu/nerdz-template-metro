@@ -193,17 +193,22 @@ $(document).ready(function() {
     if($.inArray(location.pathname,[ '/bbcode.php','/terms.php','/faq.php','/stats.php','/rank.php','/preferences.php', '/informations.php', '/preview.php' ]) != -1) {
            $("#footersearch").remove();
        };
-    
+    var kdt;
     $("body").on("focus", "textarea", function(e) {
+      if(localStorage.getItem("no-autogrow")) return $(this).css("overflow","auto"); 
       $(this).height(0).height(this.scrollHeight).css("overflow", ( this.scrollHeight > parseInt($(this).css("max-height")) ) ? "auto" : "hidden" );
     }).on("keyup", "textarea", function(e) {
-      $(this).height(0).height(this.scrollHeight).css("overflow", ( this.scrollHeight > parseInt($(this).css("max-height")) ) ? "auto" : "hidden" );
-      while ( $("body").innerHeight()+$("html").scrollTop() - ($(this).offset().top +  $(this).height()) <= 35 ) $("html").scrollTop($("html").scrollTop()+16);
+      if(localStorage.getItem("no-autogrow")) return $(this).css("overflow","auto"); 
+      window.clearTimeout(kdt);
+      kdt = window.setTimeout((function(a){
+        $(a).height(0).height(a.scrollHeight).css("overflow", ( a.scrollHeight > parseInt($(a).css("max-height")) ) ? "auto" : "hidden" );
+        while ( $("body").innerHeight()+$("html").scrollTop() - ($(a).offset().top +  $(a).height()) <= 35 ) $("html").scrollTop($("html").scrollTop()+16);
+      })(this),500);
     }).on("keydown", "textarea", function(e) {
       if( e.ctrlKey && (e.keyCode == 10 || e.keyCode == 13) ) {
         $(this).parent().trigger('submit');
       }
-    })
+    });
     
     $("#footersearch").on('submit',function(e) {
         e.preventDefault();
@@ -741,7 +746,7 @@ $(document).ready(function() {
 });
 
 $(window).on('beforeunload', function() {
-  if(location.href.match(/preferences\.php/)) return;
+  if(location.href.match(/(preferences)|(project)\.php/)) return;
   t = $("textarea");
   for (ta in t)
   {
@@ -755,3 +760,9 @@ $(window).on('beforeunload', function() {
   if($("#img_ul_file").length && $("#img_ul_file").val() != "" )
     return N.getLangData().IMG_UPLOADING_2;
 });
+
+if($.browser.mobile) {
+  var h = $("head");
+  $("<link>").attr("rel","stylesheet").attr("href","/tpl/2/css/mobile.css").appendTo(h);
+  $("<script>").attr("type","text/javascript").attr("src","/tpl/2/js/mobile.js").appendTo(h);
+}

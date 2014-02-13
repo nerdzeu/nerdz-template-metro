@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     $("#stdfrm").on('submit',function(event) {
       event.preventDefault();
-      var s = $(this).find("input[type=submit]").eq(0);
+      var s = $(this).find("input[type=submit]").eq(0);  
       if(s.attr("disabled")=="disabled") return false;
       w = s.width();
       s.width(s.parent().width()*.9).val(loading+'...').attr("disabled","disabled").next().hide();
@@ -24,7 +24,7 @@ $(document).ready(function() {
     N.json.project.newPost({message: message, to: $(this).data('to'), news: news },function(data) {
       if(data.status == 'ok') {
         $("#showpostlist").click();
-        $("#frmtxt").val('');
+        $("#frmtxt").val('').height(0);
       }
 
       s.val(data.message);

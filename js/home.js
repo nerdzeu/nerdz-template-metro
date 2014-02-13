@@ -216,7 +216,7 @@ $(document).ready(function() {
         if(undefined==localStorage.getItem("no-autolink")) message = message.autoLink();
         N.json.profile.newPost({message: message, to: 0 },function(data) {
             if(data.status == 'ok') {
-                $("#frmtxt").val('');
+                $("#frmtxt").val('').height(0) ;
                 load = false;
                 if(lang == '*') {
                   N.html.profile.getByLangHomePostList(0,lang,function(data) {

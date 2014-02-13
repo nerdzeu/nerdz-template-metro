@@ -6,6 +6,9 @@
         </a>
     </span>
     <div class="span1">
+      <a href="/informations.php" title="Info">
+        <i class="icon-info" style="padding-top: 8px;"></i>
+      </a>
     </div>
     
     <div class="span8">
@@ -21,11 +24,11 @@
     {if="$logged_b"}
     <div class="span1" style="border-left:1px solid black; cursor:pointer; text-align: center">
       <i class="icon-bell" id="notifycounter" accesskey="x" style="width:100%; padding-top:8px;"></i>
-      <div id="notify_list" style="display:none">{$loading}</div>
     </div>  
     {/if}
   </footer>
 </div>
+<div id="notify_list" style="display:none">{$loading}</div>
 <audio id='notifyaudio' preload='auto'>
   <source src='https://dl.dropboxusercontent.com/u/16542600/notify.mp3'>
 </audio>

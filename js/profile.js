@@ -15,7 +15,7 @@ $(document).ready(function() {
       N.json.profile.newPost({message: message, to: $(this).data('to') },function(data) {
           if(data.status == 'ok') {
               $("#showpostlist").click();
-              $("#frmtxt").val('');
+              $("#frmtxt").val('').height(0);
           }
           
           s.val(data.message);

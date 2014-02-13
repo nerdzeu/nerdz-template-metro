@@ -236,5 +236,8 @@
     "CODE_THEME": "Code Theme",
     "NOTIFICATIONS": "Notifications",
     "NO": "No",
-    "NO_PROJECTS": "You don't have any project"
+    "NO_PROJECTS": "You don't have any project",
+    "MOBILEAVAILABLE":"NERDZ ha anche una versione mobile, vuoi provarla?",
+    "GOTOMOBILE": "Vai alla versione mobile",
+    "STAYONDESKTOP":"Resta sul sito desktop"
 }

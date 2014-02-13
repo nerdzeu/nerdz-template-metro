@@ -657,6 +657,11 @@ p {
 .navigation-bar.dark h3 {
   color: #eee;
 }
+.commentlist {
+  width:65%;
+  margin-top:1%;
+  margin-bottom:15px;
+}
 @media only screen 
 and (min-width : 1224px) {
   /** SCROLLBARS WEBKIT **/

@@ -89,3 +89,6 @@ body, html {
 .sidebar * {
   max-width: 99%;
 }
+.commentlist {
+  width:100% !important;
+}

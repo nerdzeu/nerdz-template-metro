@@ -82,6 +82,16 @@ body, html {
 }
 .sidebar {
   overflow: auto;
+  overflow-x: hidden;
   padding-bottom: 50px;
   height:100%;
+}
+.sidebar * {
+  max-width: 99%;
+}
+/** clear sidebars **/
+::-webkit-scrollbar {
+  height: auto !important;
+  width: auto !important;
+  background: none;
 }

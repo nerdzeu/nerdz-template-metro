@@ -103,6 +103,8 @@ $(document).ready(function() {
         m = (117-$(this).height())/2;
         if (m>1)
           $(this).css("margin-top", m)
+        else 
+          $(this).css("margin-top", 0)
       })
       $(this).data("parsed","1");
     });

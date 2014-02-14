@@ -261,7 +261,7 @@ $(document).ready(function() {
         load = false;
         N.html.profile.getHomePostList(0,function(data) {
             plist.html(data);
-            hideHidden();
+            window.setTimeout(hideHidden,100);
             plist.data('type','profile');
             plist.data('mode','std');
             load = true;
@@ -304,7 +304,7 @@ $(document).ready(function() {
             {
                 plist.append(append);
             }
-
+            fixHeights();
             if(load)
             {
                 load = false;

@@ -35,7 +35,6 @@ $(document).ready(function() {
 
  $(".navigation-bar-content").eq(0).append( $('<div>').addClass("element pointer").attr("id","title_right").html(">>").css("float","right") );
  $('#title_right').click(function() {
-   console.log("R");
    if(moving) return;
    moving=1;
      if( $("#left_col").hasClass("shown") ) {

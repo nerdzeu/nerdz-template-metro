@@ -13,7 +13,7 @@
                 "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.js",
                 "js/metro.js",
                 {
-                  "lang": [ "LOADING", "BACK_TO_THE_TOP", "MORE_COMMENTS", "EVERY_COMMENT", "NEW_MESSAGE", "EDIT", "PREVIEW", "CANCEL", "YES", "NO", "NERDZ_IT", "IMG_UPLOADING", "IMG_UPLOADING_2", "POST_NOT_SENT", "NEW_MESSAGES", "NEW_NOTIFICATIONS", "PM", "MOTIVATION" ]
+                  "lang": [ "LOADING", "BACK_TO_THE_TOP", "MORE_COMMENTS", "EVERY_COMMENT", "NEW_MESSAGE", "EDIT", "PREVIEW", "CANCEL", "YES", "NO", "NERDZ_IT", "IMG_UPLOADING", "IMG_UPLOADING_2", "POST_NOT_SENT", "NEW_MESSAGES", "NEW_NOTIFICATIONS", "PM", "MOTIVATION", "ARE_YOU_SURE" ]
                 }
               ],
 		"home":   [

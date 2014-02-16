@@ -193,18 +193,9 @@ $(document).ready(function() {
     if($.inArray(location.pathname,[ '/bbcode.php','/terms.php','/faq.php','/stats.php','/rank.php','/preferences.php', '/informations.php', '/preview.php' ]) != -1) {
            $("#footersearch").remove();
        };
-    var kdt;
-    $("body").on("focus", "textarea", function(e) {
-      if(localStorage.getItem("no-autogrow")) return $(this).css("overflow","auto"); 
-      $(this).height(0).height(this.scrollHeight).css("overflow", ( this.scrollHeight > parseInt($(this).css("max-height")) ) ? "auto" : "hidden" );
-    }).on("keyup", "textarea", function(e) {
-      if(localStorage.getItem("no-autogrow")) return $(this).css("overflow","auto"); 
-      window.clearTimeout(kdt);
-      kdt = window.setTimeout((function(a){
-        $(a).height(0).height(a.scrollHeight).css("overflow", ( a.scrollHeight > parseInt($(a).css("max-height")) ) ? "auto" : "hidden" );
-        while ( $("body").innerHeight()+$("html").scrollTop() - ($(a).offset().top +  $(a).height()) <= 35 ) $("html").scrollTop($("html").scrollTop()+16);
-      })(this),500);
-    }).on("keydown", "textarea", function(e) {
+      
+    $("textarea").autogrow();
+    $("body").on("keydown", "textarea", function(e) {
       if( e.ctrlKey && (e.keyCode == 10 || e.keyCode == 13) ) {
         $(this).parent().trigger('submit');
       }
@@ -323,6 +314,8 @@ $(document).ready(function() {
     });
 
     plist.on('click',".delcomment",function() {
+      
+      var c = function() {
         var refto = $('#' + $(this).data('refto'));
         sc = refto.parents("div[id^=\"post\"]").eq(0).find(".icon-comments-4");
 
@@ -343,6 +336,8 @@ $(document).ready(function() {
               refto.html(d.message);
             }
         });
+      }
+      $.Confirm(N.getLangData().ARE_YOU_SURE, c);
     });
 
     plist.on('submit','.frmcomment',function(e) {
@@ -411,6 +406,7 @@ $(document).ready(function() {
     });
     
     plist.on('click', ".yt_frame", function(e) {
+      if($.browser.mobile) return window.open("https://m.youtube.com/watch?v="+$(this).data("vid"));
       e.preventDefault();
       var vid = $(this).data("vid");
       d = $.Dialog({
@@ -427,29 +423,27 @@ $(document).ready(function() {
         onClose: function() { $(document).unbind("keyup.yt"); },
         onShow: function(_dialog){
           $.Dialog.content('<iframe style="min-width:640px; min-height:480px; width: 100%; height:auto" src="//www.youtube.com/embed/'+vid+'" seamless></iframe>');
-          w = _dialog;
-          c = w.children(".content").eq(0);
-          $(".btn-min").click(function(e) {
-            e.preventDefault();
-            if(!w.hasClass("minimized"))
-            {
-              w.addClass("minimized");
-              if(w.hasClass("maximized")) w.removeClass("maximized").addClass("maximize")
-            } else {
-              w.hasClass("maximize") && w.addClass("maximized");
-              w.removeClass("maximize").removeClass("minimized");
-            }
-          })
-          $(".btn-max").click(function(e) {
-            e.preventDefault();
-            w.removeClass("minimized").removeClass("maximize");
-            w.toggleClass("maximized");
-            c.children().css("height",w.height()-30);
-          });
           $(document).on("keyup.yt",function(e){
              var code = e.keyCode ? e.keyCode : e.which;
              if(code==27) $.Dialog.close(d);
           });
+        },
+        sysBtnMinClick: function(e) {
+          e.preventDefault();
+          if(!w.hasClass("minimized"))
+          {
+            w.addClass("minimized");
+            if(w.hasClass("maximized")) w.removeClass("maximized").addClass("maximize")
+          } else {
+            w.hasClass("maximize") && w.addClass("maximized");
+            w.removeClass("maximize").removeClass("minimized");
+          }
+        },
+        sysBtnMaxClick: function(e) {
+          e.preventDefault();
+          w.removeClass("minimized").removeClass("maximize");
+          w.toggleClass("maximized");
+          c.children().css("height",w.height()-30);
         }
       });
     });
@@ -468,8 +462,9 @@ $(document).ready(function() {
                 num: 10
             }, function (res) {
                 refto.hide().html(res).slideDown("slow", function() {
+                  ta = refto.find('.frmcomment textarea[name=message]').autogrow();
                   if (document.location.hash == '#last')
-                    refto.find ('.frmcomment textarea[name=message]').focus();
+                    ta.focus();
                   else if (document.location.hash)
                     $(document).scrollTop ($(document.location.hash).offset().top);  
                 });
@@ -533,7 +528,7 @@ $(document).ready(function() {
       area.focus();
     });
 
-    plist.on('click',".icon-remove",function(e) {
+    plist.on('click',".icon-remove:not(.delcomment)",function(e) {
       e.preventDefault();
       var refto = $('#' + $(this).data('refto'));
       var post = refto.html();
@@ -541,20 +536,16 @@ $(document).ready(function() {
 
       N.json[plist.data('type')].delPostConfirm({ hpid: hpid },function(m) {
         if(m.status == 'ok') {
-          refto.html('<div style="text-align:center">' + m.message + '<br /><span id="delPostOk' + hpid +'" style="cursor:pointer">'+N.getLangData().YES+'</span>|<span id="delPostNo'+hpid+'" style="cursor:pointer">'+N.getLangData().NO+'</span></div>');
-          refto.on('click','#delPostOk'+hpid,function() {
+          $.Confirm(m.message, function() {
             N.json[plist.data('type')].delPost({ hpid: hpid },function(j) {
              if(j.status == 'ok') {
-              refto.remove();
+              refto.slideUp(function(){$(this).remove()});
               if(plist.data("singlepost")) location.href="/";
              }
              else {
               refto.html(j.message);
              }
             });
-          });
-          refto.on('click','#delPostNo'+hpid,function() {
-            refto.html(post);
           });
        }
     });
@@ -751,7 +742,7 @@ $(window).on('beforeunload', function() {
   for (ta in t)
   {
     val = $("textarea")[ta].value || "";
-    if ( val != "")
+    if ( $.trim(val) != "")
     {
       $("textarea").eq(ta).focus();
       return N.getLangData().POST_NOT_SENT+": \n"+val+"\n";

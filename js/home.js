@@ -8,13 +8,14 @@ $(document).ready(function() {
     var fixHeights = function() {
         plist.find(".nerdz_message").each (function() {
             var el = $(this).find('div:first');
+            var orh = el.height();
             if ((el.height() >= 200 || el.find ('.gistLoad').length > 0) && !el.attr('data-parsed'))
             {
                 el.height(200).css("overflow","hidden");
                 var n = el.next();
                 n.prepend ('<p class="more">&gt;&gt;' + N.getLangData().EXPAND + '&lt;&lt;</p>');
             }
-            el.attr('data-parsed','1');
+            el.attr('data-parsed',orh);
         });
     };
 
@@ -111,7 +112,7 @@ $(document).ready(function() {
     
     plist.on('click','.more',function() {
         var me = $(this), par = me.parent(), jenk = par.prev();
-        jenk.animate({ height: jenk[0].scrollHeight }, 500, function() { $(this).height("auto") } );
+        jenk.animate({ height: jenk[0].scrollHeight }, parseInt(1.2*jenk[0].scrollHeight), function() { $(this).height("auto") } );
         me.slideUp ('slow', function() {
             me.remove();
         });

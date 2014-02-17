@@ -304,33 +304,52 @@ TPLoad = function() {
   $("#img_ul_file").on("upload",function() {
     if ( this.files && this.files[0] ) {
       var FR= new FileReader();
-      FR.onload = function(e) {
-        $("#img_ul_btn").html(N.getLangData().UPLOADING);
-        $.ajax({
-          url: 'https://api.imgur.com/3/image',
-          method: 'POST',
-          headers: {
-            Authorization: 'Client-ID 6839f3040ee175c',
-            Accept: 'application/json'
-          },
-          data: {
-            image: e.target.result.replace(/.*,/, ''),
-            type: 'base64'
-          },
-          success: function(result) {
-            $("#frmtxt").insertAtCaret( "[img]"+result.data.link.replace("http:","https:")+"[/img]" );
-            $("#img_ul_btn").html('<i class="icon-upload"></i>');
-            $("#img_ul_file").val("").hide(200);
-          },
-          error: function(result) {
-            $("#img_ul_btn").html(result);
-          }
-        }); 
-      };       
+      FR.onload = function(event) { $.imgupload(event, $("#frmtxt")); } 
       FR.readAsDataURL( this.files[0] );
     }
   })
 };
+$.imgupload = function(e, t) {
+  $("#img_ul_btn").html(N.getLangData().LOADING);
+  $.ajax({
+    url: 'https://api.imgur.com/3/image',
+    method: 'POST',
+    headers: {
+      Authorization: 'Client-ID 6839f3040ee175c',
+      Accept: 'application/json'
+    },
+    data: {
+      image: e.target.result.replace(/.*,/, ''),
+      type: 'base64'
+    },
+    success: function(result) {
+      t.insertAtCaret( "[img]"+result.data.link.replace("http:","https:")+"[/img]" );
+      $("#img_ul_btn").html('<i class="icon-upload"></i>');
+      $("#img_ul_file").val("").hide(200);
+    },
+    error: function(result) {
+      $("#img_ul_btn").html(result);
+    }
+  }); 
+};
+$(window).on("load",function(){
+  $("body").on("paste", "textarea", function(event) {
+    t = $(event.currentTarget);
+    window.items = (event.clipboardData || event.originalEvent.clipboardData).items;
+    if(JSON.stringify(items).indexOf("image")==-1) return;
+    event.preventDefault();
+    for(var key in items) {
+      if(items[key].hasOwnProperty("type") && items[key].type.indexOf("image")>-1) {
+        var blob = items[key].getAsFile();
+      }
+    }
+    var reader = new FileReader();
+    reader.onload = function(event){
+      $.imgupload(event, t)
+    }; 
+    reader.readAsDataURL(blob);
+  });
+});
 
 $(function () {
     var scroll_timer;

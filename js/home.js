@@ -45,7 +45,7 @@ $(document).ready(function() {
       e.preventDefault();
       N.html.profile.getHomePostList(0,function(data) {
         plist.html('<h1>'+loading+'...</h1>');
-        $("#fast_nerdz").show(500);
+        $("#fast_nerdz").slideDown(500);
         if($("#profilePostArrow").hasClass("icon-arrow-up-2")) $("#profilePostArrow").click();
         $(".selectlang.active").removeClass("active");
         localStorage.removeItem("autolang");
@@ -61,7 +61,7 @@ $(document).ready(function() {
     $("#projectPostList").on('click',function(e) {
       e.preventDefault();
       plist.html('<h1>'+loading+'...</h1>');
-      $("#fast_nerdz").fadeOut(500);
+      $("#fast_nerdz").slideUp(500);
       if($("#projectPostArrow").hasClass("icon-arrow-up-2")) $("#projectPostArrow").click();
       $(".projlang.active").removeClass("active");
       load = false;
@@ -215,8 +215,7 @@ $(document).ready(function() {
         if( $("#img_ul_file").val() != "" && $("#img_ul_file").is(":visible") )
           if( !confirm("The image you selected was not uploaded still. Do you want to send the message anyway?") )
             return s.val(N.getLangData().NERDZ_IT).width(w).next().show();
-        var message = $("#frmtxt").val().tag();
-        if(undefined==localStorage.getItem("no-autolink")) message = message.autoLink();
+        var message = $("#frmtxt").val().tag().autoLink();
         N.json.profile.newPost({message: message, to: 0 },function(data) {
             if(data.status == 'ok') {
                 $("#frmtxt").val('').height(0) ;
@@ -247,7 +246,7 @@ $(document).ready(function() {
 
             setTimeout(function() {
               s.val(N.getLangData().NERDZ_IT).attr("disabled",false).width(w).next().show();
-            },1000);
+            },100);
         });
     });
 

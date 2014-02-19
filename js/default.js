@@ -289,8 +289,7 @@ $(document).ready(function() {
     });
 
     $(".preview").on('click',function(){
-        var txt = $($(this).data('refto')).val().tag();
-        if(undefined==localStorage.getItem("no-autolink")) txt = txt.autoLink();
+        var txt = $($(this).data('refto')).val().tag().autoLink();
         if(undefined != txt && txt != '') {
             window.open('/preview.php?message='+encodeURIComponent(txt));
         }
@@ -305,8 +304,7 @@ $(document).ready(function() {
     plist.on('click','.preview',function(){
         var txtarea = $($(this).data('refto'));
         txtarea.val(txtarea.val()+' '); //workaround
-        var txt = txtarea.val().tag();
-        if(undefined==localStorage.getItem("no-autolink")) txt = txt.autoLink();
+        var txt = txtarea.val().tag().autoLink();
         txtarea.val($.trim(txtarea.val()));
         if(undefined != txt && $.trim(txt) != '') {
             window.open('/preview.php?message='+encodeURIComponent(txt));
@@ -355,8 +353,7 @@ $(document).ready(function() {
           hcid = last ? last.data('hcid') : 0;
         }
         error.html (loading);
-        var message = $(this).find('textarea').eq(0).val().tag();
-        if(undefined==localStorage.getItem("no-autolink")) message = message.autoLink();
+        var message = $(this).find('textarea').eq(0).val().tag().autoLink();
         N.json[plist.data('type')].addComment ({ hpid: hpid, message: message }, function(d) {
             if(d.status == 'ok')
             {
@@ -698,8 +695,8 @@ $(document).ready(function() {
     
     TPLoad();
 
-    var curnot = localStorage.getItem("curnot") ? parseInt(localStorage.getItem("curnot")) : 0;
-    var curpm = localStorage.getItem("curpm") ? parseInt(localStorage.getItem("curpm")) : 0;
+    var curnot = sessionStorage.getItem("curnot") ? parseInt(sessionStorage.getItem("curnot")) : 0;
+    var curpm = sessionStorage.getItem("curpm") ? parseInt(sessionStorage.getItem("curpm")) : 0;
     setInterval(function() {
         var nc = $("#notifycounter"), val = parseInt(nc.html());
         nc.css('color',val == 0 || isNaN(val) ? $color : '#FF0000');
@@ -717,7 +714,7 @@ $(document).ready(function() {
             },true);
           }
           curnot = val;
-          localStorage.setItem("curnot",curnot);
+          sessionStorage.setItem("curnot",curnot);
         }
         var pc = $("#pmcounter");
         val = parseInt(pc.html());
@@ -730,7 +727,7 @@ $(document).ready(function() {
             $("#notifyaudio")[0].play();
           }
           curpm = val;
-          localStorage.setItem("curpm",val);
+          sessionStorage.setItem("curpm",val);
         }
         pc.css('color',val == 0 || isNaN(val) ? $color : '#FF0000');
     },200);

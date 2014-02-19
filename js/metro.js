@@ -1004,7 +1004,8 @@ Date.prototype.format = function (c, a) {
                 height: "auto",
                 style: !1,
                 position: "right",
-                timeout: 3E3
+                timeout: 3E3,
+                onclick: c.noop()
             },
             init: function (a) {
                 this.options = c.extend({}, this.options, a);
@@ -1015,7 +1016,7 @@ Date.prototype.format = function (c, a) {
                 a = this._container = a || c("<div/>").addClass("metro notify-container").appendTo("body");
                 var d = this.options;
                 if ("" == d.content || void 0 == d.content) return !1;
-                this._notify = c("<div/>").addClass("notify");
+                this._notify = c("<div/>").addClass("notify").click(d.onclick);
                 d.shadow && this._notify.addClass("shadow");
                 d.style && void 0 != d.style.background && this._notify.css("background-color", d.style.background);
                 d.style && void 0 != d.style.color && this._notify.css("color", d.style.color);
@@ -1063,7 +1064,13 @@ Date.prototype.format = function (c, a) {
         return Object.create(d).init(a)
     };
     c.Notify.show = function (a, b) {
-        return c.Notify({
+      return $.isFunction(b)?
+         c.Notify({
+           content: a, 
+           onclick: b
+         })
+      :
+         c.Notify({
             content: a,
             caption: b
         })

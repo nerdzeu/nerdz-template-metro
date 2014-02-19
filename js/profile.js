@@ -10,8 +10,7 @@ $(document).ready(function() {
       if( $("#img_ul_file").val() != "" && $("#img_ul_file").is(":visible") )
         if( !confirm(N.getLangData().IMG_UPLOADING) )
           return s.val(N.getLangData().NERDZ_IT).attr("disabled",false).width(w).next().show();
-      var message = $("#frmtxt").val().tag();
-      if(undefined==localStorage.getItem("no-autolink")) message = message.autoLink();
+      var message = $("#frmtxt").val().tag().autoLink();
       N.json.profile.newPost({message: message, to: $(this).data('to') },function(data) {
           if(data.status == 'ok') {
               $("#showpostlist").click();
@@ -22,7 +21,7 @@ $(document).ready(function() {
 
           setTimeout(function() {
             s.val(N.getLangData().NERDZ_IT).attr("disabled",false).width(w).next().show();
-          },1000);
+          },100);
       });
     });
 

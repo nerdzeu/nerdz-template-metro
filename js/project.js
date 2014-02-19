@@ -19,8 +19,7 @@ $(document).ready(function() {
     {
         news = '0';
     }
-    var message = $("#frmtxt").val().tag();
-    if(undefined==localStorage.getItem("no-autolink")) message = message.autoLink();
+    var message = $("#frmtxt").val().tag().autoLink();
     N.json.project.newPost({message: message, to: $(this).data('to'), news: news },function(data) {
       if(data.status == 'ok') {
         $("#showpostlist").click();
@@ -31,7 +30,7 @@ $(document).ready(function() {
 
       setTimeout(function() {
         s.val(N.getLangData().NERDZ_IT).attr("disabled",false).width(w).next().show();
-      },1000);
+      },100);
     });
   });
 

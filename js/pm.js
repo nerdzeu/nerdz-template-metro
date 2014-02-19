@@ -18,8 +18,7 @@ $(document).ready(function() {
           last = mess.length > 1 ? mess.eq (mess.length - 2) : null;
           pmid = last ? last.data('pmid') : 0;
       }
-      var m = $("#frmtxt").val();
-      if(undefined==localStorage.getItem("no-autolink")) m = m.autoLink();
+      var m = $("#frmtxt").val().autoLink();
       N.json.pm.send({ to: $("#to").val(), message: m },function(d) {
         if(d.status == 'ok') {
           $("#frmtxt").val('');
@@ -52,7 +51,7 @@ $(document).ready(function() {
         s.val(d.message);
         setTimeout(function() {
           s.val(N.getLangData().NERDZ_IT).attr("disabled",false).width(w).next().show();
-        },1000);
+        },100);
       });
     });
 

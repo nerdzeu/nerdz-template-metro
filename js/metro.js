@@ -970,7 +970,7 @@ Date.prototype.format = function (c, a) {
       c.Confirm.callback = c.isFunction(cb) ? cb : c.noop;
       op = c.extend({
           icon: !1,
-          title: me.substr(0,20)+(me.length>20?"...":""),
+          title: me,
           content: me+"<br /><br />",
           flat: true,
           shadow: false,

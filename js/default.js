@@ -312,13 +312,13 @@ $(document).ready(function() {
     });
 
     plist.on('click',".delcomment",function() {
-      
-      var c = function() {
-        var refto = $('#' + $(this).data('refto'));
+      var refto = $('#' + $(this).data('refto'));
+      var $hcid = $(this).data('hcid')
+      $.Confirm(N.getLangData().ARE_YOU_SURE, function() {
         sc = refto.parents("div[id^=\"post\"]").eq(0).find(".icon-comments-4");
 
         refto.html(loading+'...');
-          N.json[plist.data('type')].delComment({ hcid: $(this).data('hcid') },function(d) {
+          N.json[plist.data('type')].delComment({ hcid: $hcid },function(d) {
             if(d.status == 'ok')
             {
               var clist = refto.parent();
@@ -334,8 +334,7 @@ $(document).ready(function() {
               refto.html(d.message);
             }
         });
-      }
-      $.Confirm(N.getLangData().ARE_YOU_SURE, c);
+      });
     });
 
     plist.on('submit','.frmcomment',function(e) {

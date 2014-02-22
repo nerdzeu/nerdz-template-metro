@@ -61,4 +61,11 @@ $(document).ready(function() {
     window.clearTimeout(timin);
     timin = window.setTimeout(function() { if($("#left_col").hasClass("shown")) $("body").scrollLeft(0);},100)
   });
+  if(sessionStorage.getItem("advice-away")) return;
+  d = $("<div>").attr("id","mobile-advice").html("<a href='/splash.php?mobile'>"+N.getLangData().GOTOMOBILE+"</a>").appendTo($("body"));
+  $("<i>").addClass("icon-cancel").click(function() {
+    d = $(this).parent();
+    d.slideUp(function() { d.remove });
+    sessionStorage.setItem("advice-away","1");
+  }).appendTo(d);
 });

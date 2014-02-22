@@ -92,3 +92,21 @@ body, html {
 .commentlist {
   width:100% !important;
 }
+#mobile-advice {
+  width: 100%;
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  height: 60px;
+  padding-top: 20px;
+  z-index: 1000;
+  text-align: center;
+  background-color: black;
+  font-size: 20px;
+  color: white;
+}
+#mobile-advice i.icon-cancel {
+  cursor: pointer;
+  float: right;
+  margin-top: -20px;
+}

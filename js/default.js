@@ -723,6 +723,11 @@ $(document).ready(function() {
         nc.css('color',val == 0 || isNaN(val) ? $color : '#FF0000');
         if(!isNaN(val) && val != curnot && !localStorage.getItem("metro-no-notify"))
         {
+          if(window.webkitNotifications) {
+            window.webkitNotifications.requestPermission(function(e) {
+              console.log(e);
+            });
+          }          
           nw = val - curnot;
           if(nw>0)
           {

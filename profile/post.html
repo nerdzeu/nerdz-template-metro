@@ -6,9 +6,15 @@
         {else}
         :
         {/if}
-        <span class="nerdz_date">
-            {$datetime_n}
-        </span>
+            <div class="nerdz_date">
+                {$value.datetime_n}&nbsp;|&nbsp;
+                <span class="small" data-refto="{$value.hpid_n}">
+                  <span class='thumbs-counter{if="$thumbs_n > 0"} pos{else}{if="$thumbs_n < 0"} neg{/if}{/if}'>{$thumbs_n}</span>                  
+                &nbsp;
+                  <i class='vote icon-thumbs-up{if="$uthumb_n == 1"} voted{/if}'></i>
+                  <i class='vote icon-thumbs-down{if="$uthumb_n ==-1"} voted{/if}'></i>
+                </span>
+            </div>
     </div>
     <div class='nerdz_message'>
         <div>

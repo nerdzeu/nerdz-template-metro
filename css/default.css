@@ -662,6 +662,15 @@ p {
   margin-top:1%;
   margin-bottom:15px;
 }
+.vote {
+  cursor: pointer;
+}
+.thumbs-counter.pos, .icon-thumbs-up.voted {
+  color: green;
+}
+.thumbs-counter.neg, .icon-thumbs-down.voted {
+  color: red;
+}
 @media only screen 
 and (min-width : 1224px) {
   /** SCROLLBARS WEBKIT **/

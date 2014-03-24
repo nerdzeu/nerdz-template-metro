@@ -302,6 +302,7 @@ $(document).ready(function() {
           cont = curr.parent(),
           hpid = cont.data("refto"),
           tnum = cont.children(".thumbs-counter");
+    if(!cont.hasClass("comment_thumbs")) 
       curr.hasClass("voted") ? 
         N.json[plist.data ('type')].thumbs({hpid: hpid, thumb: 0}, function(r) {
           curr.removeClass("voted");
@@ -311,6 +312,22 @@ $(document).ready(function() {
         })
       :
         N.json[plist.data ('type')].thumbs({hpid: hpid, thumb: (curr.hasClass("icon-thumbs-up")?1:-1)}, function(r) {
+          cont.children(".voted").removeClass("voted");
+          curr.addClass("voted");
+          var votes = parseInt(r.message);
+          tnum.attr("class","thumbs-counter").text(votes);
+          votes!=0 && tnum.addClass(votes>0?"pos":"neg");
+         });
+    else 
+      curr.hasClass("voted") ? 
+        N.json[plist.data ('type')].cthumbs({hcid: hpid, thumb: 0}, function(r) {
+          curr.removeClass("voted");
+          var votes = parseInt(r.message);
+          tnum.attr("class","thumbs-counter").text(votes);
+          votes!=0 && tnum.addClass(votes>0?"pos":"neg");
+        })
+      :
+        N.json[plist.data ('type')].cthumbs({hcid: hpid, thumb: (curr.hasClass("icon-thumbs-up")?1:-1)}, function(r) {
           cont.children(".voted").removeClass("voted");
           curr.addClass("voted");
           var votes = parseInt(r.message);

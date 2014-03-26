@@ -112,7 +112,7 @@ if(!String.prototype.autoLink) {
     {
       if(urls[i].match(/\.(png|gif|jpg|jpeg)$/))
         str = str.replace(urls[i],"[img]"+(urls[i].match(/(^|\s+)https?:\/\//)?"":"http://")+urls[i]+"[/img]");
-      if(urls[i].match(/youtube\.com|https?:\/\/youtu\.be/))
+      if(urls[i].match(/youtube\.com|https?:\/\/youtu\.be/) && !urls[i].match(/playlist/))
         str = str.replace(urls[i],"[yt]"+$.trim(urls[i])+"[/yt]");
     }
     return str.replace(pattern, "$1[url]$2[/url]").replace(/\[(\/)?noparse\]/gi,"").replace(REformat("<3"),"♥");

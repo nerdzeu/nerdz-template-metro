@@ -62,6 +62,7 @@ $(document).ready(function() {
     timin = window.setTimeout(function() { if($("#left_col").hasClass("shown")) $("body").scrollLeft(0);},100)
   });
   if(sessionStorage.getItem("advice-away")) return;
+  if(location.origin.match(/mobile/)) return;
   d = $("<div>").attr("id","mobile-advice").html("<a href='/splash.php?goto=mobile'>"+N.getLangData().GOTOMOBILE+"</a>").appendTo($("body"));
   $("<i>").addClass("icon-cancel").click(function() {
     d = $(this).parent();

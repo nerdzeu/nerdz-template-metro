@@ -5,7 +5,6 @@
     "BOOKMARKS": "Oznake",
     "ID": "ID",
     "SKYPE": "Skype",
-    "JABBER": "Jabber",
     "GITHUB": "GitHub",
     "FACEBOOK": "Facebook",
     "TWITTER": "Twitter",
@@ -239,5 +238,8 @@
     "NO_PROJECTS": "You don't have any project",
     "MOBILEAVAILABLE":"Idi na mobilne web stranice?",
     "GOTOMOBILE": "Idi na mobilne web stranice",
-    "STAYONDESKTOP":"Ostani na desktop web stranice"
+    "STAYONDESKTOP":"Ostani na desktop web stranice",
+    "DESKTOPAVAILABLE":"Idi na desktop web stranice?",
+    "GOTODESKTOP": "Idi na desktop web stranice",
+    "STAYONMOBILE": "Ostani na mobilne web stranice"
 }

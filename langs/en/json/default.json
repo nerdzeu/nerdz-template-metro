@@ -5,7 +5,6 @@
     "BOOKMARKS": "Bookmarks",
     "ID": "ID",
     "SKYPE": "Skype",
-    "JABBER": "Jabber",
     "GITHUB": "GitHub",
     "FACEBOOK": "Facebook",
     "TWITTER": "Twitter",
@@ -240,5 +239,8 @@
     "NO_PROJECTS": "You don't have any project",
     "MOBILEAVAILABLE":"NERDZ also has a mobile website, would you like to check it out?",
     "GOTOMOBILE": "Go to mobile versione",
-    "STAYONDESKTOP":"Stay on desktop version"
+    "STAYONDESKTOP":"Stay on desktop version",
+    "DESKTOPAVAILABLE":"Go to NERDZ full website?",
+    "GOTODESKTOP": "Go to desktop version",
+    "STAYONMOBILE": "Stay on mobile version"
 }

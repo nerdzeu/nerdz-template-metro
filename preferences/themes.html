@@ -1,6 +1,7 @@
 <hr />
 <form id="themesfrm" class="center">
-  {$themes_descr}<br />
+    {$themes_descr}&nbsp;
+    {if="$mobile_b"}[mobile]{else}[Desktop]{/if}<br />
     <select name="theme">
     {loop="themes_a"}
         <option value="{$value.tplno_n}" {if="$value.tplno_n == $mytplno_n"} selected {/if}>{$value.tplname_n}</option>

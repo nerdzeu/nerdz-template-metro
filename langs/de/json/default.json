@@ -5,7 +5,6 @@
     "BOOKMARKS": "Bookmarks",
     "ID": "ID",
     "SKYPE": "Skype",
-    "JABBER": "Jabber",
     "GITHUB": "GitHub",
     "FACEBOOK": "Facebook",
     "TWITTER": "Twitter",
@@ -239,5 +238,8 @@
     "NO_PROJECTS": "You don't have any project",
     "MOBILEAVAILABLE":"Gehen Sie auf mobile Website?",
     "GOTOMOBILE": "Gehen Sie auf mobile Website",
-    "STAYONDESKTOP":"Bleiben Sie auf dem Desktop-Website"
+    "STAYONDESKTOP":"Bleiben Sie auf dem Desktop-Website",
+    "DESKTOPAVAILABLE":"Gehen Sie auf Desktop-Website?",
+    "GOTODESKTOP": "Gehen Sie auf Desktop-Website",
+    "STAYONMOBILE": "Bleiben Sie auf der mobilen Website"
 }

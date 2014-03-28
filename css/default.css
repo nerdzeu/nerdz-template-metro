@@ -663,6 +663,7 @@ p {
   margin-bottom:15px;
 }
 .vote {
+  font-size: 80%;
   cursor: pointer;
 }
 .thumbs-counter.pos, .icon-thumbs-up.voted {

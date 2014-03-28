@@ -7,10 +7,11 @@
         :
         {/if}
             <div class="nerdz_date">
-                {$datetime_n}&nbsp;|&nbsp;
-                <span class="small" data-refto="{$hpid_n}">
-                  <span class='thumbs-counter{if="$thumbs_n > 0"} pos{else}{if="$thumbs_n < 0"} neg{/if}{/if}'>{$thumbs_n}</span>                  
-                &nbsp;
+                {$datetime_n}
+                <span class="thumbs" data-refto="{$hpid_n}">
+                  &nbsp;|&nbsp;
+                  <span class='small thumbs-counter{if="$thumbs_n > 0"} pos{else}{if="$thumbs_n < 0"} neg{/if}{/if}'>{$thumbs_n}</span>                  
+                  &nbsp;
                   <i class='vote icon-thumbs-up{if="$uthumb_n == 1"} voted{/if}'></i>
                   <i class='vote icon-thumbs-down{if="$uthumb_n ==-1"} voted{/if}'></i>
                 </span>

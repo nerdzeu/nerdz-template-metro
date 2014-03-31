@@ -118,6 +118,7 @@ $(document).ready(function() {
     ns.attr('checked', false);
   ns.on('change', function(e) {
     metroOptions.setOption('notify', ns.is(':checked'));
+    console.log(ns.is(':checked'));
   });
   $('#metro-info').on('click', function(event) {
     event.stopPropagation();
@@ -710,7 +711,7 @@ $(document).ready(function() {
     var nc = $('#notifycounter'),
       val = parseInt(nc.html());
     nc.css('color', val === 0 || isNaN(val) ? $color : '#FF0000');
-    if (!isNaN(val) && val !== curnot && !metroOptions.getOption('notify')) {
+    if (!isNaN(val) && val !== curnot && metroOptions.getOption('notify')) {
       nw = val - curnot;
       if (nw > 0) {
         N.html.getNotifications(function(d) {

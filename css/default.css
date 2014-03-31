@@ -662,7 +662,7 @@ p {
   margin-top:1%;
   margin-bottom:15px;
 }
-.vote {
+.thumbs-counter, .vote {
   font-size: 80%;
   cursor: pointer;
 }

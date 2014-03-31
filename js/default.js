@@ -264,7 +264,7 @@ $(document).ready(function() {
       }), function(r) {
         curr.removeClass('voted');
         var votes = parseInt(r.message);
-        tnum.attr('class', 'thumbs-counter').text(votes);
+        tnum.attr('class', 'thumbs-counter').text(votes>0?"+"+votes:votes);
         if (votes !== 0) tnum.addClass(votes > 0 ? 'pos' : 'neg');
       });
     else
@@ -274,7 +274,7 @@ $(document).ready(function() {
         cont.children('.voted').removeClass('voted');
         curr.addClass('voted');
         var votes = parseInt(r.message);
-        tnum.attr('class', 'thumbs-counter').text(votes);
+        tnum.attr('class', 'thumbs-counter').text(votes>0?"+"+votes:votes);
         if (votes !== 0) tnum.addClass(votes > 0 ? 'pos' : 'neg');
       });
   });

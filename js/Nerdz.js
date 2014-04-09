@@ -887,9 +887,6 @@ var Nerdz = function() {
   
   var __construct = function(t) {
     $(document).ready(function() {
-      $(window).keydown(function(e) { if(e.ctrlKey) ctrlPressed=true; });
-      $(window).keyup(function(e) { if(e.ctrlKey) ctrlPressed=false; });
-      
       if(t.mobile) {
         $('<link>').attr('rel', 'stylesheet').attr('href', '/tpl/2/css/mobile.css').appendTo($('head'));
         $('<script>').attr('type', 'text/javascript').attr('src', '/tpl/2/js/mobile.js').appendTo($('head'));
@@ -897,6 +894,7 @@ var Nerdz = function() {
         t.tagPanel.load();
         $("#frmtxt").autogrow();
       }
+      $("<br/>").appendTo($("body"));
       $('iframe').attr('scrolling', 'no');
       var append_theme = '';
       if (!t.metroOptions.getOption('codeLight')) {

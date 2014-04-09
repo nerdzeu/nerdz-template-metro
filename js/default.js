@@ -87,7 +87,6 @@ $(document).ready(function() {
       if (nw > 0) {
         N.html.getNotifications(function(d) {
           nn = $('<div>').html(d).children().length;
-          console.log(d);
           if (nn === 1)
             $.Notify.show(d, function() {
               N.html.getNotifications($.noop(), false);

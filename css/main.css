@@ -1681,6 +1681,22 @@ a,
 #followedlist .active {
   color: #1ba1e2;
 }
+.amber #element .selected,
+.amber .news,
+.amber .yt_frame,
+.amber .img_frame,
+.amber .tile.selected,
+.amber .tile.tiny.selected {
+  border-color: #f0a30a;
+}
+.amber #element .selected:after,
+.amber .news:after,
+.amber .yt_frame:after,
+.amber .img_frame:after,
+.amber .tile.selected:after,
+.amber .tile.tiny.selected:after {
+  border-top-color: #f0a30a;
+}
 .amber a,
 .amber [id*=PostArrow],
 .amber #followedlist .active {
@@ -1690,6 +1706,22 @@ a,
 .amber [id*=PostArrow]:hover,
 .amber #followedlist .active:hover {
   color: #f8bf4f;
+}
+.lime #element .selected,
+.lime .news,
+.lime .yt_frame,
+.lime .img_frame,
+.lime .tile.selected,
+.lime .tile.tiny.selected {
+  border-color: #a4c400;
+}
+.lime #element .selected:after,
+.lime .news:after,
+.lime .yt_frame:after,
+.lime .img_frame:after,
+.lime .tile.selected:after,
+.lime .tile.tiny.selected:after {
+  border-top-color: #a4c400;
 }
 .lime a,
 .lime [id*=PostArrow],
@@ -1701,6 +1733,22 @@ a,
 .lime #followedlist .active:hover {
   color: #d8ff12;
 }
+.red #element .selected,
+.red .news,
+.red .yt_frame,
+.red .img_frame,
+.red .tile.selected,
+.red .tile.tiny.selected {
+  border-color: #e51400;
+}
+.red #element .selected:after,
+.red .news:after,
+.red .yt_frame:after,
+.red .img_frame:after,
+.red .tile.selected:after,
+.red .tile.tiny.selected:after {
+  border-top-color: #e51400;
+}
 .red a,
 .red [id*=PostArrow],
 .red #followedlist .active {
@@ -1710,6 +1758,22 @@ a,
 .red [id*=PostArrow]:hover,
 .red #followedlist .active:hover {
   color: #ff4432;
+}
+.steel #element .selected,
+.steel .news,
+.steel .yt_frame,
+.steel .img_frame,
+.steel .tile.selected,
+.steel .tile.tiny.selected {
+  border-color: #647687;
+}
+.steel #element .selected:after,
+.steel .news:after,
+.steel .yt_frame:after,
+.steel .img_frame:after,
+.steel .tile.selected:after,
+.steel .tile.tiny.selected:after {
+  border-top-color: #647687;
 }
 .steel a,
 .steel [id*=PostArrow],

@@ -479,31 +479,35 @@ var Nerdz = function() {
     this.getOption = function(option) {
       return options[option];
     };
+    var getOption = this. getOption;
     this.setOption = function(option, value) {
       options[option] = value;
       return localStorage.setItem('metro-options', JSON.stringify(options));
     };
     var setOption = this.setOption;
     this.initOptions = function() {
-      var reload = function () {location.reload();};
       var div = $("#pref-metro");
       if(!div.length) return false;
       div.click(function(e){e.stopPropagation();});
       $("#theme-switcher").on("click",".tile:not(.selected)", function(e) {
-        setOption("theme",$(this).attr('id'));
-        setTimeout(reload, 500);
+        var theme = getOption("theme");
+        $(this).parent().children(".selected").removeClass("selected");
+        setOption("theme",$(this).addClass("selected").attr('id'));
+        $("body").removeClass(theme).addClass($(this).attr('id'));
       }).children("#"+options.theme).addClass("selected");
       $("#theme-code-switcher").attr("checked",options.codeLight).on("change", function() {
         setOption("codeLight",$(this).is(":checked"));
-        setTimeout(reload, 500);
+        $("body").toggleClass("has-dark-theme");
       });
       for (var col in colors)
         $('<div>').attr('class', 'tile tiny')
           .html('<div class="tile-content icon"><i class="icon-record" style="color:' + colors[col] + ';"></i></div>')
           .attr('title', col).addClass(options.color === col ? 'selected' : '').appendTo($('#color-switcher'));
       $("#color-switcher .tile:not(.selected)").on("click", function(){
-        setOption("color",$(this).attr("title"));
-        setTimeout(reload, 500);
+        var color = getOption("color");
+        $(this).parent().children(".selected").removeClass("selected");
+        setOption("color",$(this).addClass("selected").attr("title"));
+        $("body").removeClass(color).addClass($(this).attr("title"));
       });
       $("#metro-notify").attr("checked",options.notify).on("change",function(){
         setOption("notify", $(this).is(":checked"));

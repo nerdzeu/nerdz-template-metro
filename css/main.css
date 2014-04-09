@@ -548,6 +548,56 @@ a {
   font-weight: normal;
   padding: 2px;
 }
+.nerdz-code-wrapper {
+  background-color: #eee;
+  color: #222;
+  margin: .5%;
+  max-width: 97%;
+  padding: 0px;
+}
+.nerdz-code-wrapper > a:after {
+  content: "\e00f";
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  padding-right: 2px;
+}
+.nerdz-code-wrapper:before {
+  float: left;
+  text-align: left;
+  width: 100%;
+  clear: both;
+  content: "\e0b5";
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  padding-right: 2px;
+}
+.nerdz-code-wrapper:after {
+  float: right;
+  content: "\e0b6";
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  padding-right: 2px;
+}
+.nerdz-code-wrapper pre {
+  padding-bottom: 1em;
+  clear: both;
+  overflow-y: hidden;
+  height: auto;
+}
+.nerdz-code-wrapper pre br:first-child {
+  display: none;
+}
+.nerdz-code-wrapper .nerdz-code-title {
+  clear: both;
+  padding: 0px 5px 0px;
+}
+.has-dark-theme div.nerdz-code-wrapper {
+  background-color: #000;
+  color: #eee;
+}
 .windows8 {
   position: relative;
   width: 50px;

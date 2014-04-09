@@ -1,38 +1,24 @@
-<article id="center_col" class="row">
-  <div class="span10 offset1">
-    <div class="row pointer bolder">
-      <span class="span1" id="id">
-        {$id}
-      </span>
-      <span class="span4" id="name">
-        {$name}
-      </span>
-      <span class="span7" id="description">
-        {$description}
-      </span>
-    </div>
-    {loop="list_a"}
-      <div class="row">
-        <span class="span1">
-          {$value.id_n}
-        </span>
-        <span class="span4">
-          <a href="/{$value.name4link_n}">{$value.name_n}</a>
-        </span>
-        <span class="span7">
-          {$value.description_n}</td>
-        </tr>
-        </span>
-      </div>
-    {/loop}
+
+<div id="main">
+  <aside id="left_col"></aside>
+  <article id="center_col">
     <div class="row">
-      <span class="span1 offset5">
-        {if="!empty($prev_url_n)"}<a href="{$prev_url_n}">&lt;&lt;&lt;</a>{/if}
-      </span>
-      <span class="span1">
-        {if="!empty($next_url_n)"}<a href="{$next_url_n}">&gt;&gt;&gt;</a>{/if}
-      </span>
+      <div id="id" class="span1 pointer bolder">{$id}</div>
+      <div id="name" class="span4 pointer bolder">{$name}</div>
+      <div id="description" class="span7 pointer bolder">{$description}</div>
     </div>
-  </div>
-<br /><br /><br />
-</article>
+    <div class="row thin">
+      <hr/>
+    </div>{loop="list_a"}
+    <div class="row thin">
+      <div class="span1">{$value.id_n}</div>
+      <div class="span4"><a href="{$value.name4link_n}" class="board">{$value.name_n}</a></div>
+      <div class="span7">{$value.description_n}</div>
+    </div>{/loop}
+    <div class="row">
+      <div class="span1 offset5">{if="!empty($prev_url_n)"}<a href="{$prev_url_n}">&lt;&lt;&lt;</a>{/if}</div>
+      <div class="span1">{if="!empty($next_url_n)"}<a href="{$next_url_n}">&gt;&gt;&gt;</a>{/if}</div>
+    </div>
+  </article>
+  <aside id="right_col"></aside>
+</div>

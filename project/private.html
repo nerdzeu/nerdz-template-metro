@@ -1,17 +1,10 @@
-<div style="
-    width:90%;
-    background-color: #AFAFAF;
-    overflow:hidden; border: 1px solid #000;
-    border-radius:2px;
-    text-align: center;
-    font-weight: bold;
-    color:#000;
-    clear: both;
-    margin: auto">
-    {$private_project}! {$register_call}
-</div>
-    {include="base/register"}
-<script type="text/javascript">
-  $(document).ready(function(){$("#left_col").remove();$("#regfrm").attr("class","span8 offset2");})
-</script>
 
+<div id="main">
+  <aside id="left_col"></aside>
+  <div id="center_col">
+    <div style="width: 90%; background-color: #AFAFAF; overflow: hidden; border: 1px solid #000; border-radius: 2px; text-align: center; font-weight: bold; color: #000; clear: both; margin: auto;">{$private_project}! {$register_call}</div>
+    <div id="tmp">{include="base/register"}</div>
+    <script type="text/javascript">$(document).ready(function(){$("#regfrm").appendTo($("#center_col")).attr("class","span10 offset1"); $("#tmp").remove()});</script>
+  </div>
+  <aside id="right_col"></aside>
+</div>

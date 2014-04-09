@@ -1,36 +1,43 @@
-<article id="center_col" data-type='{if="$project_b"}project{else}profile{/if}' class="row">
-    <span class="span1"></span>
-    <div class="span10 grid fluid">
-      <div class="row pointer">
-        <span class="span2" style="cursor:default"><i class="icon-link"></i>{$url}</span>
-        <span class="span8" id="preview"><i class="icon-book"></i>{$preview}</span>
-        <span style="span2" id="time">  <i style="padding-left:20px" class="icon-clock"></i>{$when}</span>
-      </div>
-      <hr>
-      {loop="list_a"}
-      <div class="row" id="tr{$key}" style="border-bottom: 1px #000 solid">
-        <span class="span2"><a href="{$value.link_n}">{$value.name_n} [{$value.pid_n}]</a></span>
-        <div class="nerdz_message span8">
-          {$value.preview_n}
-          <i class="unbookmark icon-remove" data-hpid="{$value.hpid_n}" style="margin-right:3px; float: right; cursor:pointer;" title="Unbookmark">&nbsp;</i>
+<div class="grid" id="main">
+  <div class="row">
+    <nav id="left_col" class="span2"></nav>
+    <article id="#center_col" class="span8">
+        <div class="row">
+            <span class="span2" style="cursor:default"><i class="icon-link"></i>{$url}</span>
+            <span class="span8" id="preview"><i class="icon-book"></i>{$preview}</span>
+            <span style="span2" id="time">  <i style="padding-left:20px" class="icon-clock"></i>{$when}</span>
         </div>
-        <span class="span2 small">
-            {$value.datetime_n}
-        </span>
-      </div>
-      {/loop}
-    </div>
+        <hr>
+        <div id="postlist" class="singlepost" data-type='{if="$project_b"}project{else}profile{/if}'>
+          {loop="list_a"}
+          <div class="row" id="tr{$key}" style="border-bottom: 1px #ccc solid">
+            <span class="span2"><a href="{$value.link_n}" class="post">{$value.name_n} [{$value.pid_n}]</a></span>
+            <div class="post span8">
+              <div class="nerdz_message">
+                <i class="unbookmark icon-remove" data-hpid="{$value.hpid_n}" style="margin:3px; float: right; cursor:pointer;" title="Unbookmark">&nbsp;</i>
+                <div>{$value.preview_n}</div>
+              </div>
+            </div>
+            <span class="span2 small">
+                {$value.datetime_n}
+            </span>
+          </div>
+          {/loop}
+        </div>
+        {if="!empty($prev_url_n)"}
+            <div style="float:left; margin-left:5%">
+                <a href="{$prev_url_n}">&lt;&lt;&lt;</a>
+            </div>
+        {/if}
+        {if="!empty($next_url_n)"}
+            <div style="float:right; margin-right:5%">
+                <a href="{$next_url_n}">&gt;&gt;&gt;</a>
+            </div>
+        {/if}
 
-    {if="!empty($prev_url_n)"}
-        <div style="float:left; margin-left:5%">
-            <a href="{$prev_url_n}">&lt;&lt;&lt;</a>
-        </div>
-    {/if}
-    {if="!empty($next_url_n)"}
-        <div style="float:right; margin-right:5%">
-            <a href="{$next_url_n}">&gt;&gt;&gt;</a>
-        </div>
-    {/if}
+        <br /><br /><br />
+    </article>
+    <nav id="right_col" class="span2"></nav>
+  </div>
+</div>
 
-    <br /><br /><br />
-</article>

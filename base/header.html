@@ -1,178 +1,168 @@
 {if="$logged_b"}
-<header id="site_title">
-  <nav class="navigation-bar dark">
-    <nav class="navigation-bar-content">
-      <a class="element" href="/home.php" accesskey="h"><h3 style="margin: 0px; padding: 2px;line-height:12px">NERDZ</h3></a>
-      <div class="element-divider"></div>
-      <div class="element">
-        <a class="dropdown-toggle" id="welcome" href="#">{$welcome}, {$myusername_n} &nbsp;&nbsp;</a>
-        <ul class="dropdown-menu" data-role="dropdown" style="z-index: 1001; padding: 0px;width:auto;">
-          <li><a href="/{$myusername4link_n}" accesskey="p"><i class="icon-user"></i>{$profile}</a></li>
-          <li><a href="/preferences.php" accesskey="z"><i class="icon-wrench"></i>{$preferences}</a></li>
-          <li id="pref-metro">
-            <a class="dropdown-toggle" href="#"><i class="icon-tools"></i>{$preferences} Metro</a>
-            <ul class="dropdown-menu pointer" data-role="dropdown" data-pos="right"> 
-              <li class="input-control switch" style="float:left;">
-                <i class="icon-ruler">{$theme}:</i><br />
-                <span id="theme-switcher" style="float:left; margin-left: 20px; padding: 3px; width:100%; overflow: auto;">
-                  <div class="tile tiny" style="background-color: #3D3D3D" title="Metro Dark" id="dark"></div>
-                  <div class="tile tiny" style="background-color: #ddd;" title="Metro Light" id="light"></div>
-                  <div class="tile tiny" style="background-color: #000" title="Metro Black" id="black"></div>
-                </span>
-              </li>
-              <li class="input-control switch" style="margin-bottom: 0px;">
-                <label>
-                  <i class="icon-code"></i>{$CODE_THEME}: &nbsp; <i class="icon-lamp" title="Dark"></i>
-                  <input type="checkbox" id="code-theme-switcher">
-                  <span class="check"></span>
-                  <i class="icon-lamp-2" title="Light"></i>
-                </label>
-              </li>              
-              <li style="float:left">
-                <i class="icon-brush">{$color}:</i><br />
-                <span id="color-switcher" style="float:left; margin-left: 20px; padding: 3px; width:100%; overflow: auto;">
-                </span>
-              </li>
-              <li class="input-control switch" style="margin-bottom: 0px;">
-                  <label>
-                    <i class="icon-alarm-2"></i>{$notifications}: &nbsp;&nbsp;
-                    <input type="checkbox" id="metro-notify" checked />
-                    <span class="check"></span>
-                  </label>
-              </li>
-              <li class="input-control switch" style="margin-bottom: 0px;">
-                  <label style="display: inline-block">
-                    <i class="icon-type"></i>TagPanel: &nbsp;&nbsp;
-                    <input type="checkbox" id="metro-tagpanel" checked />
-                    <span class="check"></span>
-                  </label>
-                  <i class="icon-tools" style="float: right;padding: 7px;" id="tagpanel-custom"></i>
-              </li>
-              <li id="metro-info">
-                <i class="icon-info">{$informations}</i>
-              </li>
-              <li onclick="window.open('http://github.com/DrJest/nerdzTemplateMetroNerdz')">
-                <i class="icon-github-2">GitHub</i>
-              </li>
-            </ul>
-          </li>
-          <li><a href="/" id="logout" data-tok="{$tok_n}"><i class="icon-exit"></i>{$logout}</a></li>
-        </ul>
-      </div>
-      <a class="element place-right" style="padding-left:30px; padding-right: 30px" href="/pm.php" accesskey="m" id="gotopm">
-        <i title="{$pm}" class="icon-mail" id="pmcounter" accesskey="q"></i>
-      </a>
-      <div class="element-divider place-right"></div>
-      <div class="element place-right">
-        <i title="Feeds" id="feeds" class="icon-feed dropdown-toggle"> RSS</i>
-        <ul class="dropdown-menu" data-role="dropdown" style="z-index: 1001; min-width: 140px;" data-pos="left">
-          <li><a href="/feed.php" target="_blank"><i title="Feed Posts" class="icon-user"> {$users} </i></a></li>
-          <li><a href="/feed.php?project=1" target="_blank"><i title="Feed Projects" class="icon-user"> {$projects} </i></a></li>
-        </ul>
-      </div>
-      <div class="element-divider place-right"></div>
-    </nav>
+<header id="site_title" class="navigation-bar">
+  <nav class="navigation-bar-content"><a href="/" accesskey="h" class="element">
+      <h3 style="margin: 0px; padding: 2px;line-height:12px;color: inherit">NERDZ</h3></a>
+    <div class="element-divider"></div>
+    <div style="cursor: pointer" class="element"><a id="welcome" class="dropdown-toggle">{$welcome}, {$myusername_n}</a>
+      <ul data-role="dropdown" class="dropdown-menu">
+        <li><a href="/{$myusername4link_n}" accesskey="p"><i class="icon-user"></i>{$profile}</a></li>
+        <li><a href="/preferences.php" accesskey="z"><i class="icon-wrench"></i>{$preferences}</a></li>
+        <li><a href="#" class="dropdown-toggle"><i class="icon-tools"></i>{$preferences} Metro</a>
+          <ul id="pref-metro" data-role="dropdown" data-pos="right" class="dropdown-menu">
+            <li><i class="icon-ruler">{$theme} </i><br/><span id="theme-switcher">
+                <div id="dark" style="background-color:#3d3d3d" title="Metro Dark" class="tile tiny"></div>
+                <div id="light" style="background-color:#ddd" title="Metro Light" class="tile tiny"></div>
+                <div id="black" style="background-color:#000" title="Metro Black" class="tile tiny"></div></span><br style="clear:both"/></li>
+            <li class="input-control switch">
+              <label><i class="icon-code"></i>{$CODE_THEME} &nbsp; <i title="dark" class="icon-lamp"></i>
+                <input id="theme-code-switcher" type="checkbox"/><span class="check"></span><i title="light" class="icon-lamp-2"></i>
+              </label>
+            </li>
+            <li><i class="icon-brush">{$color} </i><br/><span id="color-switcher"></span><br style="clear:both"/></li>
+            <li class="input-control switch">
+              <label><i class="icon-alarm-2">{$notifications}&nbsp;&nbsp;</i>
+                <input id="metro-notify" type="checkbox"/><span class="check"></span>
+              </label>
+            </li>
+            <li class="input-control switch"><i id="tagpanel-custom" style="float: right" class="icon-tools"></i>
+              <label><i class="icon-code">TagPanel  &nbsp;&nbsp;</i>
+                <input id="metro-tagpanel" type="checkbox"/><span class="check"></span>
+              </label>
+            </li>
+            <li id="metro-info"><i class="icon-info">{$informations}</i></li>
+            <li onclick="window.open('http://github.com/DrJest/nerdz-template-metro')"><i class="icon-github-2">GitHub</i></li>
+          </ul>
+        </li>
+        <li><a id="logout" href="/" data-tok="{$tok_n}"><i class="icon-exit"></i>{$logout}</a></li>
+      </ul>
+    </div><a id="gotopm" style="padding-left:30px; padding-right: 30px" href="/pm.php" accesskey="m" class="element place-right"><i id="pmcounter" title="{$pm}" accesskey="q" class="icon-mail"></i></a>
+    <div class="element-divider place-right"></div>
+    <div class="element place-right"><a href="#" class="dropdown-toggle"><i id="feeds" class="icon-feed">RSS</i></a>
+      <ul data-role="dropdown" data-pos="left" style="z-index: 1001; min-width: 140px;" class="dropdown-menu">
+        <li><a href="/feed.php" target="_blank"><i title="Feed Posts" class="icon-user">{$users}</i></a></li>
+        <li><a href="/feed.php?project=1" target="_blank"><i title="Feed Projects" class="icon-user">{$projects}</i></a></li>
+      </ul>
+    </div>
   </nav>
-</header>
-{else}
-<header id="site_title">
-  <nav id="loginfrm" class="navigation-bar dark">
-    <nav class="navigation-bar-content">
-      <div class="element">
-          <a href="/home.php" accesskey="h">NERDZ</a>
-      </div>
-      <div class="element place-right size2 center" id="login">
-        {$login}
-      </div>
-      <div class="element place-right size3 center">
-        <a class="dropdown-toggle" href="#"><i class="icon-tools"></i>{$preferences} Metro</a>
-        <ul class="dropdown-menu pointer" id="metro-pref" data-role="dropdown" data-pos="right">
-          <li>
-            <i class="icon-ruler">{$theme}:</i>
-            <select id="theme-switcher" style="margin-left: 1.5em">
-              <option value="dark">Dark</option>
-              <option value="light">Light</option>
-            </select>
-          </li>
-          <li style="float:left">
-            <i class="icon-brush">{$color}:</i><br />
-            <span id="color-switcher" style="float:left; margin-left: 20px; padding: 3px; width:100%; overflow: auto;">
-            </span>
-          </li>
-          <li id="metro-info">
-            <i class="icon-info">{$informations}</i>
-          </li>
-          <li onclick="window.open('http://github.com/DrJest/nerdzTemplateMetroNerdz')">
-            <i class="icon-github-2">GitHub</i>
-          </li>
-        </ul>
-      </div>
-    </nav>
+</header>{else}
+<nav id="site_title" class="navigation-bar">
+  <nav class="navigation-bar-content"><a href="/" accesskey="h" class="element">
+      <h3 style="margin: 0px; padding: 2px;line-height:12px">NERDZ</h3></a>
+    <div class="element-divider"></div>
+    <div class="element">{$welcome}, guest</div><a id="login" href="#" class="element place-right">{$login}</a>
   </nav>
-</header>
-<script type="application/javascript">
-var form = '<form id="loginfrm">'+
-           '  <label>{$username}</label>'+
-           '    <input type="text" name="username" required>'+
-           '  <label>{$password}</label>'+
-           '    <input type="password" name="password" required> <br />'+
-           '  <div class="input-control checkbox">'+
-           '    <label>'+
-           '      <input type="checkbox" name="setcookie" checked="checked">'+
-           '      <span class="check"></span>{$remember_me}'+
-           '    </label>'+
-           '  </div>'+
-           '  <div class="input-control checkbox">'+
-           '    <label>'+
-           '      <input type="checkbox" name="offline" >'+
-           '      <span class="check"></span>{$hide_status}'+
-           '    </label>'+
-           '  </div>'+
-           '  <div class="center">'+
-           '    <input type="submit" class="button primary" id="loginbtn" value="{$login}" />'+
-           '  </div>'+
-           '  <input type="hidden" value="{$tok_n}" name="tok" /><br />'+
-           '  <div class="center"><a href="/reset.php" target="_blank">{$FORGOT_PASSWORD}</a><br /></div>'+
-           '</form>';
-$("#login").on('click', function(){
-  location.hash = "login";
-  $.Dialog({
-    overlay: true,
-    shadow: true,
-    flat: true,
-    icon: '<i class="icon-key"></i>',
-    title: '{$login}',
-    padding: 30,
-    content: '',
-    onShow: function(_dialog){
-      var content = _dialog.children('.content');
-      content.html(form);
-    },
-    onClose: function() { location.hash=""; }
-  });
-});
-$(document).on('submit',"#loginfrm",function(event) {
-    event.preventDefault();
-    var t = $("#loginbtn");
-    N.json.login($(this).serialize(), function(r) {
-        var tmp = t.val();
-        if(r.status == 'ok')
-        {
-            t.val(r.message.replace("<br />","\n"));
-            setTimeout(function() {
-                document.location.reload();
-            },1500);
-        }
-        else
-        {
-            t.val(r.message);
-            setTimeout(function() {
-                t.val(tmp);
-            },1500);
-        }
+</nav>
+<script>
+  var loginForm =  '<form id="loginfrm">'+
+                   '  <label>{$username}</label>'+
+                   '  <input type="text" name="username" required>'+
+                   '  <label>{$password}</label>'+
+                   '  <input type="password" name="password" required> <br />'+
+                   '  <div class="input-control checkbox">'+
+                   '    <label>'+
+                   '      <input type="checkbox" name="setcookie" checked="checked">'+
+                   '      <span class="check"></span>{$remember_me}'+
+                   '    </label>'+
+                   '  </div>'+
+                   '  <div class="input-control checkbox">'+
+                   '    <label>'+
+                   '      <input type="checkbox" name="offline" >'+
+                   '      <span class="check"></span>{$hide_status}'+
+                   '    </label>'+
+                   '  </div>'+
+                   '  <div class="center">'+
+                   '    <input type="submit" class="button primary" id="loginbtn" value="{$login}" />'+
+                   '  </div>'+
+                   '  <input type="hidden" value="{$tok_n}" name="tok" /><br />'+
+                   '  <div class="center"><a href="/reset.php" id="forgot">{$FORGOT_PASSWORD}</a><br /><br /><br/></div>'+
+                   '</form>';
+  var resetForm =  '<form id="resfrm" style="width:200px!important">'+
+                   '  {$reset_descr}'+
+                   '  <div class="input-control text"><label>{$email}</label>'+
+                   '  <input type="text" name="email" id="mait" /></div>'+
+                   '  <label>{$captcha}</label>'+
+                   '  <div>'+
+                   '    <img alt="" id="captcha" />'+
+                   '     &nbsp;&nbsp;<span onclick="N.reloadCaptcha()" style="font-size:6pt; cursor: pointer">{$reload_captcha}</span>'+
+                   '  </div>'+
+                   '  <div class="input-control text"><input type="text" name="captcha" /></div>'+
+                   '  <input type="submit" id="resetbtn" value="{$send}" /><br/>'+
+                   '  <a class="back bolder" href="#login"> <- BACK </a>'+
+                   '</form>';
+  $("#login").on('click', function(e){
+    e.preventDefault();
+    if(location.hash!=="#reset") 
+      location.hash = "login";
+    var html = $("#regfrm").html();
+    $.Dialog({
+      overlay: true,
+      shadow: true,
+      flat: true,
+      icon: '<i class="icon-key"></i>',
+      title: '{$login}',
+      padding: 30,
+      content: '',
+      onShow: function(_dialog){
+        var content = _dialog.children('.content');
+        $.Dialog.content(loginForm);
+        content.on("click", "#forgot", function(e) {
+          $("#regfrm").html('');
+          e.preventDefault();
+          $.Dialog.content(resetForm);
+          N.reloadCaptcha();
+        }).on("click",".back", function() {
+          $.Dialog.content(loginForm);
+          $("#regfrm").html(html); 
+        });
+        if(location.hash==="#reset") $("#forgot").click();
+      },
+      onClose: function() { location.hash=""; $("#regfrm").html(html); }
     });
-});
-if(location.hash=="#login") $("#login").click();
-</script>
-{/if}
-<div class="grid fluid">
+  });
+  $(document).on('submit',"#loginfrm",function(event) {
+      event.preventDefault();
+      var t = $("#loginbtn");
+      N.json.login($(this).serialize(), function(r) {
+          var tmp = t.val();
+          if(r.status == 'ok')
+          {
+              t.val(r.message.replace("<br />","\n"));
+              setTimeout(function() {
+                  document.location.reload();
+              },1500);
+          }
+          else
+          {
+              t.val(r.message);
+              setTimeout(function() {
+                  t.val(tmp);
+              },1500);
+          }
+      });
+  }).on('submit','#resfrm',function(e) {
+      e.preventDefault();
+      t = $("#resetbtn");
+      var tmp = t.val();
+      t.text(N.getLangData().LOADING);
+      N.json.resetPassword($(this).serialize(), function(r) {
+          N.reloadCaptcha();
+          if(r.status == 'ok')
+          {
+              $(".content").html(loginForm);
+              var login = $("#loginbtn").val();
+              $("#loginbtn").val(r.message.replace("<br />","\n"));
+              setTimeout(function() {
+                $("#loginbtn").val(login);
+              },1500);
+          }
+          else
+          {
+              t.val(r.message);
+              setTimeout(function() {
+                  t.val(tmp);
+              },1500);
+          }
+      });
+  });
+  if(location.hash==="#reset" || location.hash==="#login") $("#login").click();
+</script>{/if}

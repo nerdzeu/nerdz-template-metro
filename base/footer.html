@@ -1,35 +1,18 @@
-  <footer id="footer_main" class="row">
-    {if="$logged_b"}
-    <span id="bug_bar" style="text-align: center" class="span1">
-        <a href="/NERDZilla+for+MetroNerdz:" title="{$bug_title}" >
-            <i class="icon-bug" style="color:red; padding-top: 8px;"></i>
-        </a>
-    </span>
-    <div class="span1">
-      <a href="/informations.php" title="Info">
-        <i class="icon-info" style="padding-top: 8px;"></i>
-      </a>
-    </div>
-    
-    <div class="span8">
-      <form id="footersearch">
-        <input type="text" name="q" style="width: 100%" placeholder="{$search}" />
-      </form>
-    </div>
-    {/if}
-    <div class="span1 pointer" style="color: #ff7200; padding-top: 4px">
-      <i class="icon-html5" title="Valid HTML5"></i>
-      <i class="icon-css3" title="Valid CSS3"></i>
-    </div>
-    {if="$logged_b"}
-    <div class="span1" style="border-left:1px solid black; cursor:pointer; text-align: center">
-      <i class="icon-bell" id="notifycounter" accesskey="x" style="width:100%; padding-top:8px;"></i>
-    </div>  
-    {/if}
-  </footer>
-</div>
-<div id="notify_list" style="display:none">{$loading}</div>
-<audio id='notifyaudio' preload='auto'>
-  <source src='https://dl.dropboxusercontent.com/u/16542600/notify.mp3'>
-</audio>
-<span id="totop" title="Back To Top" class="icon-arrow-up-3" style="position: fixed; bottom: 50px; left: 20px; z-index: 1500; display: none; cursor: pointer; font-size: 3em;"></span>
+
+<footer id="footer_main" class="row">{if="$logged_b"}
+  <div id="bug_bar" class="span1"><a href="/NERDZilla+for+MetroNerdz:" title="{$bug_title}"><i style="color: red;" class="icon-bug"></i></a></div>
+  <div class="span1"><a href="/informations.php" title="Info"><i class="icon-info"></i></a></div>
+  <div class="span8">
+    <form id="footersearch" class="input-control text">
+      <input type="text" name="q" placeholder="{$search}"/>
+      <button class="btn-search"></button>
+      <button style="right: 30px" onclick="if($('#postlist').data('mode')==='search')$.Nerdz.loadPosts()" class="btn-clear"></button>
+    </form>
+  </div>{/if}
+  <div class="span1"><i title="Valid HTML5" class="icon-html5"></i><i title="Valid CSS3" class="icon-css3"></i></div>{if="$logged_b"}
+  <div style="border-left: 1px solid black" class="span1"><i id="notifycounter" accesskey="x" style="width: 100%;" class="icon-bell"></i></div>{/if}
+</footer>
+<div id="notify_list" style="display: none;">{$loading}</div>
+<audio id="notifyaudio" preload="auto">
+  <source src="https://dl.dropboxusercontent.com/u/16542600/notify.mp3"/>
+</audio><span id="totop" title="Back To Top" class="icon-arrow-up-3"></span>

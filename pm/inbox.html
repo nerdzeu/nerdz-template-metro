@@ -1,31 +1,8 @@
-<br />
-<div class="grid fluid">
-  <div class="row">
-    <div class="span5">
-      {$from}
-    </div>
-    <div class="span5">
-      {$when}
-    </div>
-    <div class="span1">
-      {$delete}
-    </div>
-  </div>
+
+<div class="inbox">
+  <div class="new icon-plus-2">&nbsp;{$compose}</div>{loop="list_a"}<a data-from="{$value.fromid_n}" data-to="{$value.toid_n}" class="conversation">
+    <div class="conversation-content"><span class="conversation-title">{$value.from_n}</span><span data-timestamp="{$value.timestamp_n}" class="conversation-subtitle">{$when}: {$value.datetime_n}</span></div></a>{else}
+  {$no_pm}
+  {/loop}
+  <div id="delconvs" class="icon-remove">&nbsp;</div>
 </div>
-{loop="list_a"}
-  <div class="row">
-    <div class="span5">
-      <a href="/{$value.from4link_n}" class="getconv" data-from="{$value.fromid_n}" data-to="{$value.toid_n}">{$value.from_n}</a>
-    </div>
-    <div class="span5">
-      <time data-timestamp="{$value.timestamp_n}">{$value.datetime_n}</time>
-    </div>
-    <div class="span1">
-      <a class="delete" data-del="true" data-id="#x{$counter}" data-from="{$value.fromid_n}" data-to="{$value.toid_n}">X</a>
-    </div>
-  </div>
-{else}
-  <div style="text-align: center">{$no_pm}</div>
-{/loop}
-<hr />
-<div id="conversation"></div><br />

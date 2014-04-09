@@ -1,30 +1,18 @@
-<div id="center_col">
-    <form id="tshare">
-        <table style="width:80%">
-            <tr>
-                <td style="widht:5%">
-                    URL:
-                </td>
-                <td style="width:80%">
-                    <textarea name="url" style="width:320px; height: 18px"></textarea>        
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {$comments}:
-                </td>
-                <td>
-                    <textarea name="comment" style="width:320px; height: 110px"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="submit" value="{$nerdz_it}" style="float: left" />
-                </td>
-                <td>
-                    <div id="errore"></div>
-                </td>
-            </tr>
-        </table>
+
+<div id="main">
+  <aside id="left_col"></aside>
+  <article id="center_col">
+    <form id="tshare" onsubmit="$.Nerdz.profile.share(this); return false;">
+      <div class="input-control text">
+        <input type="text" placeholder="URL" name="url"/>
+        <button class="btn-clear"></button>
+      </div>
+      <div class="input-control textarea">
+        <textarea placeholder="{$comments}" name="comment"></textarea>
+      </div>
+      <input type="submit" value="{$nerdz_it}"/>
+      <div id="errore"></div>
     </form>
+  </article>
+  <aside id="right_col"></aside>
 </div>

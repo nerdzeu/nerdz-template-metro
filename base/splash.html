@@ -1,15 +1,12 @@
-<article id="center_col" class="row">
-  <div class="span10 offset1">
-      {if="$mobile_b"}
-      {$desktopavailable}
-      
-      <a href="{$gotodesktop_n}"><h2>{$gotodesktop}</h2></a>
-      <a href="{$gotomobile_n}">{$stayonmobile}</a>
-    {else}
-      {$mobileavailable}
-      
-      <a href="{$gotomobile_n}"><h2>{$gotomobile}</h2></a>
-      <a href="{$gotodesktop_n}">{$stayondesktop}</a>
-    {/if}
-  </div>
-</article>
+
+<div id="main">
+  <aside id="left_col"></aside>
+  <article id="center_col">
+    {if="$mobile_b"}
+    {$desktopavailable}<a href="{$gotodesktop_n}"></a>
+    <h2>{$gotodesktop}</h2><a href="{$gotomobile_n}">{$stayonmobile}</a>{else}
+    {$mobileavailable}<a href="{$gotomobile_n}">
+      <h2>{$gotodesktop}</h2></a><a href="{$gotomobile_n}">{$gotomobile}</a><a href="{$gotodesktop_n}">{$stayondesktop}</a>{/if}
+  </article>
+  <aside id="right_col"></aside>
+</div>

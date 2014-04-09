@@ -1,115 +1,80 @@
-<div id="main" class="row">
-  <aside id="left_col" class="span3 offset1 center">
-    {$presentation_n}
-  </aside>
-  <form id="regfrm" class="span7">
-    <div class="row">
-      <span class="span4 offset1">
-        {$username}:
-      </span>
-      <input type="text" name="username" required class="span6" />
+
+<div id="main">
+  <div class="span3 offset1">{$presentation_n}</div>
+  <form id="regfrm" class="span5">
+    <div class="input-control text">
+      <input type="text" name="username" required="required" placeholder="{$username}"/>
+      <button class="btn-clear"></button>
     </div>
-    <div class="row">
-      <span class="span4 offset1">
-        {$name}:
-      </span>
-      <input type="text" name="name" required class="span6" />
+    <div class="input-control text">
+      <input type="text" name="name" required="required" placeholder="{$name}"/>
+      <button class="btn-clear"></button>
     </div>
-    <div class="row">
-      <span class="span4 offset1">
-        {$surname}:
-      </span>
-      <input type="text" name="surname" required class="span6" />
+    <div class="input-control text">
+      <input type="text" name="surname" required="required" placeholder="{$surname}"/>
+      <button class="btn-clear"></button>
     </div>
-    <div class="row">
-      <span class="span4 offset1">
-        {$email}:
-      </span>
-      <input type="text" name="email" required class="span6" />
+    <div class="input-control text">
+      <input type="text" name="email" required="required" placeholder="{$email}"/>
+      <button class="btn-clear"></button>
     </div>
-    <div class="row">
-      <span class="span4 offset1">
-        {$password}:
-      </span>
-      <input type="password" name="password" required class="span6" />
+    <div class="input-control password">
+      <input type="password" name="password" required="required" placeholder="{$password}"/>
+      <button class="btn-reveal"></button>
     </div>
-    <div class="row">
-      <span class="span4 offset1">
-        {$gender}:
-      </span>
-      <select name="gender" class="span">
-          <option value="1">{$male}</option>
-          <option value="2">{$female}</option>
+    <div class="input-control select">
+      <label>{$gender}</label>
+      <select name="gender">
+        <option value="1">{$male}</option>
+        <option value="2">{$female}</option>
       </select>
     </div>
-    <div class="row">
-      <span class="span4 offset1">
-        {$birth_date}:
-      </span>
-      <div class="input-control text span6" data-role="datepicker"
-          data-format='d/m/yyyy'
-          data-effect='fade'
-          data-week-start='1'>
-          <input type="text" id="birth_date" value="" required />
-          <button class="btn-date"></button>
-      </div>
-      <input type="hidden" id="birth_day" name="birth_day">
-      <input type="hidden" id="birth_month" name="birth_month">
-      <input type="hidden" id="birth_year" name="birth_year">
+    <div data-role="datepicker" data-format="d/m/yyyy" data-effect="fade" data-week-start="1" class="input-control text">
+      <input id="birth_date" type="text" value="" required="required" placeholder="{$birth_date}"/>
+      <input id="birth_day" type="hidden" name="birth_day"/>
+      <input id="birth_month" type="hidden" name="birth_month"/>
+      <input id="birth_year" type="hidden" name="birth_year"/>
     </div>
-    <div class="row">
-      <span class="span4 offset1">
-        {$timezone}:
-      </span>
-      <select name="timezone" class="span6">
-        {loop="timezones_a"}
-          <option value="{$value}">{$value}</option>
-        {/loop}
+    <div class="input-control select">
+      <label>{$timezone}</label>
+      <select name="timezone">{loop="timezones_a"}
+        <option value="{$value}">{$value}</option>{/loop}
       </select>
+    </div><img id="captcha" src="{$captchaurl_n}##" alt="" title="captcha" style="border: 1px solid #FFF;" width="90" height="30"/><span onclick="N.reloadCaptcha()" style="font-size: 6pt; cursor: pointer;">{$reload_captcha}</span>
+    <div class="input-control text">
+      <input type="text" name="captcha" required="required" placeholder="{$captcha}"/>
+      <button class="btn-clear"></button>
     </div>
-    <div class="row">
-      <span class="span4 offset1">
-        {$captcha}:
-      </span>
-      <div class="span6">
-          <input type="text" id="cptxt" name="captcha" required /><br /><img src="{$captchaurl_n}##" alt="" id="captcha" title="captcha" style="border: 1px solid #FFF" width="90" height="30" />
-          &nbsp;<span onclick="N.reloadCaptcha()" style="font-size:6pt; cursor: pointer">{$reload_captcha}</span>
-      </div>
-    </div>
-    <div class="row center">
-      <input class="span2 offset4" type="submit" value="{$register}" />
-      <div class="span6">
-        <div id="error" style="color: #FF0000"></div>
-        <div id="done" style="color: #00FF00"></div>
-      </div>
-    </div> 
+    <input type="submit" value="{$register}"/>
+    <div id="error" style="color: #FF0000;"></div>
+    <div id="done" style="color: #00FF00;"></div>
   </form>
 </div>
 <script type="text/javascript">
-$("#regfrm").on('submit',function(e) {
-    e.preventDefault();
-    $("#birth_date").attr("readonly",false);
-    $date = $("#birth_date").val().split("/");
-    if(!$date.length) { $("#error").html("Missing: Birth Date"); return; }
-    $("#birth_day").val($date[0]);
-    $("#birth_month").val($date[1]);
-    $("#birth_year").val($date[2]);
-    N.json.register($("#regfrm").serialize(),function(obj) {
-        if(obj.status == 'error')
-        {
-            $("#birth_date").attr("readonly",true);
-            $("#error").html(obj.message.replace(/\n/g,"<br />"));
-            $("#cptxt").html('');
-            N.reloadCaptcha();
-        }
-        else if(obj.status == 'ok')
-        {
-            $("#error").hide();
-            $("#done").html(obj.message);
-            setTimeout(function() {
-                window.location.reload();
-            }, 1500);
-        }
-    });
-});
+  $("#regfrm").on('submit',function(e) {
+  e.preventDefault();
+  $("#birth_date").attr("readonly",false);
+  $date = $("#birth_date").val().split("/");
+  if(!$date.length) { $("#error").html("Missing: Birth Date"); return; }
+  $("#birth_day").val($date[0]);
+  $("#birth_month").val($date[1]);
+  $("#birth_year").val($date[2]);
+  N.json.register($("#regfrm").serialize(),function(obj) {
+  if(obj.status == 'error')
+  {
+  $("#birth_date").attr("readonly",true);
+  $("#error").html(obj.message.replace(/\\n/g,"<br />"));
+  $("#cptxt").html('');
+  N.reloadCaptcha();
+  }
+  else if(obj.status == 'ok')
+  {
+  $("#error").hide();
+  $("#done").html(obj.message);
+  setTimeout(function() {
+  window.location.reload();
+  }, 1500);
+  }
+  });
+  });
 </script>

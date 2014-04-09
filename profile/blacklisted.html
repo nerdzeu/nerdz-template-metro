@@ -1,29 +1,21 @@
-<article id="center_col" class="row">
-  <span class="span1"></span>
-  <span class="span1 pointer">
-    {if="$canifollow_b"}
-      <div id="follow" data-id="{$id_n}">{$follow}</div>
-    {else}
-      <div id="unfollow" data-id="{$id_n}">{$unfollow}</div>
-    {/if}
-  </span>
-  <span class="span1 pointer">
-    {if="$caniblacklist_b"}
-      <div id="blacklist" data-id="{$id_n}">Blacklist</div>
-    {else}
-      <div id="unblacklist" data-id="{$id_n}">Unblacklist</div>
-    {/if}
-  </span>
-  <div class="span6">
-    <div style="text-align:center">Blacklisted!</div>
-    <br />
-    <div class="nerdz_from">Motivation:</div>
-    <div id="postlist" class="nerdz_message">
-        {$motivation_n}
-    </div>
-    <div style="margin:auto;width:468px">
-        {$banners_a.468x60}
-    </div>
-  </div>
-</article>
 
+<div id="main">
+  <aside id="left_col" style="text-align:center">{if="$canifollow_b"}
+    <button id="follow" data-id="{$id_n}">{$follow}</button>{else}
+    <button id="unfollow" data-id="{$id_n}">{$unfollow}</button>{/if}<br/><br/>{if="$caniblacklist_b"}
+    <button id="blacklist" data-id="{$id_n}">Blacklist</button>{else}
+    <button id="unblacklist" data-id="{$id_n}">Unblacklist</button>{/if}
+  </aside>
+  <article id="center_col" class="span8">
+    <h2>Blacklisted!</h2>
+    <div id="postlist" class="singlepost">
+      <div class="post">
+        <div class="nerdz_from"><a>Motivation:</a></div>
+        <div class="nerdz_message">
+          <div>{$motivation_n}</div>
+        </div>
+      </div>
+    </div>
+  </article>
+  <aside id="right_col">{$banners_a.120x600}</aside>
+</div>

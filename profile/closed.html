@@ -1,16 +1,10 @@
-<div style="
-    width:90%;
-    background-color: #AFAFAF;
-    overflow:hidden; border: 1px solid #000;
-    border-radius:2px;
-    text-align: center;
-    font-weight: bold;
-    color:#000;
-    clear: both;
-    margin: auto">
-        Closed Profile. Register on NERDZ to view it!<br />
+
+<div id="main">
+  <aside id="left_col"></aside>
+  <article id="center_col">
+    <div style="width: 100%; background-color: #AFAFAF; overflow: hidden; border: 1px solid #000; border-radius: 2px; text-align: center; font-weight: bold; color: #000; clear: both; margin: auto;">Closed Profile. Register on NERDZ to view it!</div>
+    <div id="tmp">{include="base/register"}</div>
+    <script type="text/javascript"> $(document).ready(function(){$("#regfrm").attr("class","span10 offset1").appendTo("##center_col");$("#tmp").remove();})</script>
+  </article>
+  <aside id="right_col"></aside>
 </div>
-    {include="base/register"}
-<script type="text/javascript">
-  $(document).ready(function(){$("#left_col").remove();$("#regfrm").attr("class","span8 offset2");})
-</script>

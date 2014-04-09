@@ -13,25 +13,19 @@ var METRO_AUTO_REINIT, METRO_LOCALE, METRO_WEEK_START, METRO_DIALOG = false;
 $(function() {
   $('html').on('click', function(c) {
     $('.dropdown-menu').each(function(a, b) {
-      $(b).hasClass('keep-open') || 'block' != $(b).css('display') || $(b).hide();
+      $(b).hasClass('keep-open') || 'block' !== $(b).css('display') || $(b).hide();
     });
   });
 });
 $(function() {
   $(window).on('resize', function() {
-    if (METRO_DIALOG) {
-      var c = ($(window).height() - METRO_DIALOG.outerHeight()) / 2,
-        a = ($(window).width() - METRO_DIALOG.outerWidth()) / 2;
-      METRO_DIALOG.css({
-        top: c,
-        left: a
-      });
-    }
+    if (METRO_DIALOG) 
+      $.Dialog.autoResize();
   });
 });
 (function(c) {
   c.Metro.currentLocale = 'en';
-  c.Metro.currentLocale = void 0 != METRO_LOCALE ? METRO_LOCALE : 'en';
+  c.Metro.currentLocale = void 0 !== METRO_LOCALE ? METRO_LOCALE : 'en';
   c.Metro.Locale = {
     en: {
       months: 'January February March April May June July August September October November December Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' '),
@@ -102,9 +96,9 @@ function touch2Mouse(c) {
     default:
       return;
   }
-  'mousedown' == b && (eventTimer = new Date().getTime(), startX = a.clientX, startY = a.clientY, mouseDown = true);
-  'mouseup' == b && (500 >= new Date().getTime() - eventTimer ? b = 'click' : 1000 < new Date().getTime() - eventTimer && (b = 'longclick'), eventTimer = 0, mouseDown = false);
-  'mousemove' == b && mouseDown && (deltaX = a.clientX - startX, deltaY = a.clientY - startY, moveDirection = deltaX > deltaY ? 'horizontal' : 'vertical');
+  'mousedown' === b && (eventTimer = new Date().getTime(), startX = a.clientX, startY = a.clientY, mouseDown = true);
+  'mouseup' === b && (500 >= new Date().getTime() - eventTimer ? b = 'click' : 1000 < new Date().getTime() - eventTimer && (b = 'longclick'), eventTimer = 0, mouseDown = false);
+  'mousemove' === b && mouseDown && (deltaX = a.clientX - startX, deltaY = a.clientY - startY, moveDirection = deltaX > deltaY ? 'horizontal' : 'vertical');
   var d = document.createEvent('MouseEvent');
   d.initMouseEvent(b, true, true, window, 1, a.screenX, a.screenY, a.clientX, a.clientY, false, false, false, false, 0, null);
   a.target.dispatchEvent(d);
@@ -121,21 +115,21 @@ var dateFormat = function() {
       return a;
     };
   return function(e, f, g) {
-    var h = dateFormat;
-    1 != arguments.length || ('[object String]' != Object.prototype.toString.call(e) || /\d/.test(e)) || (f = e, e = void 0);
+    var h1 = dateFormat;
+    1 !== arguments.length || ('[object String]' !== Object.prototype.toString.call(e) || /\d/.test(e)) || (f = e, e = void 0);
     e = e ? new Date(e) : new Date();
-    f = String(h.masks[f] || f || h.masks['default']);
-    'UTC:' == f.slice(0, 4) && (f = f.slice(4), g = true);
+    f = String(h1.masks[f] || f || h1.masks['default']);
+    'UTC:' === f.slice(0, 4) && (f = f.slice(4), g = true);
     locale = $.Metro.currentLocale;
-    var k = g ? 'getUTC' : 'get',
-      h = e[k + 'Date'](),
-      l = e[k + 'Day'](),
-      n = e[k + 'Month'](),
-      p = e[k + 'FullYear'](),
-      m = e[k + 'Hours'](),
-      q = e[k + 'Minutes'](),
-      u = e[k + 'Seconds'](),
-      k = e[k + 'Milliseconds'](),
+    var k1 = g ? 'getUTC' : 'get',
+      h = e[k1 + 'Date'](),
+      l = e[k1 + 'Day'](),
+      n = e[k1 + 'Month'](),
+      p = e[k1 + 'FullYear'](),
+      m = e[k1 + 'Hours'](),
+      q = e[k1 + 'Minutes'](),
+      u = e[k1 + 'Seconds'](),
+      k = e[k1 + 'Milliseconds'](),
       r = g ? 0 : e.getTimezoneOffset(),
       s = {
         d: h,
@@ -169,7 +163,7 @@ var dateFormat = function() {
           'st',
           'nd',
           'rd'
-        ][3 < h % 10 ? 0 : (10 != h % 100 - h % 10) * h % 10]
+        ][3 < h % 10 ? 0 : (10 !== h % 100 - h % 10) * h % 10]
       };
     return f.replace(c, function(a) {
       return a in s ? s[a] : a.slice(1, a.length - 1);
@@ -204,7 +198,7 @@ Date.prototype.format = function(c, a) {
       format: 'yyyy-mm-dd',
       multiSelect: false,
       startMode: 'day',
-      weekStart: void 0 != METRO_WEEK_START ? METRO_WEEK_START : 0,
+      weekStart: void 0 !== METRO_WEEK_START ? METRO_WEEK_START : 0,
       otherDays: false,
       date: new Date(),
       buttons: true,
@@ -223,13 +217,13 @@ Date.prototype.format = function(c, a) {
     _events: [],
     _create: function() {
       var a = this.element;
-      void 0 != a.data('multiSelect') && (this.options.multiSelect = a.data('multiSelect'));
-      void 0 != a.data('format') && (this.options.format = a.data('format'));
-      void 0 != a.data('date') && (this.options.date = new Date(a.data('date')));
-      void 0 != a.data('locale') && (this.options.locale = a.data('locale'));
-      void 0 != a.data('startMode') && (this.options.startMode = a.data('startMode'));
-      void 0 != a.data('weekStart') && (this.options.weekStart = a.data('weekStart'));
-      void 0 != a.data('otherDays') && (this.options.otherDays = a.data('otherDays'));
+      void 0 !== a.data('multiSelect') && (this.options.multiSelect = a.data('multiSelect'));
+      void 0 !== a.data('format') && (this.options.format = a.data('format'));
+      void 0 !== a.data('date') && (this.options.date = new Date(a.data('date')));
+      void 0 !== a.data('locale') && (this.options.locale = a.data('locale'));
+      void 0 !== a.data('startMode') && (this.options.startMode = a.data('startMode'));
+      void 0 !== a.data('weekStart') && (this.options.weekStart = a.data('weekStart'));
+      void 0 !== a.data('otherDays') && (this.options.otherDays = a.data('otherDays'));
       this._year = this.options.date.getFullYear();
       this._distance = parseInt(this.options.date.getFullYear()) - 4;
       this._month = this.options.date.getMonth();
@@ -242,7 +236,7 @@ Date.prototype.format = function(c, a) {
       var a = this._year,
         b = this._month,
         d = 28;
-      1 == b && (0 != a % 100 && 0 == a % 4 || 0 == a % 400) && (d = 29);
+      1 === b && (0 !== a % 100 && 0 === a % 4 || 0 === a % 400) && (d = 29);
       var e = [
         '31',
         '' + d + '',
@@ -272,7 +266,7 @@ Date.prototype.format = function(c, a) {
       var l;
       h = c('<tr/>');
       for (k = 0; 7 > k; k++)
-        this.options.weekStart ? (l = k + 1, 7 == l && (l = 0), c('<td/>').addClass('text-center day-of-week').html(c.Metro.Locale[this.options.locale].days[l + 7]).appendTo(h)) : c('<td/>').addClass('text-center day-of-week').html(c.Metro.Locale[this.options.locale].days[k + 7]).appendTo(h);
+        this.options.weekStart ? (l = k + 1, 7 === l && (l = 0), c('<td/>').addClass('text-center day-of-week').html(c.Metro.Locale[this.options.locale].days[l + 7]).appendTo(h)) : c('<td/>').addClass('text-center day-of-week').html(c.Metro.Locale[this.options.locale].days[k + 7]).appendTo(h);
       h.addClass('calendar-subheader').appendTo(d);
       h = this._month - 1;
       0 > h && (h = 11);
@@ -284,7 +278,7 @@ Date.prototype.format = function(c, a) {
         this.options.otherDays && (n = e - (l - k - 1)), c('<td/>').addClass('empty').html('<small class=\'other-day\'>' + n + '</small>').appendTo(h);
       g = (this.options.weekStart ? g + 6 : g) % 7;
       for (k = 1; k <= f; k++)
-        g %= 7, 0 == g && (h.appendTo(d), h = c('<tr/>')), e = c('<td/>').addClass('text-center day').html('<a href=\'#\'>' + k + '</a>'), a == this._today.getFullYear() && (b == this._today.getMonth() && this._today.getDate() == k) && e.addClass('today'), l = new Date(this._year, this._month, k).format('yyyy-mm-dd'), 0 <= this.element.data('_storage').indexOf(l) && e.find('a').addClass('selected'), e.appendTo(h), g++;
+        g %= 7, 0 === g && (h.appendTo(d), h = c('<tr/>')), e = c('<td/>').addClass('text-center day').html('<a href=\'#\'>' + k + '</a>'), a === this._today.getFullYear() && (b === this._today.getMonth() && this._today.getDate() === k) && e.addClass('today'), l = new Date(this._year, this._month, k).format('yyyy-mm-dd'), 0 <= this.element.data('_storage').indexOf(l) && e.find('a').addClass('selected'), e.appendTo(h), g++;
       a = '';
       for (k = g + 1; 7 >= k; k++)
         this.options.otherDays && (a = k - g), c('<td/>').addClass('empty').html('<small class=\'other-day\'>' + a + '</small>').appendTo(h);
@@ -304,7 +298,7 @@ Date.prototype.format = function(c, a) {
       b.addClass('calendar-header').appendTo(a);
       b = c('<tr/>');
       for (e = f = 0; 12 > e; e++)
-        d = c('<td/>').addClass('text-center month').html('<a href=\'#\' data-month=\'' + e + '\'>' + c.Metro.Locale[this.options.locale].months[e + 12] + '</a>'), this._month == e && new Date().getFullYear() == this._year && d.addClass('today'), d.appendTo(b), 0 == (f + 1) % 4 && (b.appendTo(a), b = c('<tr/>')), f += 1;
+        d = c('<td/>').addClass('text-center month').html('<a href=\'#\' data-month=\'' + e + '\'>' + c.Metro.Locale[this.options.locale].months[e + 12] + '</a>'), this._month === e && new Date().getFullYear() === this._year && d.addClass('today'), d.appendTo(b), 0 === (f + 1) % 4 && (b.appendTo(a), b = c('<tr/>')), f += 1;
       a.appendTo(this.element);
     },
     _renderYears: function() {
@@ -319,7 +313,7 @@ Date.prototype.format = function(c, a) {
       b = c('<tr/>');
       f = 0;
       for (e = this._distance; e < this._distance + 12; e++)
-        d = c('<td/>').addClass('text-center year').html('<a href=\'#\' data-year=\'' + e + '\'>' + e + '</a>'), new Date().getFullYear() == e && d.addClass('today'), d.appendTo(b), 0 == (f + 1) % 4 && (b.appendTo(a), b = c('<tr/>')), f += 1;
+        d = c('<td/>').addClass('text-center year').html('<a href=\'#\' data-year=\'' + e + '\'>' + e + '</a>'), new Date().getFullYear() === e && d.addClass('today'), d.appendTo(b), 0 === (f + 1) % 4 && (b.appendTo(a), b = c('<tr/>')), f += 1;
       a.appendTo(this.element);
     },
     _renderCalendar: function() {
@@ -338,7 +332,7 @@ Date.prototype.format = function(c, a) {
     _initButtons: function() {
       var a = this,
         b = this.element.find('table');
-      'day' == this._mode ? (b.find('.btn-select-month').on('click', function(b) {
+      'day' === this._mode ? (b.find('.btn-select-month').on('click', function(b) {
         b.preventDefault();
         b.stopPropagation();
         a._mode = 'month';
@@ -355,7 +349,7 @@ Date.prototype.format = function(c, a) {
         b.preventDefault();
         b.stopPropagation();
         a._month += 1;
-        12 == a._month && (a._year += 1, a._month = 0);
+        12 === a._month && (a._year += 1, a._month = 0);
         a._renderCalendar();
       }), b.find('.btn-previous-year').on('click', function(b) {
         a._event = 'eventPrevious';
@@ -395,7 +389,7 @@ Date.prototype.format = function(c, a) {
         a.options.multiSelect ? (c(this).toggleClass('selected'), c(this).hasClass('selected') ? a._addDate(d) : a._removeDate(d)) : (b.find('.day a').removeClass('selected'), c(this).addClass('selected'), a.element.data('_storage', []), a._addDate(d));
         a.options.getDates(a.element.data('_storage'));
         a.options.click(d, e);
-      })) : 'month' == this._mode ? (b.find('.month a').on('click', function(b) {
+      })) : 'month' === this._mode ? (b.find('.month a').on('click', function(b) {
         a._event = 'eventNext';
         b.preventDefault();
         b.stopPropagation();
@@ -455,7 +449,7 @@ Date.prototype.format = function(c, a) {
       this._renderCalendar();
     },
     getDate: function(a) {
-      return new Date(void 0 != a ? this.element.data('_storage')[a] : this.element.data('_storage')[0]).format(this.options.format);
+      return new Date(void 0 !== a ? this.element.data('_storage')[a] : this.element.data('_storage')[0]).format(this.options.format);
     },
     getDates: function() {
       return this.element.data('_storage');
@@ -481,7 +475,7 @@ Date.prototype.format = function(c, a) {
       effect: 'none',
       position: 'bottom',
       locale: c.Metro.currentLocale,
-      weekStart: void 0 != METRO_WEEK_START ? METRO_WEEK_START : 0,
+      weekStart: void 0 !== METRO_WEEK_START ? METRO_WEEK_START : 0,
       otherDays: false,
       selected: function(a, b) {},
       _calendar: void 0
@@ -491,22 +485,22 @@ Date.prototype.format = function(c, a) {
         b = this.element,
         d = b.children('input'),
         e = b.children('button.btn-date');
-      void 0 != b.data('date') && (this.options.date = b.data('date'));
-      void 0 != b.data('format') && (this.options.format = b.data('format'));
-      void 0 != b.data('effect') && (this.options.effect = b.data('effect'));
-      void 0 != b.data('position') && (this.options.position = b.data('position'));
-      void 0 != b.data('locale') && (this.options.locale = b.data('locale'));
-      void 0 != b.data('weekStart') && (this.options.weekStart = b.data('weekStart'));
-      void 0 != b.data('otherDays') && (this.options.otherDays = b.data('otherDays'));
+      void 0 !== b.data('date') && (this.options.date = b.data('date'));
+      void 0 !== b.data('format') && (this.options.format = b.data('format'));
+      void 0 !== b.data('effect') && (this.options.effect = b.data('effect'));
+      void 0 !== b.data('position') && (this.options.position = b.data('position'));
+      void 0 !== b.data('locale') && (this.options.locale = b.data('locale'));
+      void 0 !== b.data('weekStart') && (this.options.weekStart = b.data('weekStart'));
+      void 0 !== b.data('otherDays') && (this.options.otherDays = b.data('otherDays'));
       this._createCalendar(b, this.options.date);
       d.attr('readonly', true);
       e.on('click', function(b) {
         b.stopPropagation();
-        'none' == a.options._calendar.css('display') ? a._show() : a._hide();
+        'none' === a.options._calendar.css('display') ? a._show() : a._hide();
       });
       b.on('click', function(b) {
         b.stopPropagation();
-        'none' == a.options._calendar.css('display') ? a._show() : a._hide();
+        'none' === a.options._calendar.css('display') ? a._show() : a._hide();
       });
       c('html').on('click', function(a) {
         c('.calendar-dropdown').hide();
@@ -520,7 +514,7 @@ Date.prototype.format = function(c, a) {
         'max-width': 260,
         'z-index': 1000
       }).addClass('calendar calendar-dropdown').appendTo(a);
-      void 0 != e.options.date && d.data('date', e.options.date);
+      void 0 !== e.options.date && d.data('date', e.options.date);
       d.calendar({
         multiSelect: false,
         format: e.options.format,
@@ -535,7 +529,7 @@ Date.prototype.format = function(c, a) {
           e._hide();
         }
       });
-      void 0 != b && (d.calendar('setDate', b), a.children('input[type=text]').val(d.calendar('getDate')));
+      void 0 !== b && (d.calendar('setDate', b), a.children('input[type=text]').val(d.calendar('getDate')));
       switch (this.options.position) {
         case 'top':
           d.css({
@@ -552,10 +546,10 @@ Date.prototype.format = function(c, a) {
       this.options._calendar = d;
     },
     _show: function() {
-      'slide' == this.options.effect ? (c('.calendar-dropdown').slideUp('fast'), this.options._calendar.slideDown('fast')) : 'fade' == this.options.effect ? (c('.calendar-dropdown').fadeOut('fast'), this.options._calendar.fadeIn('fast')) : (c('.calendar-dropdown').hide(), this.options._calendar.show());
+      'slide' === this.options.effect ? (c('.calendar-dropdown').slideUp('fast'), this.options._calendar.slideDown('fast')) : 'fade' === this.options.effect ? (c('.calendar-dropdown').fadeOut('fast'), this.options._calendar.fadeIn('fast')) : (c('.calendar-dropdown').hide(), this.options._calendar.show());
     },
     _hide: function() {
-      'slide' == this.options.effect ? this.options._calendar.slideUp('fast') : 'fade' == this.options.effect ? this.options._calendar.fadeOut('fast') : this.options._calendar.hide();
+      'slide' === this.options.effect ? this.options._calendar.slideUp('fast') : 'fade' === this.options.effect ? this.options._calendar.fadeOut('fast') : this.options._calendar.hide();
     },
     _destroy: function() {},
     _setOption: function(a, b) {
@@ -574,14 +568,14 @@ Date.prototype.format = function(c, a) {
       var a = this,
         b = this.element,
         d = this.name,
-        e = this.element.parent(),
-        e = this.options.toggleElement || e.children('.dropdown-toggle');
-      void 0 != b.data('effect') && (this.options.effect = b.data('effect'));
+        e1 = this.element.parent(),
+        e = this.options.toggleElement || e1.children('.dropdown-toggle');
+      void 0 !== b.data('effect') && (this.options.effect = b.data('effect'));
       e.on('click.' + d, function(d) {
         d.preventDefault();
         d.stopPropagation();
-        'block' != b.css('display') || b.hasClass('keep-open') ? (c('.dropdown-menu').each(function(d, e) {
-          b.parents('.dropdown-menu').is(e) || (c(e).hasClass('keep-open') || 'block' != c(e).css('display')) || a._close(e);
+        'block' !== b.css('display') || b.hasClass('keep-open') ? (c('.dropdown-menu').each(function(d, e) {
+          b.parents('.dropdown-menu').is(e) || (c(e).hasClass('keep-open') || 'block' !== c(e).css('display')) || a._close(e);
         }), a._open(b)) : a._close(b);
       });
       c(b).find('li.disabled a').on('click', function(a) {
@@ -640,7 +634,7 @@ Date.prototype.format = function(c, a) {
       d.attr('type', 'button');
       e.on('change', function() {
         var a = c(this).val();
-        '' != a && f.val(a);
+        '' !== a && f.val(a);
       });
       d.on('click', function() {
         e.trigger('click');
@@ -649,7 +643,7 @@ Date.prototype.format = function(c, a) {
     initTextInput: function(a, b) {
       var d = a.children('.btn-clear'),
         e = a.children('input[type=text]');
-      if (0 != d.length && (d.attr('tabindex', '-1'), d.attr('type', 'button'), d.on('click', function() {
+      if (0 !== d.length && (d.attr('tabindex', '-1'), d.attr('type', 'button'), d.on('click', function() {
         e = a.children('input');
         e.prop('readonly') || (e.val(''), e.focus(), b._trigger('onClear', null, a));
       }), !e.attr('disabled')))
@@ -660,7 +654,7 @@ Date.prototype.format = function(c, a) {
     initPasswordInput: function(a, b) {
       var d = a.children('.btn-reveal'),
         e = a.children('input[type=password]');
-      if (0 != d.length && (d.attr('tabindex', '-1'), d.attr('type', 'button'), d.on('mousedown', function(a) {
+      if (0 !== d.length && (d.attr('tabindex', '-1'), d.attr('type', 'button'), d.on('mousedown', function(a) {
         e.attr('type', 'text');
       }), d.on('mouseup, mouseleave, blur', function(a) {
         e.attr('type', 'password').focus();
@@ -686,7 +680,7 @@ Date.prototype.format = function(c, a) {
         b;
       if (!a.parent().hasClass('input-control')) {
         b = a.get(0).tagName.toLowerCase();
-        'textarea' == b ? this.options.transformType = 'textarea' : 'select' == b ? this.options.transformType = 'select' : void 0 != a.data('transformType') ? this.options.transformType = a.data('transformType') : this.options.transformType = a.attr('type');
+        'textarea' === b ? this.options.transformType = 'textarea' : 'select' === b ? this.options.transformType = 'select' : void 0 !== a.data('transformType') ? this.options.transformType = a.data('transformType') : this.options.transformType = a.attr('type');
         a = void 0;
         switch (this.options.transformType) {
           case 'password':
@@ -755,7 +749,7 @@ Date.prototype.format = function(c, a) {
         e = c('<span/>').addClass('check'),
         f = a.clone(true);
       a.parent();
-      var g = c('<span/>').addClass('caption').html(void 0 != a.data('caption') ? a.data('caption') : '');
+      var g = c('<span/>').addClass('caption').html(void 0 !== a.data('caption') ? a.data('caption') : '');
       d.appendTo(b);
       f.appendTo(d);
       e.appendTo(d);
@@ -771,7 +765,7 @@ Date.prototype.format = function(c, a) {
         e = c('<span/>').addClass('check'),
         f = a.clone(true);
       a.parent();
-      var g = c('<span/>').addClass('caption').html(void 0 != a.data('caption') ? a.data('caption') : '');
+      var g = c('<span/>').addClass('caption').html(void 0 !== a.data('caption') ? a.data('caption') : '');
       d.appendTo(b);
       f.appendTo(d);
       e.appendTo(d);
@@ -787,7 +781,7 @@ Date.prototype.format = function(c, a) {
         e = c('<span/>').addClass('check'),
         f = a.clone(true);
       a.parent();
-      var g = c('<span/>').addClass('caption').html(void 0 != a.data('caption') ? a.data('caption') : '');
+      var g = c('<span/>').addClass('caption').html(void 0 !== a.data('caption') ? a.data('caption') : '');
       d.appendTo(b);
       f.appendTo(d);
       e.appendTo(d);
@@ -898,11 +892,17 @@ Date.prototype.format = function(c, a) {
     e.appendTo(d);
     f.appendTo(d);
     d.appendTo(b ? b : $('body'));
-    'auto' != a.width && d.css('min-width', a.width);
-    'auto' != a.height && d.css('min-height', a.height);
+    'auto' !== a.width && d.css('min-width', a.width);
+    'auto' !== a.height && d.css('min-height', a.height);
     b && b.hide().appendTo('body').fadeIn('fast');
     METRO_DIALOG = d;
-    d.css('position', 'fixed').css('z-index', 10000).css('top', (c(window).height() - METRO_DIALOG.outerHeight()) / 2).css('left', (c(window).width() - d.outerWidth()) / 2);
+    d.css('position', 'fixed').css('z-index', 10000);
+    if(a.position==='default') 
+      d.css('top', (c(window).height() - METRO_DIALOG.outerHeight()) / 2).css('left', (c(window).width() - d.outerWidth()) / 2).data("position","default");
+    else 
+      d.css('top', a.position.top !== undefined ? a.position.top : (a.position.bottom!==undefined ? (c(window).height()-METRO_DIALOG.outerHeight()-a.position.bottom) : 0))
+       .css('left', a.position.left !== undefined ? a.position.left : (a.position.right!==undefined ? (c(window).width()-METRO_DIALOG.outerWidth()-a.position.right) : 0)).
+       data("position",JSON.stringify(a.position));
     addTouchEvents(d[0]);
     if (a.draggable)
       e.on('mousedown', function(a) {
@@ -941,36 +941,44 @@ Date.prototype.format = function(c, a) {
     return METRO_DIALOG;
   };
   c.Dialog.content = function(a) {
-    return c.Dialog.opened && void 0 != METRO_DIALOG ? a ? (METRO_DIALOG.children('.content').html(a), c.Dialog.autoResize(), true) : METRO_DIALOG.children('.content').html() : false;
+    return c.Dialog.opened && void 0 !== METRO_DIALOG ? a ? (METRO_DIALOG.children('.content').html(a), c.Dialog.autoResize(), true) : METRO_DIALOG.children('.content').html() : false;
   };
   c.Dialog.title = function(a) {
-    if (!c.Dialog.opened || void 0 == METRO_DIALOG)
+    if (!c.Dialog.opened || void 0 === METRO_DIALOG)
       return false;
     var b = METRO_DIALOG.children('.caption').children('.title');
     a ? b.html(a) : b.html();
     return true;
   };
   c.Dialog.autoResize = function() {
-    if (!c.Dialog.opened || void 0 == METRO_DIALOG)
+    if (!c.Dialog.opened || void 0 === METRO_DIALOG)
       return false;
-    var a = METRO_DIALOG.children('.content'),
-      b = (c(window).height() - METRO_DIALOG.outerHeight()) / 2,
-      d = (c(window).width() - METRO_DIALOG.outerWidth()) / 2;
+    var a = METRO_DIALOG.children('.content');
+    if(METRO_DIALOG.data("position")==="default")
+      var b = (c(window).height() - METRO_DIALOG.outerHeight()) / 2,
+          d = (c(window).width() - METRO_DIALOG.outerWidth()) / 2;
+    else {
+      var p = JSON.parse(METRO_DIALOG.data("position")),
+          b = (p.top !== undefined ? p.top : (p.bottom!==undefined ? (c(window).height()-METRO_DIALOG.outerHeight()-parseInt(p.bottom)) : 0)),
+          d = (p.left !== undefined ? p.left : (p.right!==undefined ? (c(window).width()-METRO_DIALOG.outerWidth()-parseInt(p.right)) : 0));
+    }
     METRO_DIALOG.css({
-      width: a.outerWidth(),
-      height: a.outerHeight(),
+      innerWidth: a.outerWidth(),
+      innerHeight: a.outerHeight(),
       top: b,
       left: d
     });
     return true;
   };
-  c.Dialog.close = function() {
+  c.Dialog.close = function(cb) {
     c.Dialog.onClose && c.Dialog.onClose();
-    if (!c.Dialog.opened || void 0 == METRO_DIALOG)
+    if (!c.Dialog.opened || void 0 === METRO_DIALOG)
       return false;
     c.Dialog.opened = false;
     (METRO_DIALOG.parent('.window-overlay').length ? METRO_DIALOG.parent('.window-overlay') : METRO_DIALOG).html('').fadeOut(function() {
       c(this).remove();
+      METRO_DIALOG = false;
+      if($.isFunction(cb)) cb();
     });
     return false;
   };
@@ -1038,38 +1046,38 @@ Date.prototype.format = function(c, a) {
       _build: function() {
         a = this._container = a || c('<div/>').addClass('metro notify-container').appendTo('body');
         var d = this.options;
-        if ('' == d.content || void 0 == d.content)
+        if ('' === d.content || void 0 === d.content)
           return false;
         this._notify = c('<div/>').addClass('notify').click(d.onclick);
         d.shadow && this._notify.addClass('shadow');
-        d.style && void 0 != d.style.background && this._notify.css('background-color', d.style.background);
-        d.style && void 0 != d.style.color && this._notify.css('color', d.style.color);
-        '' != d.caption && void 0 != d.caption && c('<div/>').addClass('caption').html(d.caption).appendTo(this._notify);
-        '' != d.content && void 0 != d.content && c('<div/>').addClass('content').html(d.content).appendTo(this._notify);
-        'auto' != d.width && this._notify.css('min-width', d.width);
-        'auto' != d.height && this._notify.css('min-height', d.height);
+        d.style && void 0 !== d.style.background && this._notify.css('background-color', d.style.background);
+        d.style && void 0 !== d.style.color && this._notify.css('color', d.style.color);
+        '' !== d.caption && void 0 !== d.caption && c('<div/>').addClass('caption').html(d.caption).appendTo(this._notify);
+        '' !== d.content && void 0 !== d.content && c('<div/>').addClass('content').html(d.content).appendTo(this._notify);
+        'auto' !== d.width && this._notify.css('min-width', d.width);
+        'auto' !== d.height && this._notify.css('min-height', d.height);
         this._notify.hide().appendTo(this._container).fadeIn('slow');
         b.push(this._notify);
         this.close(d.timeout);
       },
       close: function(a) {
         this.clear();
-        if (a == parseInt(a)) {
+        if (a === parseInt(a)) {
           var b = this;
           this._timer = setTimeout(function() {
             b._timer = null;
             b._hide();
           }, a);
-        } else if (void 0 == a)
+        } else if (void 0 === a)
           return this._hide();
         return this;
       },
       clear: function() {
-        return null != this._timer ? (clearTimeout(this._timer), this._timer = null, this) : false;
+        return null !== this._timer ? (clearTimeout(this._timer), this._timer = null, this) : false;
       },
       _hide: function() {
         this.clear();
-        return void 0 != this._notify ? (this._notify.hide('slow', function() {
+        return void 0 !== this._notify ? (this._notify.hide('slow', function() {
           this.remove();
           b.splice(b.indexOf(this._notify), 1);
         }), this) : false;
@@ -1099,19 +1107,19 @@ Date.prototype.format = function(c, a) {
 }(jQuery));
 (function(c) {
   c.Metro.initCalendars = function(a) {
-    void 0 != a ? c(a).find('[data-role=calendar]').calendar() : c('[data-role=calendar]').calendar();
+    void 0 !== a ? c(a).find('[data-role=calendar]').calendar() : c('[data-role=calendar]').calendar();
   };
   c.Metro.initDatepickers = function(a) {
-    void 0 != a ? c(a).find('[data-role=datepicker]').datepicker() : c('[data-role=datepicker]').datepicker();
+    void 0 !== a ? c(a).find('[data-role=datepicker]').datepicker() : c('[data-role=datepicker]').datepicker();
   };
   c.Metro.initDropdowns = function(a) {
-    void 0 != a ? c(a).find('[data-role=dropdown]').dropdown() : c('[data-role=dropdown]').dropdown();
+    void 0 !== a ? c(a).find('[data-role=dropdown]').dropdown() : c('[data-role=dropdown]').dropdown();
   };
   c.Metro.initInputs = function(a) {
-    void 0 != a ? c(a).find('[data-role=input-control], .input-control').inputControl() : c('[data-role=input-control], .input-control').inputControl();
+    void 0 !== a ? c(a).find('[data-role=input-control], .input-control').inputControl() : c('[data-role=input-control], .input-control').inputControl();
   };
   c.Metro.transformInputs = function(a) {
-    void 0 != a ? c(a).find('[data-transform=input-control]').inputTransform() : c('[data-transform=input-control]').inputTransform();
+    void 0 !== a ? c(a).find('[data-transform=input-control]').inputTransform() : c('[data-transform=input-control]').inputTransform();
   };
   c.Metro.initAll = function(a) {
     c.Metro.initCalendars(a);

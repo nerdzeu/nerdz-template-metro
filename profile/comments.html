@@ -14,8 +14,8 @@
         <a href="/{$value.from4link_n}" style="vertical-align:top">
             {$value.from_n}
         </a>
-        <span class="nerdz_date pointer">
-            <a href="#{$value.uid_n}" title="Permalink" data-refto="post{$value.hpid_n}" id="nd{$value.uid_n}{$value.hcid_n}">{$value.datetime_n}</a>
+        <span class="nerdz_date">
+            <a href="#{$value.uid_n}" title="Permalink" data-refto="post{$value.hpid_n}" id="nd{$value.uid_n}{$value.hcid_n}" onclick="$.Nerdz.Permalink(this)">{$value.datetime_n}</a>
             {if="$value.canshowlock_b"}
                 {if="$value.lock_b"}
                     <i class="icon-locked" data-hpid="{$value.hpid_n}" data-silent="{$value.fromid_n}" title="{$recv_notify}"></i>
@@ -39,7 +39,6 @@
         {/if}
         {$value.message_n}
     </div>
-    <script type="application/javascript">$("#nd{$value.uid_n}{$value.hcid_n}").attr("href",(typeof(lnk{$hpid_n})=="undefined"?document.location.pathname:lnk{$hpid_n})+"#{$value.uid_n}");</script>
   </div>
 {/loop}
 </div>

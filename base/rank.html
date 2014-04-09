@@ -1,44 +1,25 @@
-<article id="center_col" class="row">
-  <div class="span10 offset1">
+
+<div id="main">
+  <aside id="left_col"></aside>
+  <article id="center_col">
     <div class="row">
-      <span class="span3">
-        {$position}
-      </span>
-      <span class="span3">
-        {$username}
-      </span>
-      <span class="span3">
-        {$comments}
-      </span>
-      {if="!$monthly_b"}
-        <span class="span3">
-          {$stupid_stuff}
-        </span>
-      {/if}
+      <div id="id" class="span2 pointer bolder">{$position}</div>
+      <div id="name" class="span3 pointer bolder">{$username}</div>
+      <div id="description" class="span3 pointer bolder">{$comments}</div>{if="!$monthly_b"}
+      <div class="span3 bolder">{$stupid_stuff}</div>{/if}
     </div>
-    {loop="list_a"}
-      <div class="row">
-        <span class="span3">
-          {$value.position_n}
-        </span>
-        <span class="span3">
-          <a href="/{$value.username4link_n}">{$value.username_n}</a>
-        </span>
-        <span class="span3">
-          {$value.comments_n}
-        </span>
-        {if="!$monthly_b"}
-          <span class="span3">
-            {$value.stupidstuff_n}
-          </span>
-        {/if}
-      </div>
-    {/loop}
-    <div class="row center">
-      <span style="font-style:italic">
-          {$last_update}: {$lastupdate_n}
-      </span>
+    <div class="row thin">
+      <hr/>
+    </div>{loop="list_a"}
+    <div class="row thin">
+      <div class="span2">{$value.position_n}</div>
+      <div class="span3"><a href="{$value.username4link_n}" class="board">{$value.username_n}</a></div>
+      <div class="span3">{$value.comments_n}</div>{if="!$monthly_b"}
+      <div class="span3 bolder">{$value.stupidstuff_n}</div>{/if}
+    </div>{/loop}
+    <div class="row">
+      <div class="span2 offset5"></div>
     </div>
-  </div>
-</article>
-<br /><br />
+  </article>
+  <aside id="right_col"></aside>
+</div>

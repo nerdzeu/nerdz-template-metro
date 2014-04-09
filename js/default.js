@@ -40,7 +40,10 @@ $(document).ready(function() {
   $('#gotopm').on('click', function(e) {
     e.preventDefault();
     var pmc = $('#pmcounter');
-    if(e.ctrlKey && location.pathname !== "/pm.php") return location.href = "/pm.php"+(pmc.html() !== '0'?"#new":"");
+    if(e.ctrlKey && location.pathname !== "/pm.php") {
+      location.href = "/pm.php"+(pmc.html() !== '0'?"#new":"");
+      return;
+    }
     if(location.pathname === "/pm.php") {
       if(pmc.html() !== '0') location.hash = "#new";
       return location.reload();
@@ -60,11 +63,16 @@ $(document).ready(function() {
       content: '<div style="float:left;"></div><div style="float:right;"></div>',
       onShow: function(_dialog) {
         _dialog.addClass("pmwindow");
-        var content = _dialog.children(".content");
-            msbox = content.children().eq(0).css("background-color",$("body").css("background-color")).css("padding", "0px 5px");
+        var content = _dialog.children(".content"),
+            msbox = content.children().eq(0).css("background-color",$("body").css("background-color")).css("padding", "0px 5px"),
             inbox = content.children().eq(1);
-        inbox.css("width",content.width()*0.25).css("margin",content.width()*0.01);
-        msbox.css("width",content.width()*0.70).css("margin",content.width()*0.01).css("color",$("body").css("color"));
+        if(!$.Nerdz.mobile) {
+          inbox.css("width",content.width()*0.25).css("margin",content.width()*0.01);
+          msbox.css("width",content.width()*0.70).css("margin",content.width()*0.01).css("color",$("body").css("color"));
+        } else {
+          inbox.width(content.width()*.99).prependTo(content);
+          msbox.width(content.width()*.99);
+        }
         var cb = function() {
           if(pmc.html() !== '0')
             METRO_DIALOG.find(".conversation").eq(0).click();
@@ -120,7 +128,7 @@ $(document).ready(function() {
   /** back to top **/
   $("#totop").click(function(e) {
     e.preventDefault();
-    $.Nerdz.scrollTo(0, 1000);
+    $(window).scrollTo(0, 1000);
     $(this).fadeOut(500);
   });
 });

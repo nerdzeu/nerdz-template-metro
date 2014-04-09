@@ -8,18 +8,19 @@ html, body {
   height: auto;
 }
 #center_col {
-  width: 99% !important;
+  position: absolute;
+  width: 100% !important;
   margin: 0px !important;
-  margin-top: 45px !important;
   left: 0px;
   top: 50px;
-  z-index: 1000;
+  z-index: 99;
   background-color: #3D3D3D;
   padding: 0px 0.2% 0px 0.8%;
   overflow: auto;
 }
 .titleicons {
   width: 160px;
+  padding: 0px;
   margin: auto;
 }
 .preview {

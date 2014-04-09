@@ -15,7 +15,7 @@ $(document).ready(function() {
   $("#gotopm").appendTo(ti);
   var moving = 0;
   $("#left_col, #right_col, #center_col").addClass("mobile");
-  if($("#left_col").html().length) 
+  if($("#left_col").length && $("#left_col").html().length) 
     $('.navigation-bar-content').eq(0).prepend($('<div>').addClass('element').attr('id', 'title_left').html('<<'));
   ti.appendTo($('.navigation-bar-content').eq(0));  
   $('.navigation-bar-content').eq(0).append($('<div>').addClass('element pointer').attr('id', 'title_right').html('>>').css('float', 'right'));
@@ -72,6 +72,8 @@ $(document).ready(function() {
       if ($('#left_col').hasClass('shown'))
         $('body').scrollLeft(0);
     }, 100);
+  }).resize(function() {
+    $("aside").height($(window).height()-45);
   });
   if (sessionStorage.getItem('advice-away'))
     return;

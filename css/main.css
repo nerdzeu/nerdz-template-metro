@@ -506,6 +506,48 @@ a {
   top: 0;
   z-index: 3;
 }
+.quote {
+  max-width: 97%;
+  display: block;
+  margin: 5px;
+  outline: #999999 solid 2px;
+  border-radius: 2px;
+  padding: 2px 2px 1em;
+  position: relative;
+}
+.quote span img {
+  display: none;
+}
+.quote blockquote {
+  clear: both;
+  margin-top: .5em;
+}
+.quote > *:first-child:before {
+  clear: both;
+  font-weight: bold;
+  content: "Quote ~ ";
+  margin-left: 10px;
+}
+.quote:before {
+  float: left;
+  content: "\e163";
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  padding: 2px;
+}
+.quote:after {
+  clear: both;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  float: right;
+  content: "\e164";
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  padding: 2px;
+}
 .windows8 {
   position: relative;
   width: 50px;
@@ -6755,9 +6797,97 @@ img.polaroid {
   width: 100%;
   box-shadow: 0 0 0 #000;
 }
+#postlist .nerdz_message > div .spoiler,
+#postlist .news > div .spoiler {
+  border: 1px #AFAFAF solid;
+  width: 97%;
+  margin: 5px 3px 10px;
+  padding: 2px;
+}
+#postlist .nerdz_message > div .spoiler > div,
+#postlist .news > div .spoiler > div {
+  clear: both;
+}
+#postlist .nerdz_message > div .spoiler > div br:first-child,
+#postlist .news > div .spoiler > div br:first-child {
+  display: none;
+}
+#postlist .nerdz_message > div .spoiler span,
+#postlist .news > div .spoiler span {
+  clear: both;
+  display: block;
+  text-decoration: none;
+  background-color: #eeeeee;
+  color: #4390df;
+  padding-left: 10px;
+  margin: 0;
+  width: 100%;
+}
+#postlist .nerdz_message > div .spoiler span:before,
+#postlist .news > div .spoiler span:before {
+  float: left;
+  margin-right: 7px;
+  display: block;
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid black;
+}
+#postlist .nerdz_message > div .spoiler.expanded span:before,
+#postlist .news > div .spoiler.expanded span:before {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  margin-left: -4px;
+}
 #postlist .nerdz_message > div .quote,
 #postlist .news > div .quote {
   max-width: 97%;
+  display: block;
+  margin: 5px;
+  outline: #999999 solid 2px;
+  border-radius: 2px;
+  padding: 2px 2px 1em;
+  position: relative;
+}
+#postlist .nerdz_message > div .quote span img,
+#postlist .news > div .quote span img {
+  display: none;
+}
+#postlist .nerdz_message > div .quote blockquote,
+#postlist .news > div .quote blockquote {
+  clear: both;
+  margin-top: .5em;
+}
+#postlist .nerdz_message > div .quote > *:first-child:before,
+#postlist .news > div .quote > *:first-child:before {
+  clear: both;
+  font-weight: bold;
+  content: "Quote ~ ";
+  margin-left: 10px;
+}
+#postlist .nerdz_message > div .quote:before,
+#postlist .news > div .quote:before {
+  float: left;
+  content: "\e163";
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  padding: 2px;
+}
+#postlist .nerdz_message > div .quote:after,
+#postlist .news > div .quote:after {
+  clear: both;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  float: right;
+  content: "\e164";
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  padding: 2px;
 }
 #postlist .nerdz_message img,
 #postlist .news img {
@@ -6933,6 +7063,48 @@ img.polaroid {
   word-wrap: break-word;
   margin-bottom: 10px;
   background-color: rgba(200, 200, 200, 0.2);
+}
+.commentlist .nerdz_comments .qu_main {
+  max-width: 97%;
+  display: block;
+  margin: 5px;
+  outline: #999999 solid 2px;
+  border-radius: 2px;
+  padding: 2px 2px 1em;
+  position: relative;
+}
+.commentlist .nerdz_comments .qu_main span img {
+  display: none;
+}
+.commentlist .nerdz_comments .qu_main blockquote {
+  clear: both;
+  margin-top: .5em;
+}
+.commentlist .nerdz_comments .qu_main > *:first-child:before {
+  clear: both;
+  font-weight: bold;
+  content: "Quote ~ ";
+  margin-left: 10px;
+}
+.commentlist .nerdz_comments .qu_main:before {
+  float: left;
+  content: "\e163";
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  padding: 2px;
+}
+.commentlist .nerdz_comments .qu_main:after {
+  clear: both;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  float: right;
+  content: "\e164";
+  font-family: iconFont;
+  font-size: 9pt;
+  font-weight: normal;
+  padding: 2px;
 }
 .commentlist .nerdz_comments > div {
   max-width: 95%;

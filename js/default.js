@@ -31,7 +31,7 @@ $(document).ready(function() {
     var list = $('#notify_list'),
       old = $(this).html();
     var nold = parseInt(old);
-    list.toggle(200).loading();
+    list.toggle(200).html(N.getLangData().LOADING);
     N.html.getNotifications(function(d) {
       list.html(d);
     });

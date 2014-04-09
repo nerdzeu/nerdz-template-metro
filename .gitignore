@@ -3,3 +3,6 @@
 .DS_Store
 *.swp
 *.orig
+*.jade
+*.less
+css/less

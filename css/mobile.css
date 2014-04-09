@@ -1,26 +1,39 @@
 html, body {
   width: 100% !important;
   max-width: 100% !important;
-  min-width: 10px !important;
+  min-width: 100% !important;
+  overflow-x: hidden;
+}
+#main {
+  height: auto;
 }
 #center_col {
   width: 99% !important;
   margin: 0px !important;
-  position: absolute;
+  margin-top: 45px !important;
   left: 0px;
   top: 50px;
   z-index: 1000;
   background-color: #3D3D3D;
   padding: 0px 0.2% 0px 0.8%;
+  overflow: auto;
 }
-body, html {
-  overflow-x: hidden;
+.titleicons {
+  width: 160px;
+  margin: auto;
 }
- #left_col, #right_col {
+.preview {
+  display: none !important;
+}
+input[type="submit"] {
+  width: 100%!important;
+}
+#left_col, #right_col {
+  overflow: auto;
   display: none;
   z-index: 100;
   position: fixed;
-  top: 50px; 
+  top: 45px; 
   width:70% !important;
 }
 #gotopm {

@@ -1359,14 +1359,14 @@ dl.horizontal dd {
 #body .row .span2,
 .grid #main .span2,
 #body #main .span2,
-.grid .row #right_col,
-#body .row #right_col,
-.grid #main #right_col,
-#body #main #right_col,
-.grid .row #left_col,
-#body .row #left_col,
-.grid #main #left_col,
-#body #main #left_col {
+.grid .row #right_col:not(.mobile),
+#body .row #right_col:not(.mobile),
+.grid #main #right_col:not(.mobile),
+#body #main #right_col:not(.mobile),
+.grid .row #left_col:not(.mobile),
+#body .row #left_col:not(.mobile),
+.grid #main #left_col:not(.mobile),
+#body #main #left_col:not(.mobile) {
   width: 14.893615% !important;
 }
 .grid .row .span3,
@@ -1403,10 +1403,10 @@ dl.horizontal dd {
 #body .row .span8,
 .grid #main .span8,
 #body #main .span8,
-.grid .row #center_col,
-#body .row #center_col,
-.grid #main #center_col,
-#body #main #center_col {
+.grid .row #center_col:not(.mobile),
+#body .row #center_col:not(.mobile),
+.grid #main #center_col:not(.mobile),
+#body #main #center_col:not(.mobile) {
   width: 65.957437% !important;
 }
 .grid .row .span9,
@@ -1616,6 +1616,10 @@ body.black {
 #hptable li {
   color: inherit;
 }
+#followedlist {
+  max-height: 300px;
+  overflow: auto;
+}
 h1,
 h2,
 h3,
@@ -1631,39 +1635,48 @@ header .dropdown-menu a:hover {
   color: inherit!important;
 }
 a,
-[id*=PostArrow] {
+[id*=PostArrow],
+#followedlist .active {
   color: #1ba1e2;
 }
 .amber a,
-.amber [id*=PostArrow] {
+.amber [id*=PostArrow],
+.amber #followedlist .active {
   color: #f0a30a;
 }
 .amber a:hover,
-.amber [id*=PostArrow]:hover {
+.amber [id*=PostArrow]:hover,
+.amber #followedlist .active:hover {
   color: #f8bf4f;
 }
 .lime a,
-.lime [id*=PostArrow] {
+.lime [id*=PostArrow],
+.lime #followedlist .active {
   color: #a4c400;
 }
 .lime a:hover,
-.lime [id*=PostArrow]:hover {
+.lime [id*=PostArrow]:hover,
+.lime #followedlist .active:hover {
   color: #d8ff12;
 }
 .red a,
-.red [id*=PostArrow] {
+.red [id*=PostArrow],
+.red #followedlist .active {
   color: #e51400;
 }
 .red a:hover,
-.red [id*=PostArrow]:hover {
+.red [id*=PostArrow]:hover,
+.red #followedlist .active:hover {
   color: #ff4432;
 }
 .steel a,
-.steel [id*=PostArrow] {
+.steel [id*=PostArrow],
+.steel #followedlist .active {
   color: #647687;
 }
 .steel a:hover,
-.steel [id*=PostArrow]:hover {
+.steel [id*=PostArrow]:hover,
+.steel #followedlist .active:hover {
   color: #8d9cab;
 }
 table {
@@ -2585,6 +2598,9 @@ form textarea {
   margin: 2px 0px;
   max-height: 300px;
   overflow: hidden;
+}
+form .preview {
+  max-width: 45%;
 }
 fieldset {
   margin: 0;
@@ -4497,8 +4513,8 @@ img.polaroid {
   width: 6.382978% !important;
 }
 #footer_main .span2,
-#footer_main #right_col,
-#footer_main #left_col {
+#footer_main #right_col:not(.mobile),
+#footer_main #left_col:not(.mobile) {
   width: 14.893615% !important;
 }
 #footer_main .span3 {
@@ -4517,7 +4533,7 @@ img.polaroid {
   width: 57.4468% !important;
 }
 #footer_main .span8,
-#footer_main #center_col {
+#footer_main #center_col:not(.mobile) {
   width: 65.957437% !important;
 }
 #footer_main .span9 {
@@ -7002,7 +7018,7 @@ img.polaroid {
 .inbox {
   position: relative;
   display: block;
-  max-height: 250px;
+  max-height: 300px;
   overflow: auto;
 }
 .inbox .new,

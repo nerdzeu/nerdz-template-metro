@@ -55,7 +55,7 @@ $(document).ready(function() {
       position: { top: "45px", right:"0px" },
       flat: true,
       overlay: false,
-      width: "60%",
+      width: $.Nerdz.mobile?"100%":"60%",
       height: "auto",
       content: '<div style="float:left;"></div><div style="float:right;"></div>',
       onShow: function(_dialog) {

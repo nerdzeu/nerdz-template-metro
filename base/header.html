@@ -5,14 +5,15 @@
     <div class="element-divider"></div>
     <div style="cursor: pointer" class="element"><a id="welcome" class="dropdown-toggle">{$welcome}, {$myusername_n}</a>
       <ul data-role="dropdown" class="dropdown-menu">
-        <li><a href="/{$myusername4link_n}" accesskey="p"><i class="icon-user"></i>{$profile}</a></li>
-        <li><a href="/preferences.php" accesskey="z"><i class="icon-wrench"></i>{$preferences}</a></li>
-        <li><a href="#" class="dropdown-toggle"><i class="icon-tools"></i>{$preferences} Metro</a>
+        <li><a href="/{$myusername4link_n}" accesskey="p"><i class="icon-user"></i>&nbsp;{$profile}</a></li>
+        <li><a href="/preferences.php" accesskey="z"><i class="icon-wrench"></i>&nbsp;{$preferences}</a></li>
+        <li><a href="#" class="dropdown-toggle"><i class="icon-cog"></i>&nbsp;{$preferences} Metro</a>
           <ul id="pref-metro" data-role="dropdown" data-pos="right" class="dropdown-menu">
             <li><i class="icon-ruler">{$theme} </i><br/><span id="theme-switcher">
                 <div id="dark" style="background-color:#3d3d3d" title="Metro Dark" class="tile tiny"></div>
                 <div id="light" style="background-color:#ddd" title="Metro Light" class="tile tiny"></div>
-                <div id="black" style="background-color:#000" title="Metro Black" class="tile tiny"></div></span><br style="clear:both"/></li>
+                <div id="black" style="background-color:#000" title="Metro Black" class="tile tiny"></div>
+                <div id="pure" style="background-color:rgba(45, 173, 237, 0.6)" title="Metro Pure" class="tile tiny"></div></span><br style="clear:both"/></li>
             <li class="input-control switch">
               <label><i class="icon-code"></i>{$CODE_THEME} &nbsp; <i title="dark" class="icon-lamp"></i>
                 <input id="theme-code-switcher" type="checkbox"/><span class="check"></span><i title="light" class="icon-lamp-2"></i>
@@ -33,7 +34,7 @@
             <li onclick="window.open('http://github.com/DrJest/nerdz-template-metro')"><i class="icon-github-2">GitHub</i></li>
           </ul>
         </li>
-        <li><a id="logout" href="/" data-tok="{$tok_n}"><i class="icon-exit"></i>{$logout}</a></li>
+        <li><a id="logout" href="/" data-tok="{$tok_n}"><i class="icon-exit"></i>&nbsp;{$logout}</a></li>
       </ul>
     </div><a id="gotopm" style="padding-left:30px; padding-right: 30px" href="/pm.php" accesskey="m" class="element place-right"><i id="pmcounter" title="{$pm}" accesskey="q" class="icon-mail"></i></a>
     <div class="element-divider place-right"></div>

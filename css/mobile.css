@@ -14,7 +14,6 @@ html, body {
   left: 0px;
   top: 50px;
   z-index: 99;
-  background-color: #3D3D3D;
   padding: 0px 0.2% 0px 0.8%;
   overflow: auto;
 }
@@ -22,6 +21,9 @@ html, body {
   width: 160px;
   padding: 0px;
   margin: auto;
+}
+.pure .titleicons {
+  background-color: #8BD0F1;
 }
 .preview {
   display: none !important;

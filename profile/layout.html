@@ -1,39 +1,43 @@
 
 <div id="main">
   <aside id="left_col">
-    <div class="row">
-      <div class="span10 offset1"><a href="/{$username4link_n}"><img src="{$gravatarurl_n}?s=180#" alt="{$username}" style="max-width: 100%; max-height: 100%;" onerror="this.src='{$onerrorimgurl_n}'"/></a></div>
-    </div>
-    <div class="row smallest center">
-      <div class="span4 offset1">{if="$online_b"}<span style="color: #00FF00;">{$online}</span>{else}<span style="color: #FF0000;">{$offline}</span>{/if}</div>
-      <div class="span2"><img src="flags/{$lang_n}.png" alt="{$lang_n}" title="{$lang_n}" style="border: 1px solid #FFF; margin-left: 10%;" width="18" height="12"/></div>
-      <div class="span4">
-        <div data-size="small" data-count="1" data-href="http://www.nerdz.eu/{$username4link_n}" class="g-plusone"></div>
+    <div id="badge_left" class="row">
+      <div class="row">
+        <div class="span10 offset1"><a href="/{$username4link_n}" class="board"><img src="{$gravatarurl_n}?s=180#" alt="{$username}" style="max-width: 100%; max-height: 100%;" onerror="this.src='{$onerrorimgurl_n}'"/></a></div>
       </div>
-    </div>{if="$canshowmenu_b"}
-    <div class="row center pointer">
-      <div id="profilepm" class="button smallest span3 offset1">{$pm}</div>{if="$canifollow_b"}<span id="follow" data-id="{$id_n}" class="button smallest span4">{$follow}</span>{else}<span id="unfollow" data-id="{$id_n}" class="button smallest span4">{$unfollow}</span>{/if}
-      {if="$caniblacklist_b"}
-      <div id="blacklist" data-id="{$id_n}" class="button smallest span4">Blacklist</div>{else}
-      <div id="unblacklist" data-id="{$id_n}" class="button smallest span4">Unblacklist</div>{/if}
-    </div>{/if}
-    <div class="row">
-      <div class="span10 offset1">
-        <h3>{$about_me}</h3>{$username}:<br/><span id="username">{$username_n}</span><br/><br/>{$name}:<br/>{$name_n}<br/>{$surname}:<br/>{$surname_n}<br/>{$birth_date}:<br/>{$birthdate_n}<br/>{$gender}:<br/>{$gender_n}<br/>
+      <div class="row h">
+        <div class="span2 offset1"><img src="flags/{$lang_n}.png" alt="{$lang_n}" title="{$lang_n}" style="border: 1px solid #FFF; margin-left: 10%;" width="18" height="12"/></div>
+        <div class="span5">{if="$online_b"}<span style="color: #00FF00;">{$online}</span>{else}<span style="color: #FF0000;">{$offline}</span>{/if}</div>
+        <div class="span3">
+          <div data-size="small" data-count="1" data-href="http://www.nerdz.eu/{$username4link_n}" class="g-plusone"></div>
+        </div>
+      </div>{if="$canshowmenu_b"}
+      <div class="row half">
+        <div id="profilepm" data-id="{$id_n}" data-username="{$username_n}" class="button smallest span3 offset1">{$pm}</div>{if="$canifollow_b"}<span id="follow" data-id="{$id_n}" class="button smallest span4">{$follow}</span>{else}<span id="unfollow" data-id="{$id_n}" class="button smallest span4">{$unfollow}</span>{/if}
+        {if="$caniblacklist_b"}
+        <div id="blacklist" data-id="{$id_n}" class="button smallest span4">Blacklist</div>{else}
+        <div id="unblacklist" data-id="{$id_n}" class="button smallest span4">Unblacklist</div>{/if}
+      </div>{/if}
+    </div>
+    <div id="badge_right" class="row thin">
+      <div class="row thin">
+        <div class="span10 offset1">
+          <h3>{$about_me}</h3>{$username}:<br/><span id="name">{$username_n}</span><br/><br/>{$name}:<br/>{$name_n}<br/>{$surname}:<br/>{$surname_n}<br/>{$birth_date}:<br/>{$birthdate_n}<br/>{$gender}:<br/>{$gender_n}<br/>
+        </div>
+      </div>
+      <div id="website" class="row thin">
+        <div class="span10 offset1">{if="!empty($website_n)"}<br/>{$website}:<br/><span style="font-size: 8pt;"><a href="{$website4link_n}#" target="_blank">{$website_n}</a><br/></span>{/if}</div>
       </div>
     </div>
-    <div class="row thin">
-      <div class="span10 offset1">{if="!empty($website_n)"}<br/>{$website}:<br/><span style="font-size: 8pt;"><a href="{$website4link_n}#" target="_blank">{$website_n}</a><br/></span>{/if}</div>
-    </div>
-    <div class="row small">
+    <div id="stuff" class="row small">
       <div class="span offset1">5tUp1d stUfF!1</div><span class="span">-{$stupidstuffless_n} =></span><br/><i class="span1"></i><span class="span"><i class="icon-trophy">{$stupidstuffnext_n}</i></span>
     </div>
-    <div class="row small"><span class="span6 offset1">{$id}:</span><span class="span5">{$id_n}</span></div>
-    <div class="row thin small"><span class="span6 offset1">{$comments}:</span><span class="span5">{$totalcomments_n}</span></div>
-    <div class="row thin small"><span class="span6 offset1">{$last_visit}:</span><span class="span5">{$lastvisit_n}</span></div>
-    <div class="row small"><span class="span4 offset1">Browser:</span><span class="span">{$useragent_a.name} {$useragent_a.version}</span></div>
-    <div class="row thin small"><span class="span4 offset1">Platform:</span><span class="span">{$useragent_a.platform} {$useragent_a.platver}</span></div>{if="!empty($friends_a)"}
-    <div class="row"><span class="span1"></span>
+    <div id="id" class="row small"><span class="span6 offset1">{$id}:</span><span class="span5">{$id_n}</span></div>
+    <div id="comments" class="row thin small"><span class="span6 offset1">{$comments}:</span><span class="span5">{$totalcomments_n}</span></div>
+    <div id="last" class="row thin small"><span class="span6 offset1">{$last_visit}:</span><span class="span5">{$lastvisit_n}</span></div>
+    <div id="browser" class="row small"><span class="span4 offset1">Browser:</span><span class="span">{$useragent_a.name} {$useragent_a.version}</span></div>
+    <div id="platform" class="row thin small"><span class="span4 offset1">Platform:</span><span class="span">{$useragent_a.platform} {$useragent_a.platver}</span></div>{if="!empty($friends_a)"}
+    <div id="friends" class="row"><span class="span1"></span>
       <div style="max-height: 250px; overflow: auto;" class="span10">{$friends}    ({$totalfriends_n})<br/>{loop="friends_a"}<a href="/{$value.username4link_n}">{$value.username_n}</a><br/>{/loop}</div>
     </div>{/if}
   </aside>

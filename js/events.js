@@ -181,11 +181,13 @@ $(document).ready(function(){
     });
   });
   main.on('click', '.yt_frame', function(e) {
-    if ($.Nerdz.mobile)
+    if ($.Nerdz.mobile || e.ctrlKey)
       return window.open('https://m.youtube.com/watch?v=' + $(this).data('vid'));
+    if (METRO_DIALOGS.length && $("div.window").hasClass("ytplayer"))
+      $.Dialog.close($("div.window.ytplayer").data("uuid"));
     e.preventDefault();
     var vid = $(this).data('vid');
-    d = $.Dialog({
+    $.Dialog({
       overlay: false,
       shadow: true,
       sysButtons: {
@@ -199,34 +201,28 @@ $(document).ready(function(){
       height: 480,
       width: 656,
       content: '',
-      overlayClickClose: false,
       onClose: function() {
         $(document).unbind('keyup.yt');
       },
       onShow: function(_dialog) {
-        $.Dialog.content('<iframe style="min-width:640px; min-height:460px; width: 100%; height:auto" src="//www.youtube.com/embed/' + vid + '" seamless></iframe>');
+        _dialog.addClass("ytplayer");
+        _dialog.find(".content").html('<iframe style="min-width:640px; min-height:460px; width: 100%; height:auto" src="//www.youtube.com/embed/' + vid + '" seamless></iframe>');
         $(document).on('keyup.yt', function(e) {
           var code = e.keyCode ? e.keyCode : e.which;
           if (code === 27)
-            $.Dialog.close(d);
+            $.Dialog.close($("div.window.ytplayer").data("uuid"));
         });
       },
-      sysBtnMinClick: function(e) {
-        e.preventDefault();
-        if (!w.hasClass('minimized')) {
-          w.addClass('minimized');
-          if (w.hasClass('maximized'))
-            w.removeClass('maximized').addClass('maximize');
-        } else {
-          if (w.hasClass('maximize')) w.addClass('maximized');
-          w.removeClass('maximize').removeClass('minimized');
-        }
-      },
-      sysBtnMaxClick: function(e) {
-        e.preventDefault();
-        w.removeClass('minimized').removeClass('maximize');
-        w.toggleClass('maximized');
-        c.children().css('height', w.height() - 30);
+      sysBtnMaxClick: function(e, _dialog) {
+        var _caption = _dialog.find(".caption"),
+            _content = _dialog.find(".content").show(),
+            _iframe = _content.find("iframe");
+        if(undefined===_iframe.data("height"))
+          _iframe.data("height",_iframe.height());
+          
+        _iframe.height(_iframe.data("height"));
+        if(_dialog.hasClass("maximized"))
+          _iframe.height(_dialog.innerHeight()-_caption.outerHeight());
       }
     });
   });
@@ -513,49 +509,67 @@ $(document).ready(function(){
     $.Nerdz.loadPosts({location: "home", type: type, lang: $(this).data('lang')});
   });
   /** profile & projects **/
-  main.on("click","#left_col #follow", function() {
-    var me = $(this).html("...");
-    N.json[plist.data("type")].follow({
-      id: $(this).data('id')
-    }, function(d) {
-      me.html(N.getLangData().UNFOLLOW).attr("id","unfollow");
-    });
-  }).on("click","#left_col #unfollow", function() {
-    var me = $(this).html('...');
-    N.json[plist.data("type")].unfollow({
-      id: $(this).data('id')
-    }, function(d) {
-      me.html(N.getLangData().FOLLOW).attr("id","follow");
-    });
-  }).on("click","#left_col #blacklist",function() {
-    var me = $(this),
-        oldPlist = plist.html();
-    plist.html("");
-    $("#fast_nerdz").hide();
-    $("<form>").html(N.getLangData().MOTIVATION + ': <textarea style="width:100%; height:60px" id="blmot"></textarea><br /><input type="submit" class="place-right" value="Blacklist" /><input type="button" class="cancel" value="' + N.getLangData().CANCEL + '" />')
-                .on("submit", function(e) {
-                  e.preventDefault();
-                  N.json.profile.blacklist({
-                    id: me.data('id'),
-                    motivation: $('#blmot').val()
-                  }, function(d) {
-                    me.html(d.message);
-                    plist.html(d.message);
-                    me.html("Unblacklist").attr("id","unblacklist");
-                  });
-                }).on('click', '.cancel', function() {
-                  me.html('Blacklist');
-                  plist.html(oldPlist);
-                  $('#fast_nerdz').show();
-                }).appendTo(plist);
-  }).on("click","#left_col #unblacklist",function() {
-    var me = $(this).html('...');
-    N.json.profile.unblacklist({
-      id: me.data('id')
-    }, function(d) {
-      me.html("Blacklist").attr("id","blacklist");
-      $.Nerdz.loadPosts({type:"profile",id:me.data("id"),location:"profile"});
-    });
+  $.Nerdz.initButtons($("#main"));
+  
+  var BOARD, REBOARD, HINT = false;
+  main.on("mouseover","a.board",function(e) {
+    if($.Nerdz.mobile) return;
+    var that = $(this);
+    if(HINT) $.Dialog.close(HINT.data("uuid"));
+    window.clearTimeout(REBOARD);
+    window.clearTimeout(BOARD);
+    BOARD = window.setTimeout(function() {
+      var POS = {};
+          POS.position = "absolute";
+      if(e.clientY+350<$(window).height())
+        POS.top = $(window).scrollTop()+e.clientY+1;
+      else
+        POS.bottom = 45;
+      if(e.clientX+500<$(window).width())
+        POS.left = e.clientX+1;
+      else
+        POS.right = $(window).width()-e.clientX-1;
+      HINT = $.Dialog({
+        icon: '<i class="icon-user"></i>',
+        title: that.text()+" @ Nerdz",
+        overlay: false,
+        flat: true,
+        shadow: true,
+        position: POS,
+        padding: 10,
+        onShow: function(_dialog) {
+          var _content = _dialog.children(".content");
+            _dialog.mouseover(function(e) { 
+              HINT.stop().show().css("opacity",1); 
+              window.clearTimeout(REBOARD);
+            }).mouseout(function(e) { 
+              REBOARD = window.setTimeout(function() {
+                HINT.fadeOut("slow", function() {
+                  HINT.remove();
+                }); 
+              }, 250);
+            });
+          _content.loading().css({ width: "100%", overflow: "hidden" });
+          var tmp = $("<div/>").load(that.attr("href")+" #left_col", function() {
+            _content.html('');
+            var divl = $("<div/>").css({ float: "left", width: 220, padding: 5 })
+                .append(tmp.find("#badge_left").eq(0))
+                .appendTo(_content);
+            var divr = $("<div/>").css({ float: "left", minWidth: 220, padding: 5, overflow: "auto" });
+            tmp.find("#badge_right").eq(0).appendTo(divr).find("h3").eq(0).remove();
+            divr.data("type", divr.find("#stuff").length ? "profile" : "project")
+                .appendTo(_content);
+            var usr = divr.find("#name");
+                usr.html('<a href="'+that.attr("href")+'">'+usr.text()+'<i class="icon-new-tab-2"></i></a>');
+            $.Nerdz.initButtons(_content);
+            $.Dialog.autoResize(_dialog.data("uuid"));
+          });
+        }
+      });
+    }, 500);
+  }).on("mouseout","a.board", function(e) {
+    window.clearTimeout(BOARD);
+    REBOARD = window.setTimeout(function() {if(HINT) { $.Dialog.close(HINT.data("uuid")); HINT = false; }}, 1000);
   });
   
   $('body').on('click', '.notref', function(e) {

@@ -1,13 +1,12 @@
 $(document).ready(function() {
-    
+  $("#main").children().append("<br/><br/>");
   $('#main').on('click', ".preview", function() {
     var txtarea = $($(this).data('refto'));
     txtarea.val(txtarea.val() + ' ');
     var txt = txtarea.val().tag().autoLink();
     txtarea.val($.trim(txtarea.val()));
     if (undefined !== txt && $.trim(txt) !== '') {
-      if(METRO_DIALOG) return window.open('/preview.php?message=' + encodeURIComponent(txt));
-       $.Dialog({
+      $.Dialog({
         shadow: true,
         overlay: true,
         flat: true,
@@ -48,40 +47,7 @@ $(document).ready(function() {
       if(pmc.html() !== '0') location.hash = "#new";
       return location.reload();
     }
-    if(METRO_DIALOG!==false)
-      if(METRO_DIALOG.hasClass("pmwindow")) 
-        return $.Dialog.close();
-      else 
-        return false;
-    $.Dialog({
-      title: pmc.attr("title"),
-      position: { top: "45px", right:"0px" },
-      flat: true,
-      overlay: false,
-      width: $.Nerdz.mobile?"100%":"60%",
-      height: "auto",
-      content: '<div style="float:left;"></div><div style="float:right;"></div>',
-      onShow: function(_dialog) {
-        _dialog.addClass("pmwindow");
-        var content = _dialog.children(".content"),
-            msbox = content.children().eq(0).css("background-color",$("body").css("background-color")).css("padding", "0px 5px"),
-            inbox = content.children().eq(1);
-        if(!$.Nerdz.mobile) {
-          inbox.css("width",content.width()*0.25).css("margin",content.width()*0.01);
-          msbox.css("width",content.width()*0.70).css("margin",content.width()*0.01).css("color",$("body").css("color"));
-        } else {
-          inbox.width(content.width()*.99).prependTo(content);
-          msbox.width(content.width()*.99);
-        }
-        var cb = function() {
-          if(pmc.html() !== '0')
-            METRO_DIALOG.find(".conversation").eq(0).click();
-          METRO_DIALOG.children(".content").children("div").eq(1).append('<br><a href="pm.php"> Open in full window <i class="icon-new-tab-2"></i></a>');
-        };
-        $.Nerdz.pm.loadInbox(inbox, msbox, cb);
-      }
-    });
-    return;
+    return $.Nerdz.pm.loadWindow();
   });
   var curnot = sessionStorage.getItem('curnot') ? parseInt(sessionStorage.getItem('curnot')) : 0;
   var curpm = sessionStorage.getItem('curpm') ? parseInt(sessionStorage.getItem('curpm')) : 0;
@@ -94,14 +60,15 @@ $(document).ready(function() {
       nw = val - curnot;
       if (nw > 0) {
         N.html.getNotifications(function(d) {
-          nn = $('<div>').html(d).children().length;
-          if (nn === 1)
-            $.Notify.show(d, function() {
-              N.html.getNotifications($.noop(), false);
+          var nn = $('<div>').html(d).find("li");
+          if (nn.length === 1)
+            $.Notify.show(nn.html(), function() {
+              N.html.getNotifications($.noop, false);
             });
           else
-            $.Notify.show('<a href="#" onclick="">' + N.getLangData().NEW_NOTIFICATIONS.format(nn) + '</a>', function() {
+            $.Notify.show('<a href="#" onclick="">' + N.getLangData().NEW_NOTIFICATIONS.format(nn.length) + '</a>', function(notify) {
               $('#notifycounter').click();
+              notify.hide();
             });
           $('#notifyaudio')[0].play();
         }, true);
@@ -114,8 +81,9 @@ $(document).ready(function() {
     if (!isNaN(val) && val !== curpm && $.Nerdz.metroOptions.getOption('notify')) {
       nw = val - curpm;
       if (nw > 0) {
-        $.Notify.show('<a style="cursor:pointer">' + (nw === 1 ? N.getLangData().NEW_MESSAGE : N.getLangData().NEW_MESSAGES.format(nw)) + '!</a>', function() {
+        $.Notify.show('<a href="#">' + (nw === 1 ? N.getLangData().NEW_MESSAGE : N.getLangData().NEW_MESSAGES.format(nw)) + '!</a>', function(notify) {
           $('#gotopm').click();
+          notify.hide();
         });
         $('#notifyaudio')[0].play();
       }

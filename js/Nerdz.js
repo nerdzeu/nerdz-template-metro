@@ -155,6 +155,46 @@ var Nerdz = function() {
   var project = this.project = new __project();
   
   var __pm = function() {
+    this.loadWindow = function(reopenifalreadyopened, callback) {
+      if(METRO_DIALOGS!==0 && $(".window").hasClass("pmwindow")) {
+        $.Dialog.close($(".window").data("uuid"));
+        if(!reopenifalreadyopened) return;
+      }
+      var pmc = $('#pmcounter');
+      $.Dialog({
+        title: pmc.attr("title"),
+        position: { top: "45px", right:"0px" },
+        flat: true,
+        effect: "slide",
+        overlay: false,
+        width: $.Nerdz.mobile?"100%":"60%",
+        height: "auto",
+        content: '<div style="float:left;"></div><div style="float:right;"></div>',
+        onShow: function(_dialog) {
+          _dialog.addClass("pmwindow");
+          var content = _dialog.children(".content"),
+              msbox = content.children().eq(0).css("background-color",$("body").css("background-color")).css("padding", "0px 5px"),
+              inbox = content.children().eq(1);
+          if(!$.Nerdz.mobile) {
+            inbox.css("width",content.width()*0.25).css("margin",content.width()*0.01);
+            msbox.css("width",content.width()*0.70).css("margin",content.width()*0.01).css("color",$("body").css("color"));
+          } else {
+            inbox.width(content.width()*0.99).prependTo(content);
+            msbox.width(content.width()*0.99);
+          }
+          var cb = function() {
+            if(pmc.html() !== '0') {
+              _dialog.find(".conversation").eq(0).click();
+              pmc.html( parseInt(pmc.html())-1 );
+            }
+            _dialog.children(".content").children("div").eq(1).append('<br><a href="pm.php"> Open in full window <i class="icon-new-tab-2"></i></a>');
+            if($.isFunction(callback)) callback(_dialog);
+          };
+          $.Nerdz.pm.loadInbox(inbox, msbox, cb);
+        }
+      });
+    };
+    
     this.loadInbox = function(r, c, callback) {
       var loadtxt = N.getLangData().LOADING;
       var newpm = false;
@@ -194,6 +234,7 @@ var Nerdz = function() {
               num: 10
             }, function(data) {
               c.html(data);
+              c.find("#convfrm textarea").focus();
               c.find("#pmlist").on("scroll", function(e) {
                 var plist = $(this);
                 if(!plist.children(".loading").length && plist.scrollTop()<100) {
@@ -257,6 +298,7 @@ var Nerdz = function() {
             });
           }
         }).on("click",".new",function() {
+          var n = $(this);
           c.loading();
           r.find(".conversation.marked").removeClass("marked");
           N.html.pm.getForm(function(data) {
@@ -282,6 +324,11 @@ var Nerdz = function() {
                 } else return s.val(N.getLangData().NERDZ_IT).attr('disabled', false).width(w).next().show(); 
               });
             });
+            if(undefined!==n.data("username")) {
+              c.find("#convfrm input").eq(0).val(n.data("username")).attr("disabled", true);
+              c.find("textarea").focus();
+              n.removeData("username");
+            }
             $.Nerdz.tagPanel.load(c.find(".tagpanel"));
           });
         }).on("click","#delconvs", function() {
@@ -378,10 +425,15 @@ var Nerdz = function() {
           N.html.profile.getPostListBeforeHpid(num, id, hpid, manageResponse);
       break;
       case "project":
-        
+        var id = plist.data("id");
+        if(!id) return;
+        if(mode==="search")
+          N.html.search.specificPrjectPostsBeforeHpid(num, $("#footersearch input[name=q]").val(), id, hpid, manageResponse);
+        else
+          N.html.project.getPostListBeforeHpid(num, id, hpid, manageResponse);
       break;
       default: 
-        return;
+        return false;
     }
   };
   
@@ -401,7 +453,7 @@ var Nerdz = function() {
         N.html.search.globalProjectPosts(num, qs, manageResponse);
       } else {
         if (plist.data('location') === 'project') {
-          N.html.search.specificProjectPosts(num, qs, plist.data('projectid'), manageResponse);
+          N.html.search.specificProjectPosts(num, qs, plist.data('id'), manageResponse);
         }
       }
     } else {
@@ -409,7 +461,7 @@ var Nerdz = function() {
         N.html.search.globalProfilePosts(num, qs, manageResponse);
       } else {
         if (plist.data('location') === 'profile') {
-          N.html.search.specificProfilePosts(num, qs, plist.data('profileid'), manageResponse);
+          N.html.search.specificProfilePosts(num, qs, plist.data('id'), manageResponse);
         }
       }
     }
@@ -497,13 +549,13 @@ var Nerdz = function() {
       }).children("#"+options.theme).addClass("selected");
       $("#theme-code-switcher").attr("checked",options.codeLight).on("change", function() {
         setOption("codeLight",$(this).is(":checked"));
-        $("body").toggleClass("has-dark-theme");
+        location.reload();
       });
       for (var col in colors)
         $('<div>').attr('class', 'tile tiny')
           .html('<div class="tile-content icon"><i class="icon-record" style="color:' + colors[col] + ';"></i></div>')
           .attr('title', col).addClass(options.color === col ? 'selected' : '').appendTo($('#color-switcher'));
-      $("#color-switcher .tile:not(.selected)").on("click", function(){
+      $("#color-switcher").on("click", ".tile:not(.selected)", function(){
         var color = getOption("color");
         $(this).parent().children(".selected").removeClass("selected");
         setOption("color",$(this).addClass("selected").attr("title"));
@@ -886,6 +938,68 @@ var Nerdz = function() {
           t.html(tmp);
         }, 1500);
       }
+    });
+  };
+  
+  this.initButtons = function(obj) {
+    if(obj.hasClass("parsed")) return;
+    var plist = obj.find("#postlist").length?obj.find("#postlist"):obj.children("div").last();
+    return obj.addClass("parsed").on("click","#follow", function() {
+      var me = $(this).html("...");
+      N.json[plist.data("type")].follow({
+        id: $(this).data('id')
+      }, function(d) {
+        me.html(N.getLangData().UNFOLLOW).attr("id","unfollow");
+      });
+    }).on("click","#unfollow", function() {
+      var me = $(this).html('...');
+      N.json[plist.data("type")].unfollow({
+        id: $(this).data('id')
+      }, function(d) {
+        me.html(N.getLangData().FOLLOW).attr("id","follow");
+      });
+    }).on("click","#blacklist",function() {
+      var me = $(this),
+          oldPlist = plist.html();
+      plist.html("");
+      obj.find("#fast_nerdz").hide();
+      $("<form>").html(N.getLangData().MOTIVATION + ': <textarea style="width:100%; height:60px" id="blmot"></textarea><br /><input type="submit" class="place-right" value="Blacklist" /><input type="button" class="cancel" value="' + N.getLangData().CANCEL + '" />')
+                  .on("submit", function(e) {
+                    e.preventDefault();
+                    N.json.profile.blacklist({
+                      id: me.data('id'),
+                      motivation: $('#blmot').val()
+                    }, function(d) {
+                      me.html(d.message);
+                      plist.html(d.message);
+                      me.html("Unblacklist").attr("id","unblacklist");
+                    });
+                  }).on('click', '.cancel', function() {
+                    me.html('Blacklist');
+                    plist.html(oldPlist);
+                    obj.find('#fast_nerdz').show();
+                  }).appendTo(plist);
+    }).on("click","#unblacklist",function() {
+      var me = $(this).html('...');
+      N.json.profile.unblacklist({
+        id: me.data('id')
+      }, function(d) {
+        me.html("Blacklist").attr("id","blacklist");
+        $.Nerdz.loadPosts({type:"profile",id:me.data("id"),location:"profile"});
+      });
+    }).on("click", "#profilepm", function() {
+      var btn = $(this);
+      var selConv =  function(_dialog) {
+        var id = btn.data("id"),
+            conv = _dialog.find(".conversation[data-from="+id+"]");
+        if(conv.length) return conv.click();
+        _dialog.find(".new").data("username",btn.data("username")).click();
+      };
+      
+      if($(".window.pmwindow").length) {
+        return selConv($(".window.pmwindow"));
+      }
+      $.Nerdz.pm.loadWindow(true, selConv);
     });
   };
   

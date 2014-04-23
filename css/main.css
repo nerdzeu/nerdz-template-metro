@@ -6432,6 +6432,10 @@ img.polaroid {
   background-color: #1ba1e2;
   color: #ffffff;
 }
+.pure #right_col li.active a {
+  background-color: #FFFFFF;
+  color: #1691b3;
+}
 .calendar {
   width: 250px;
   border: 1px #eeeeee solid;

@@ -753,6 +753,10 @@ var Nerdz = function() {
         location.reload();
       });
       var tp = options.tagPanel;
+      if(typeof tp === "boolean" || typeof tp === "undefined") {
+				tp =  '11111111111111111111';
+				setOption("tagpanel", tp)
+			}
       $("#metro-tagpanel").attr("checked",tp.charAt(0)==="1").on("change",function() {
         tp = tp.replaceAt(0, $(this).is(":checked")?"1":"0");
         setOption("tagPanel",tp);

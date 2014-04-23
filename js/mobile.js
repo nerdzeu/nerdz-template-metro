@@ -6,7 +6,7 @@ $(document).ready(function() {
     $('#body').append($('<div>').attr('id', 'right_col').addClass('sidebar'));
   $('#feeds').parent().parent().remove();
   var ti = $("<div>").addClass("titleicons");
-  ti.append($('<div>').addClass('element').append($('#notifycounter').attr('style', '')));
+  ti.append($('<div>').addClass('element').append($('#ncounter').attr('style', '')));
   $('#footersearch').prependTo($('#left_col'));
   $('#footer_main').remove();
   $('#right_col').prepend($('.dropdown-menu').eq(0).removeClass('dropdown-menu'));

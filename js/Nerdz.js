@@ -1,9 +1,24 @@
+/**
+ * @class Nerdz
+ * @description A class made to handle ordinary NERDZ's actions
+ */
 var Nerdz = function() {
-  var __home = function() {
-    this.hideHidden = function() {
+	/**
+	 * @class Nerdz#home
+	 * @memberof Nerdz
+	 * @description Handles home's events
+	 */
+  var home = function() {
+		/**
+		 * @description Hides posts from localStorage["hid"]
+		 * @memberof Nerdz#home
+		 * @function
+		 */
+    var hideHidden = this.hideHidden = function() {
       plist = $("#postlist");
       if(!plist.length || plist.data("location") !== "home")
         return;
+      compressPosts();
       var hidden = localStorage.getItem('hid');
       if(hidden === null) return;
       html = '';
@@ -20,10 +35,14 @@ var Nerdz = function() {
       if (html === '' || !$("#hptable").length)
         return pids;
       $('#hptable').hide().html(html).show(500);
-      this.compressPosts();
       return pids;
     };
-    
+    /**
+     * @description Hides a post from home, adding it to localStorage["hid"]
+		 * @memberof Nerdz#home
+     * @function
+     * @param {HTMLElement} post - The post to hide
+     */
     this.hide = function(post) {
       var pid = $(post).data('postid');
       $('#' + pid).hide(500);
@@ -38,9 +57,14 @@ var Nerdz = function() {
       if (lock.length) {
         lock.eq(0).click();
       }
-      this.hideHidden();
+      hideHidden();
     };
-    
+    /**
+     * @description Shows a previously hidden post
+		 * @memberof Nerdz#home
+     * @function
+     * @param {HTMLElement} me - Post to show again 
+     */
     this.show = function(me) {
       var pids = localStorage.getItem('hid').split('|').sort();
       pids.splice($(me).data('i'), 1);
@@ -60,8 +84,12 @@ var Nerdz = function() {
         $(this).remove();
       });
     };
-    
-    this.compressPosts = function() {
+    /** 
+     * @description Fix the height of posts in home
+		 * @memberof Nerdz#home
+     * @function
+     */
+    var compressPosts = this.compressPosts = function() {
       plist = $("#postlist");
       if(!plist.length)
         return;
@@ -76,7 +104,12 @@ var Nerdz = function() {
         $(this).addClass("parsed");
       });
     };
-    
+		/**
+		 * @description Loads home posts
+		 * @function
+		 * @param {{type:string, lang: string}} object - An object containing type(profile, project) and language of the home
+		 * @param {function} callback - A function that will be triggered after posts' load
+		 */
     this.loadPosts = function(object, callback) {
       plist = $("#postlist");
       if(!plist.length || !object || !object.type)
@@ -95,7 +128,7 @@ var Nerdz = function() {
           $('#fast_nerdz').hide();
           N.html[type].getFollowedHomePostList(0, function(data) {
             plist.html(data).data('type', type).data('mode', 'followed');
-            home.hideHidden();
+            hideHidden();
             if(type === "profile") localStorage.setItem("autolang", lang);
           });
         } else {
@@ -105,7 +138,7 @@ var Nerdz = function() {
             $('#fast_nerdz').hide();
           N.html[type].getByLangHomePostList(0, lang, function(r) {
             plist.html(r).data('mode', 'language').data('type', type);
-            home.hideHidden();
+            hideHidden();
             if(type === "profile") localStorage.setItem("autolang", lang);
           });
         }
@@ -118,20 +151,36 @@ var Nerdz = function() {
           }
           if(!list.is(":hidden")) btn.click();
           $('.selectlang, .projlang').removeClass('active');
-          home.hideHidden();
+          hideHidden();
         });
       }
     };
   };
-  var home = this.home = new __home();
-  
-  var __profile = function() {
+  home = this.home = new home();
+  /**
+   * @class Nerdz#profile
+   * @description Handles events on profiles' page
+   */
+  var profile = function() {
+		/**
+     * @description Loads profiles' posts
+		 * @memberof Nerdz#profile
+		 * @function
+		 * @param {{id:int}} object - An object containing the id of the board
+		 * @param {function} callback - A function that will be triggered after posts' load
+		 */
     this.loadPosts = function(object, callback) {
       N.html.profile.getPostList(10, object.id,function(r) {
         $("#postlist").html(r);
         if($.isFunction(callback)) callback();
       });
     };
+		/**
+     * @description Shares a post
+		 * @memberof Nerdz#profile
+		 * @function
+		 * @todo
+		 */
     this.share = function(el) {
       N.json.profile.share($(el).serialize(), function(d) {
         if (d.status === 'ok') {
@@ -142,9 +191,19 @@ var Nerdz = function() {
       });
     };
   };
-  var profile = this.profile = new __profile();
-  
-  __project = function() {
+  profile = this.profile = new profile();
+  /**
+   * @class Nerdz#project
+   * @description Handles events on projects' page
+   */
+  var project = function() {
+		/**
+     * @description Loads projects' posts
+		 * @memberof Nerdz#project
+		 * @function
+		 * @param {{id:int}} object - An object containing the id of the board
+		 * @param {function} callback - A function that will be triggered after posts' load
+		 */
     this.loadPosts = function(object, callback) {
       N.html.project.getPostList(10, object.id, function(r) {
         $("#postlist").html(r);
@@ -152,15 +211,25 @@ var Nerdz = function() {
       });
     };
   };
-  var project = this.project = new __project();
-  
-  var __pm = function() {
+  project = this.project = new project();
+  /**
+   * @class Nerdz#pm
+   * @description Handles pms' events
+   */
+  var pm = function() {
+		/**
+     * @description Load pms' dialog
+		 * @memberof Nerdz#pm
+		 * @function
+		 * @param {bool} reopenifalreadyopened - Looks clever, isn't in?
+		 * @param {function} callback - Callback called after window load
+		 */
     this.loadWindow = function(reopenifalreadyopened, callback) {
       if(METRO_DIALOGS!==0 && $(".window").hasClass("pmwindow")) {
         $.Dialog.close($(".window").data("uuid"));
         if(!reopenifalreadyopened) return;
       }
-      var pmc = $('#pmcounter');
+      var pmc = $('#pcounter');
       $.Dialog({
         title: pmc.attr("title"),
         position: { top: "45px", right:"0px" },
@@ -171,16 +240,21 @@ var Nerdz = function() {
         height: "auto",
         content: '<div style="float:left;"></div><div style="float:right;"></div>',
         onShow: function(_dialog) {
-          _dialog.addClass("pmwindow");
+          _dialog.addClass("pmwindow").outerWidth($(window).innerWidth);
           var content = _dialog.children(".content"),
               msbox = content.children().eq(0).css("background-color",$("body").css("background-color")).css("padding", "0px 5px"),
               inbox = content.children().eq(1);
           if(!$.Nerdz.mobile) {
             inbox.css("width",content.width()*0.25).css("margin",content.width()*0.01);
-            msbox.css("width",content.width()*0.70).css("margin",content.width()*0.01).css("color",$("body").css("color"));
+            msbox.css("width",content.width()*0.70).css("margin",content.width()*0.01);
           } else {
-            inbox.width(content.width()*0.99).prependTo(content);
-            msbox.width(content.width()*0.99);
+						var rs = function() { h = $(window).height(); content.height(h-80).css("overflow","auto"); _dialog.css("overflow","auto"); };
+						$(window).on("resize",rs);
+						rs();
+						content.html('');
+            var div = $("<div>").width(content.width()*0.99).appendTo(content).css("text-align","center");
+            inbox = msbox = $("<div>").width(content.width()*0.99).appendTo(content);
+            $("<a>").html("<a href='#' style='font-size: 150%'><i class='icon-mail'></i></a>").appendTo(div).click(function(e) {e.preventDefault();$.Nerdz.pm.loadInbox(inbox, msbox, cb);});
           }
           var cb = function() {
             if(pmc.html() !== '0') {
@@ -194,7 +268,14 @@ var Nerdz = function() {
         }
       });
     };
-    
+    /**
+     * @description Load inbox on specified selectors
+		 * @memberof Nerdz#pm
+     * @function
+     * @param {HTMLElement} r - The element that will contain the conversations' list
+     * @param {HTMLElement} c - The element that will contain the conversation
+     * @param {function} callback - Callback called after inbox load
+     */
     this.loadInbox = function(r, c, callback) {
       var loadtxt = N.getLangData().LOADING;
       var newpm = false;
@@ -259,6 +340,8 @@ var Nerdz = function() {
               });
               c.find("#convfrm").on("submit",function(e) {
                 e.preventDefault();
+                var m = $(this).find('#frmtxt').val().autoLink();
+                if($.trim(m)==="") return;
                 var s = $(this).find('input[type=submit]').eq(0);
                 if (s.attr('disabled') === 'disabled')
                   return false;
@@ -267,7 +350,6 @@ var Nerdz = function() {
                 if (c.find('#img_ul_file').val() !== '' && c.find('#img_ul_file').is(':visible'))
                   if (!confirm(N.getLangData().IMG_UPLOADING))
                     return s.val(N.getLangData().NERDZ_IT).attr('disabled', false).width(w).next().show();
-                var m = $(this).find('#frmtxt').val().autoLink();
                 var plist = c.find("#pmlist"),
                     pms = plist.children(".pm"),
                     last = pms.length>1 ? pms.eq(pms.length-1) : pms.eq(pms.length-1),
@@ -324,6 +406,12 @@ var Nerdz = function() {
                 } else return s.val(N.getLangData().NERDZ_IT).attr('disabled', false).width(w).next().show(); 
               });
             });
+            c.find("#convfrm input").on('keydown', function(e) {
+							if (e.which===13) {
+								e.preventDefault();
+								c.find("textarea").focus();
+							}
+						});
             if(undefined!==n.data("username")) {
               c.find("#convfrm input").eq(0).val(n.data("username")).attr("disabled", true);
               c.find("textarea").focus();
@@ -355,8 +443,13 @@ var Nerdz = function() {
       });
     };
   };
-  var pm = this.pm = new __pm();
-  
+  pm = this.pm = new pm();
+  /**
+   * @description Calls the right loadpost, depending on (object.)location
+   * @function
+   * @param {object} object - Contains location, type and eventually lang or id of the postlist
+   * @param {function} callback - Callback called after posts load
+   */
   var loadPosts = this.loadPosts = function(object, callback) {
     var plist = $("#postlist");
     if(!plist.length) return;
@@ -376,7 +469,11 @@ var Nerdz = function() {
       return false;
     $.Nerdz[loc].loadPosts(object,callback);
   };
-  
+  /**
+   * @description Load older posts, depending on location
+   * @function
+   * @param {function} callback - Callback called after posts load
+   */
   var loadOlderPosts = this.loadOlderPosts = function(callback) {
     var plist = $("#postlist");
     var num = 10;
@@ -393,10 +490,11 @@ var Nerdz = function() {
       $('#scrtxt').remove();
       if (data.length > 0) {
         plist.append(data);
-        home.hideHidden();
+        hideHidden();
       }
       if($.isFunction(callback)) callback();
     };
+    var id;
     switch(plist.data("location")) {
       case "home":
         switch(plist.data("mode")) {
@@ -417,7 +515,7 @@ var Nerdz = function() {
         }
       break;
       case "profile":
-        var id = plist.data("id");
+        id = plist.data("id");
         if(!id) return;
         if(mode==="search")
           N.html.search.specificProfilePostsBeforeHpid(num, $("#footersearch input[name=q]").val(), id, hpid, manageResponse);
@@ -425,7 +523,7 @@ var Nerdz = function() {
           N.html.profile.getPostListBeforeHpid(num, id, hpid, manageResponse);
       break;
       case "project":
-        var id = plist.data("id");
+        id = plist.data("id");
         if(!id) return;
         if(mode==="search")
           N.html.search.specificPrjectPostsBeforeHpid(num, $("#footersearch input[name=q]").val(), id, hpid, manageResponse);
@@ -436,7 +534,43 @@ var Nerdz = function() {
         return false;
     }
   };
-  
+  /**
+   * @description Currently is used only on postlist, projectlist and bookmarks to order posts. Could be extended to order any type of post
+   * @function
+   * @param {string} order - The key on which order posts
+   * @param {string} url - The url to format
+   * @param {bool} returnUrl - If true the function will return the formatted url, else user will be redirect on it
+   */
+  var orderBy = this.orderBy = function(order, url, returnUrl) {
+		if(!url) url = window.location.href;
+		if (url.search(/orderby=[a-z]+/i) !== -1) {
+			url = url.replace(/orderby=[a-z]+/i, 'orderby=' + order);
+		} else {
+			url += (location.search === '' ? '?' : '&') + 'orderby=' + order;
+		}
+		var re, str;
+		if(/userslist/.test(url)) {
+			re = new RegExp(/desc=[0-1]/i);
+			str = "desc=";
+		}else{
+			re = new RegExp(/asc=[0-1]/i);
+			str = "asc=";
+		}
+		if (url.search(re) !== -1) {
+			url = url.replace(re, str + (url.match(re)[1] === '1' ? '0' : '1'));
+		} else {
+			url += '&'+str+'0';
+		}
+		if(!returnUrl)
+			location.replace(url);
+		else
+			return url;
+	};
+	/**
+	 * @description Handles researches on all needed pages
+	 * @function
+	 * @param {function} callback - Callback called after search
+	 */
   var Search = this.Search = function(callback) {
     var plist = $('#postlist');
     var qs = $.trim($('#footersearch input[name=q]').val());
@@ -448,26 +582,32 @@ var Nerdz = function() {
       plist.html(d?d:"<center>No results Found</center>");
       if($.isFunction(callback)) callback(); 
     };
-    if (plist.data('type') === 'project') {
-      if (plist.data('location') === 'home') {
-        N.html.search.globalProjectPosts(num, qs, manageResponse);
-      } else {
-        if (plist.data('location') === 'project') {
-          N.html.search.specificProjectPosts(num, qs, plist.data('id'), manageResponse);
-        }
-      }
-    } else {
-      if (plist.data('location') === 'home') {
-        N.html.search.globalProfilePosts(num, qs, manageResponse);
-      } else {
-        if (plist.data('location') === 'profile') {
-          N.html.search.specificProfilePosts(num, qs, plist.data('id'), manageResponse);
-        }
-      }
-    }
-    plist.data('mode', 'search').loading();
+    var type = plist.data("type"),
+				location = plist.data("location");
+		if(/(home|profile|project)/.test(location))
+			N.html.search[((location==="home")?"global":"specific")+type.capitalize()+"Posts"](num, qs, manageResponse);
+		else {
+			var url = window.location.href,
+					order;
+			url.replace(/orderby=([a-z]+)/i, function(match, str) {
+				order = str;
+			});
+			if(!order) order = $(".pointer.default").eq(0).attr("id");
+			url = $.Nerdz.orderBy(order, url, true);
+			if (url.search(/q=[a-z]+/i) !== -1) {
+				url = url.replace(/q=[a-z]+/i, 'q=' + qs);
+			} else {
+				url = url + '&q=' + qs;
+			}
+			return window.location.replace(url);
+		}
+		plist.data('mode', 'search').loading();
   };
-  
+  /**
+   * @description Sends a new NERDZ
+   * @function
+   * @param {object} object - Contains informations on type, location and id of the current board
+   */
   var Post = this.Post = function(object) {
     var loading = N.getLangData().LOADING;
     var s = $("#stdfrm").find('input[type=submit]').eq(0);
@@ -503,14 +643,19 @@ var Nerdz = function() {
       }, 1250);
     });
   };
-
+	/**
+	 * @class nerdz#metroOption
+	 * @description Handles options of MetroNerdz
+	 */
   var __metroOptions = function() {
     var options = {
       codeLight: false,
       color: 'default',
       theme: 'dark',
       tagPanel: '11111111111111111111',
-      notify: true
+      notify: true,
+      fixedHeader: false,
+      footer: true
     };
     var colors = {
       'default': '#4390DF',
@@ -519,24 +664,59 @@ var Nerdz = function() {
       'red': '#e51400',
       'steel': '#555555'
     };
+   /**
+    * @description Returns current Metro Options
+    * @memberof Nerdz#metroOption
+    * @function
+    */
     this.getOptions = function() {
       return options;
     };
+   /**
+    * @description Restores options from localstorage
+    * @memberof Nerdz#metroOption
+    * @function
+    */
     this.restoreOptions = function() {
-      obj = JSON.parse(localStorage.getItem('metro-options'));
+      var obj = JSON.parse(localStorage.getItem('metro-options')),
+					aKeys = Object.keys(obj).sort(),
+					bKeys = Object.keys(options).sort();
       if (undefined !== obj)
-        options = obj;
+				if(JSON.stringify(aKeys) === JSON.stringify(bKeys))
+					options = obj;
+				else {
+					$.extend(options, obj);
+					this.setOption();
+				}
       return this;
     };
+   /**
+    * @description Returns current value of the specified option
+    * @memberof Nerdz#metroOption
+    * @function
+    * @param {string} options - The key of the option
+    */
     this.getOption = function(option) {
       return options[option];
     };
     var getOption = this. getOption;
+   /**
+    * @description Set an options
+    * @memberof Nerdz#metroOption
+    * @function
+    * @param {string} option - The key of the option
+    * @param {*} value - Value to be set
+    */
     this.setOption = function(option, value) {
-      options[option] = value;
+      if(option && value!==undefined) options[option] = value;
       return localStorage.setItem('metro-options', JSON.stringify(options));
     };
     var setOption = this.setOption;
+   /**
+    * @description (Re)Initialize UI with current options
+    * @memberof Nerdz#metroOption
+    * @function
+    */
     this.initOptions = function() {
       var div = $("#pref-metro");
       if(!div.length) return false;
@@ -561,8 +741,16 @@ var Nerdz = function() {
         setOption("color",$(this).addClass("selected").attr("title"));
         $("body").removeClass(color).addClass($(this).attr("title"));
       });
+      $("#metro-header").attr("checked",options.fixedHeader).on("change",function(){
+        setOption("notify", $(this).is(":checked"));
+        $("body").toggleClass("fixedHeader");
+      });
       $("#metro-notify").attr("checked",options.notify).on("change",function(){
         setOption("notify", $(this).is(":checked"));
+      });
+      $("#metro-footer").attr("checked",options.footer).on("change",function(){
+        setOption("footer", $(this).is(":checked"));
+        location.reload();
       });
       var tp = options.tagPanel;
       $("#metro-tagpanel").attr("checked",tp.charAt(0)==="1").on("change",function() {
@@ -572,6 +760,13 @@ var Nerdz = function() {
       });
       $('#tagpanel-custom').on('click', tagPanel.showOptions);
       $("body").addClass(options.theme).addClass(options.color);
+      if(options.fixedHeader && !$.Nerdz.mobile) $("body").addClass("fixedHeader");
+			if(!options.footer && !$.Nerdz.mobile) {
+				$("#ncounter").appendTo($("<a>").attr("id","gotono").addClass("element place-right").css({paddingLeft: 30, paddingRight:30, cursor: "pointer"}).insertBefore("#gotopm"));
+				$("<style>").html("#notify_list { top: 45px; bottom: auto; }").appendTo("head");
+				$("#footersearch").appendTo($("<span>").attr("id","search").addClass("element place-right").css({paddingLeft: 30, paddingRight:30, cursor: "pointer"}).appendTo($("header").children().eq(0)));
+				$("footer").remove();
+			}
       $('#metro-info').on('click', function() {
         $.Dialog({
           shadow: true,
@@ -581,11 +776,11 @@ var Nerdz = function() {
           width: 500,
           padding: 10,
           onShow: function(_dialog) {
-            _dialog.css('min-height', '150px');
             $.ajax({
               url: '/tpl/2/VERSION'
             }).done(function(d) {
               _dialog.children('.content').html('<a href=\'https://github.com/nerdzeu/nerdz.eu/commit/{1}\' target=\'_blank\'> Nerdz, Last Commit {1} </a> <br />NerdzMetro Theme by Dr.Jest. Version {0} <br /> Barely based on work made by<a href=\'https://github.com/olton/Metro-UI-CSS/blob/master/LICENSE\' target=\'_blank\'> Sergey Pimenov </a>'.format(d, Nversion));
+              $.Dialog.autoResize();
             });
           }
         });
@@ -601,7 +796,10 @@ var Nerdz = function() {
     }(this);
   };
   var metroOptions = this.metroOptions = new __metroOptions();
-  
+  /**
+   * @class Nerdz#tagPanel
+   * @description Renders the MetroTagPanel
+   */
   var __tagPanel = function() {
     var buttons = [
       { ak: "a", tag: "url", html: "i.icon-link" },
@@ -636,10 +834,16 @@ var Nerdz = function() {
       el.attr("accesskey", obj.ak).data("tag",obj.tag);
       return el;
     };
-    
-    this.update = function() {
-      var tp = $(".tagpanel"),
-          div = tp.children("div").eq(0);
+   /**
+    * @description Reloads the tag
+    * @memberof Nerdz#tagPanel
+    * @function
+    * @param {HTMLElement} tp - The tagpanel to reload (Default: $(".tagpanel").eq(0))
+    */
+    this.update = function(tp) {
+			if(!tp || !tp.length)
+				tp = $(".tagpanel");
+      var div = tp.children("div").eq(0);
       opt = metroOptions.getOption("tagPanel").toString();
       if(!tp.length)
         return;
@@ -654,7 +858,12 @@ var Nerdz = function() {
         div.children(".button").eq(j++).css("display",opt.charAt(i)==="1"?"inline":"none");
       }
     };
-    
+   /**
+    * @description Loads the tag
+    * @memberof Nerdz#tagPanel
+    * @function
+    * @param {HTMLElement} tp - The tagpanel to reload (Default: $(".tagpanel").eq(0))
+    */    
     this.load = function(tp) {
       if(!tp || !tp.length)
         tp = $(".tagpanel").eq(0);
@@ -719,7 +928,12 @@ var Nerdz = function() {
       }).appendTo(div);
       return tp.on("click",".button", tagPanel.trigger);
     };
-    
+   /**
+    * @description Triggered when clicking on a button
+    * @memberof Nerdz#tagPanel
+    * @function
+    * @param {MouseEvent} e - MouseEvent, used to detect the key
+    */
     this.trigger = function(e) {
       e.preventDefault();
       var tg = $(e.target),
@@ -828,7 +1042,11 @@ var Nerdz = function() {
         break;
       }
     };
-    
+   /**
+    * @description Show a {@link metro.Dialog} containing panel options
+    * @memberof Nerdz#tagPanel
+    * @function
+    */
     this.showOptions = function() {
       if (!$('.tagpanel').length)
         return false;
@@ -874,7 +1092,13 @@ var Nerdz = function() {
         }
       });
     };
-    
+   /**
+    * @description Reload the tag
+    * @memberof Nerdz#metroOption
+    * @function
+    * @param {Event} e - Default Event
+    * @param {HTMLEvent} textarea - Textarea that will contain the link to the uploaded image
+    */
     this.imgupload = function(e, t) {
       var btn = $('#img_ul_btn');
       if(!btn.length) return;
@@ -903,11 +1127,54 @@ var Nerdz = function() {
   };
   
   var tagPanel = this.tagPanel = new __tagPanel();
-
+	/**
+	 * @function
+	 * @returns bool
+	 * @description Returns true if the browser is mobile
+	 */
   this.mobile = function(a){
     return /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4));
   }(navigator.userAgent || navigator.vendor || window.opera);
-
+  /**
+   * @description Generates preview's Dialog
+   * @function
+   */
+	this.Preview = function(a) {
+		var me=$(a),
+				preview=me.val(),
+				refto = me.data("refto"),
+				txtarea = $(refto);
+		txtarea.val(txtarea.val() + ' ');
+		var txt = txtarea.val().tag().autoLink();
+		txtarea.val($.trim(txtarea.val()));
+		if (undefined !== txt && $.trim(txt) !== '') {
+			me.attr("disabled",true).val(N.getLangData().LOADING);
+			$.Dialog({
+				shadow: true,
+				overlay: true,
+				flat: true,
+				icon: '<span class="icon-checkmark"></span>',
+				title: 'Preview',
+				width: "60%",
+				padding: 10,
+				content: '',
+				onShow: function(_dialog){
+					var content = _dialog.children('.content').css({maxHeight:$(window).height()-60, overflow: "auto"});
+					content.loading().load('/preview.php?message=' + encodeURIComponent(txt) + ' #center_col', function() {
+						$.Dialog.autoResize();
+					});
+				},
+				onClose: function() {
+					me.val(preview).attr("disabled", false);
+				}
+			});
+		}
+	};
+	/**
+	 * @description Correctly formats comments' permalinks	
+	 * @function
+	 * @param {HTMLElement} a - The Comment
+	 */
   this.Permalink = function(a) {
     var me = $(a),
         postid = me.data("refto"),
@@ -919,7 +1186,11 @@ var Nerdz = function() {
     me.attr("href", href);
     return false;
   };
-  
+  /**
+   * @description Handles logout
+   * @function
+   * @param {MouseEvent} e - Original Event
+   */
   this.logout = function(e) {
     e.preventDefault();
     var t = $('#welcome');
@@ -940,7 +1211,11 @@ var Nerdz = function() {
       }
     });
   };
-  
+  /**
+   * @description Initialize (un)follow, (un)blacklist and profilepm buttons on a selected area
+   * @function
+   * @param {HTMLElement} obj - The area to initialize
+   */
   this.initButtons = function(obj) {
     if(obj.hasClass("parsed")) return;
     var plist = obj.find("#postlist").length?obj.find("#postlist"):obj.children("div").last();
@@ -1002,7 +1277,6 @@ var Nerdz = function() {
       $.Nerdz.pm.loadWindow(true, selConv);
     });
   };
-  
   var __construct = function(t) {
     $(document).ready(function() {
       if(t.mobile) {
@@ -1030,9 +1304,124 @@ var Nerdz = function() {
         '/informations.php',
         '/preview.php'
       ]) !== -1) $('#footersearch').remove();
+      else 
+				$('#footersearch').on('submit', function(e) {
+					e.preventDefault();
+					t.Search();
+				});
       $("#logout").click(t.logout);
+      t.title = document.title;
+			var $color = $("#color-switcher .selected .icon-record").css("color");
+			$('#main').on('click', ".preview", function() {
+				t.Preview(this);
+			}).children().append("<br/><br/>");
+			
+			$('#ncounter').on('click', function(e) {
+				e.preventDefault();
+				var list = $('#notify_list'),
+					old = $(this).html();
+				var nold = parseInt(old);
+				list.toggle(200).html(N.getLangData().LOADING);
+				N.html.getNotifications(function(d) {
+					list.html(d);
+					updateTitle();
+				});
+				$(this).html(isNaN(nold) ? old : '0').css("color",$color);
+			});
+			$('#gotopm').on('click', function(e) {
+				e.preventDefault();
+				var pmc = $('#pcounter');
+				if(e.ctrlKey && location.pathname !== "/pm.php") {
+					location.href = "/pm.php"+(pmc.html() !== '0'?"#new":"");
+					return;
+				}
+				if(location.pathname === "/pm.php") {
+					if(pmc.html() !== '0') location.hash = "#new";
+					return location.reload();
+				}
+				return t.pm.loadWindow(false, function() { 
+					updateTitle(); 
+					if(pmc.html()==="0")
+						pmc.css("color",$color);
+				});
+			});
+			
+			var curnot = sessionStorage.getItem('curnot') ? parseInt(sessionStorage.getItem('curnot')) : 0,
+					curpms = sessionStorage.getItem('curpms') ? parseInt(sessionStorage.getItem('curpms')) : 0;
+			var notify = function() {
+				var nc = $('#ncounter'), pc = $("#pcounter");
+				N.json.post('/pages/profile/notify.json.php',{}, function(obj) {
+					var nw, not = obj.status === 'ok' ? parseInt(obj.message) : 0;
+					nc.html(not).css("color", not===0?$color:'#FF0000');
+					if (not > curnot && t.metroOptions.getOption('notify')) {
+						nw = not-curnot;
+						if(nw===1)
+							N.html.getNotifications(function(d) {
+								var htm = $("<div/>").html(d).find("li").html();
+								$.Notify.show(htm, function() {
+									N.html.getNotifications($.noop, false);
+								});
+							});
+						else
+							$.Notify.show('<a href="#" onclick="">' + N.getLangData().NEW_NOTIFICATIONS.format(nn.length) + '</a>', function(notify) {
+								$("#ncounter").click();
+								notify.hide();
+							});
+						$('#notifyaudio')[0].play();
+					}
+					curnot = not;
+					sessionStorage.setItem('curnot', not);
+					updateTitle();
+				});
+				N.json.post('/pages/pm/notify.json.php',{}, function(obj) {
+					var pms = obj.status === 'ok' ? parseInt(obj.message) : 0;
+					pc.html(pms).css("color", pms===0?$color:'#FF0000');
+					if (pms > curpms && t.metroOptions.getOption('notify')) {
+						nw = pms-curpms;
+						$.Notify.show('<a href="#">' + (nw === 1 ? N.getLangData().NEW_MESSAGE : N.getLangData().NEW_MESSAGES.format(nw)) + '!</a>', function(notify) {
+							$('#gotopm').click();
+							notify.hide();
+						});
+						$('#notifyaudio')[0].play();
+					}
+					curpms = pms;
+					sessionStorage.setItem('curpms', pms);
+					updateTitle();
+				});
+			};
+			
+			var updateTitle = function() {
+				var title = t.title;
+				if(parseInt($("#ncounter").text())>0) title = "("+$("#ncounter").text()+") "+title;
+				if(parseInt($("#pcounter").text())>0) title = "["+$("#pcounter").text()+"] "+title;
+				document.title = title;
+			};
+			
+			notify();
+			window.setInterval(notify, 10000);
+			
+			/** back to top **/
+			$("#totop").click(function(e) {
+				e.preventDefault();
+				$(window).scrollTo(0, 1000);
+				$(this).fadeOut(500);
+			});
+
     });
   }(this);
 };
 
 $.Nerdz = new Nerdz();
+var scroll_timer, displayed=false;
+$(window).on("scroll", function() {
+  window.clearTimeout(scroll_timer);
+  window.setTimeout(function() {
+      if ($(window).scrollTop() <= 700) {
+        displayed = false;
+        $('#totop').fadeOut(500);
+      } else if (displayed === false) {
+        displayed = true;
+        $('#totop').stop(true, true).fadeIn();
+      }
+    }, 100);
+});

@@ -1,8 +1,10 @@
 var METRO_WEEK_START = 0, METRO_DIALOGS = [];
 $.browser = {msie:false};
 
-/*
- * Date Format 1.2.3
+/**
+ * @name dateFormat
+ * @function
+ * @description Date Format 1.2.3
  * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
  * MIT license
  *
@@ -13,8 +15,10 @@ $.browser = {msie:false};
  * Returns a formatted version of the given date.
  * The date defaults to the current date/time.
  * The mask defaults to dateFormat.masks.default.
+ * @param {date} date - The date to format
+ * @param {object} mask - The format of the output date
+ * @param {bool} utc - Using local or utc time
  */
-
 var dateFormat = function () {
     var	token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
         timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
@@ -113,7 +117,6 @@ Date.prototype.format = function (mask, utc) {
     return dateFormat(this, mask, utc);
 };
 
-// TouchEvents
 var hasTouch = 'ontouchend' in window, eventTimer;
 var moveDirection = 'undefined', startX, startY, deltaX, deltaY, mouseDown = false;
 function addTouchEvents(element){
@@ -123,6 +126,12 @@ function addTouchEvents(element){
         element.addEventListener("touchend", touch2Mouse, true);
     }
 }
+/** 
+ * @name touch2mouse
+ * @function
+ * @description Transform touch events in mouse-like events
+ * @param {MouseEvent} - original event
+ */
 function touch2Mouse(e) {
     var theTouch = e.changedTouches[0];
     var mouseEv;
@@ -168,13 +177,21 @@ function touch2Mouse(e) {
     e.preventDefault();
 }
 
-// $.Metro
-(function($){
+(function( $ ){
+	/**
+	 * @namespace metro
+	 * @description Is a container for further components
+	 * @param {object} - objects and functions to be attached
+	 */ 
     $.Metro = function(params){
         params = $.extend({
         }, params);
     };
-
+	/**
+	 * @name metro#getDeviceSize
+	 * @function
+	 * @description Returns the size of the screen
+	 */
     $.Metro.getDeviceSize = function(){
         var device_width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
         var device_height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
@@ -184,7 +201,17 @@ function touch2Mouse(e) {
         };
     };
     
+   /**
+    * @name metro.currentLocale
+    * @type {string}
+    * @description Rapresents the current Locale 
+    */
     $.Metro.currentLocale = "en";
+   /**
+    * @name metro.Locale
+    * @type {object}
+    * @description It's an object containing all locales supported
+    */
     $.Metro.Locale = {
       en: {
         months: 'January February March April May June July August September October November December Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' '),
@@ -212,10 +239,23 @@ function touch2Mouse(e) {
         buttons: 'Hoy Limpiar Cancel Help Prior Next Finish'.split(' ')
       }
     };
+   /**
+    * @name metro#setLocale
+    * @function
+    * @description Adds or overwrite a locale in $.Metro.Locale
+    * @param {string} index - Two letter rapresentation of the locale
+    * @param {object} local - Object containing localizated names
+    */
     $.Metro.setLocale = function(a, b) {
       $.Metro.Locale[a] = b;
     };
     
+   /**
+    * @name metro#initCalendars
+    * @function
+    * @description Inits the calendar compontents on the selected area
+    * @param {HTMLElement} area - The area on which initialize - Default HtmlDocument
+    */
     $.Metro.initCalendars = function(area){
         if (area !== undefined) {
             $(area).find('[data-role=calendar]').calendar();
@@ -224,6 +264,12 @@ function touch2Mouse(e) {
         }
     };
 
+   /**
+    * @name metro#initDatepickers
+    * @function
+    * @description Inits the datepicker compontents on the selected area
+    * @param {HTMLElement} area - The area on which initialize - Default HtmlDocument
+    */
     $.Metro.initDatepickers = function(area){
         if (area !== undefined) {
             $(area).find('[data-role=datepicker]').datepicker();
@@ -232,6 +278,12 @@ function touch2Mouse(e) {
         }
     };
 
+   /**
+    * @name metro#initDropdowns
+    * @function
+    * @description Inits the dropdown compontents on the selected area
+    * @param {HTMLElement} area - The area on which initialize - Default HtmlDocument
+    */
     $.Metro.initDropdowns = function(area){
       if (area !== undefined) {
         $(area).find('[data-role=dropdown]').dropdown();
@@ -244,7 +296,13 @@ function touch2Mouse(e) {
         });
       });
     };
-    
+
+   /**
+    * @name metro#initInputs
+    * @function
+    * @description Inits the input compontents on the selected area
+    * @param {HTMLElement} area - The area on which initialize - Default HtmlDocument
+    */
     $.Metro.initInputs = function(area){
         if (area !== undefined) {
             $(area).find('[data-role=input-control], .input-control').inputControl();
@@ -253,6 +311,12 @@ function touch2Mouse(e) {
         }
     };
 
+   /**
+    * @name metro#transformInputs
+    * @function
+    * @description Inits the input-transform compontents on the selected area
+    * @param {HTMLElement} area - The area on which initialize - Default HtmlDocument
+    */
     $.Metro.transformInputs = function(area){
         if (area !== undefined) {
             $(area).find('[data-transform=input-control]').inputTransform();
@@ -261,6 +325,11 @@ function touch2Mouse(e) {
         }
     };
     
+   /**
+    * @name metro#initDialog
+    * @function
+    * @description Inits the dialog resize on $(window).resize
+    */
     $.Metro.initDialog = function() {
       $(window).on("resize", $.Dialog.autoResize);
     };
@@ -275,15 +344,32 @@ function touch2Mouse(e) {
     };
 })(jQuery);
 
-// Calendar
 (function( $ ) {
-    $.widget("metro.calendar", {
-
+	/** 
+	 * @namespace metro.calendar
+	 * @description Renders a Calendar
+	 * @param {object} options - Overwrite default options
+	 */
+   $.widget("metro.calendar", {
         version: "1.0.0",
-
+			
+			/**
+			 * @name metro.calendar#options
+			 * @description Calendar's options - Note: they are overwritten by data-* properties of the target element
+			 * @type {object}
+			 * @prop {String} format - The format in which dates will be rendered (Default: "yyyy-mm-dd")
+			 * @prop {String} startMode - The default view in the calendar (year, month, day) (Default: "day")
+			 * @prop {int} weekStart - The first day of the week (0 - Sunday, 1 - Monday) (Default: 1);
+			 * @prop {bool} otherDays - Show days of previous/next month (Default: false)
+			 * @prop {Date} date - The date set as "Today" (Default: new Date())
+			 * @prop {bool} buttons - show or not to show navigation buttons? (Default: true)
+			 * @prop {String} locale - 2 letters rapresentation of the locale in which show the calendar. It must be an index in the {@link metro.Locale} object (Default: {@link metro.currentLocale})
+			 * @prop {function} getDates - something to do with stored dates in the calendar (Default: function(d){})
+			 * @prop {function} click - something to do when clicking on a day
+			 */
         options: {
             format: "yyyy-mm-dd",
-            startMode: 'day', //year, month, day
+            startMode: 'day',
             weekStart: 1, // 0 - Sunday, 1 - Monday
             otherDays: false,
             date: new Date(),
@@ -293,18 +379,51 @@ function touch2Mouse(e) {
             click: function(d, d0){},
             _storage: []
         },
-
+			/**
+			 * @name metro.calendar._year
+			 * @private
+			 */
         _year: 0,
+			/**
+			 * @name metro.calendar._month
+			 * @private
+			 */
         _month: 0,
+			/**
+			 * @name metro.calendar._day
+			 * @private
+			 */
         _day: 0,
+			/**
+			 * @name metro.calendar._today
+			 * @private
+			 */
         _today: new Date(),
+			/**
+			 * @name metro.calendar._event
+			 * @private
+			 */
         _event: '',
-
-        _mode: 'day', // day, month, year
+			/**
+			 * @name metro.calendar._mode
+			 * @private
+			 */
+        _mode: 'day',
+			/**
+			 * @name metro.calendar._distance
+			 * @private
+			 */
         _distance: 0,
-
+			/**
+			 * @name metro.calendar._events
+			 * @private
+			 */
         _events: [],
-
+			/**
+			 * @name metro.calendar#_create
+			 * @function
+			 * @private
+			 */
         _create: function(){
             var element = this.element;
 
@@ -326,6 +445,11 @@ function touch2Mouse(e) {
             this._renderCalendar();
         },
 
+			/**
+			 * @name metro.calendar#_renderMonth
+			 * @function
+			 * @private
+			 */
         _renderMonth: function(){
             var year = this._year,
                 month = this._month,
@@ -411,7 +535,11 @@ function touch2Mouse(e) {
             table.appendTo(this.element);
             this.options.getDates(this.element.data('_storage'));
         },
-
+			/**
+			 * @name metro.calendar#_renderMonths
+			 * @function
+			 * @private
+			 */
         _renderMonths: function(){
             var table, tr, td, i, j;
 
@@ -449,6 +577,11 @@ function touch2Mouse(e) {
             table.appendTo(this.element);
         },
 
+			/**
+			 * @name metro.calendar#_renderYears
+			 * @function
+			 * @private
+			 */
         _renderYears: function(){
             var table, tr, td, i, j;
 
@@ -492,6 +625,11 @@ function touch2Mouse(e) {
             this._initButtons();
         },
 
+			/**
+			 * @name metro.calendar#_initButtons
+			 * @function
+			 * @private
+			 */
         _initButtons: function(){
             // Add actions
             var that = this, table = this.element;
@@ -638,16 +776,31 @@ function touch2Mouse(e) {
             }
         },
 
+			/**
+			 * @name metro.calendar#_addDate
+			 * @function
+			 * @private
+			 */
         _addDate: function(d){
             var index = this.element.data('_storage').indexOf(d);
             if (index < 0) this.element.data('_storage').push(d);
         },
 
+			/**
+			 * @name metro.calendar#_removeDate
+			 * @function
+			 * @private
+			 */
         _removeDate: function(d){
             var index = this.element.data('_storage').indexOf(d);
             this.element.data('_storage').splice(index, 1);
         },
 
+			/**
+			 * @name metro.calendar#_setDate
+			 * @function
+			 * @private
+			 */
         setDate: function(d){
             var r;
             d = new Date(d);
@@ -656,14 +809,29 @@ function touch2Mouse(e) {
             this._renderCalendar();
         },
 
+			/**
+			 * @name metro.calendar#_getDate
+			 * @function
+			 * @private
+			 */
         getDate: function(index){
             return new Date(index !== undefined ? this.element.data('_storage')[index] : this.element.data('_storage')[0]).format(this.options.format);
         },
 
+			/**
+			 * @name metro.calendar#_getDates
+			 * @function
+			 * @private
+			 */
         getDates: function(){
             return this.element.data('_storage');
         },
 
+			/**
+			 * @name metro.calendar#_unsetDate
+			 * @function
+			 * @private
+			 */
         unsetDate: function(d){
             var r;
             d = new Date(d);
@@ -672,25 +840,51 @@ function touch2Mouse(e) {
             this._renderCalendar();
         },
 
+			/**
+			 * @name metro.calendar#_destroy
+			 * @function
+			 * @private
+			 */
         _destroy: function(){},
 
+			/**
+			 * @name metro.calendar#_setOption
+			 * @function
+			 * @private
+			 */
         _setOption: function(key, value){
             this._super('_setOption', key, value);
         }
     });
 })( jQuery );
 
-// DatePicker
 (function( $ ) {
+	/** 
+	 * @namespace metro.datepicker
+	 * @description Renders a datepicker, based on {@link metro.calendar}
+	 */
     $.widget("metro.datepicker", {
         version: "1.0.0",
+      /** 
+       * @name metro.datepicker#options 
+			 * @description Calendar's options - Note: they are overwritten by data-* properties of the target element
+			 * @type {object} 
+			 * @prop {string} format - Same as in {@link metro.calendar#options} (Default: dd.mm.yyyy)
+			 * @prop {date} date - Today (Default: undefined)
+			 * @prop {string} effect - Spawning effect of the datepicker (slide, fade, none) (Default: "slide")
+			 * @prop {string} locale - 2 letters rapresentation of the locale in which show the calendar. It must be an index in the {@link metro.Locale} object (Default: {@link metro.currentLocale})
+			 * @prop {int} weekStart - The first day of the week (0 - Sunday, 1 - Monday) (Default: 1);
+			 * @prop {bool} otherDays - Show days of previous/next month (Default: false)
+			 * @prop {function} selected - Triggered on date selection (Default: function(d, d0) {})
+			 * @prop {HTMLElement} calendar - HTMLElement in which render calendar
+			 */
         options: {
             format: "dd.mm.yyyy",
             date: undefined,
             effect: 'slide',
             position: 'bottom',
             locale: $.Metro.currentLocale,
-            weekStart: 0,
+            weekStart: 1,
             otherDays: false,
             selected: function(d, d0){},
             _calendar: undefined
@@ -812,13 +1006,25 @@ function touch2Mouse(e) {
     });
 })( jQuery );
 
-// Dropdown
 (function( $ ) {
+	/** 
+	 * @namespace metro.dropdown
+	 * @description Creates a dropdown menu
+	 */
     $.widget("metro.dropdown", {
         version: "1.0.0",
+      /** 
+       * @name metro.datepicker#options 
+			 * @description Calendar's options - Note: they are overwritten by data-* properties of the target element
+			 * @type {object} 
+			 * @prop {string} effect - Spawning effect of the dropdown (slide, fade, none) (Default: "slide")
+			 * @prop {HTMLElement} toggleElement - element that will trigger the dropdown (Default: element.parent(".dropdown-toggle")
+			 * @prop {bool} keepOpen - if true, the dropdown will be close only by clicking on the trigger (Default: false)
+			 */
         options: {
             effect: 'slide',
-            toggleElement: false
+            toggleElement: false,
+            keepOpen: false
         },
 
         _create: function(){
@@ -831,6 +1037,8 @@ function touch2Mouse(e) {
             if (menu.data('effect') !== undefined) {
                 this.options.effect = menu.data('effect');
             }
+            
+            if(this.options.keepOpen) this.element.addClass("keep-open");
 
             toggle.on('click.'+name, function(e){
                 e.preventDefault();
@@ -881,8 +1089,11 @@ function touch2Mouse(e) {
     });
 })( jQuery );
 
-// Input
 (function( $ ) {
+	/** 
+	 * @namespace metro.inputControl
+	 * @description Renders a input element
+	 */
     $.widget("metro.inputControl", {
         version: "1.0.0",
         options: {
@@ -960,8 +1171,11 @@ function touch2Mouse(e) {
             this._super('_setOption', key, value);
         }
     });
+	/** 
+	 * @namespace metro.inputTransform
+	 * @description Transform a form's children elements
+	 */
     $.widget("metro.inputTransform", {
-
         version: "1.0.0",
         options: {
             transformType: "text"
@@ -1119,13 +1333,37 @@ function touch2Mouse(e) {
     });
 })( jQuery );
 
-// $.Dialog
 (function($) {
+	/** 
+	 * @namespace metro.Dialog
+	 * @description Create a dialog window
+	 */
     $.Dialog = function(params) {
         if($.isNumeric(params)) return $("#window"+params).eq(0);
 
         $.Dialog.settings = params;
-
+			/**
+			 * @name metro.Dialog#params
+			 * @type {object}
+			 * @prop {(string|HTMLElement)} icon - The icon of the dialog (Default: false)
+			 * @prop {string} title - Title of the dialog (Default: "")
+			 * @prop {(string|HTMLElement)} content - Content of the dialog. Can be set later using onShow() or {@link metro.Dialog#Content} (Default: "")
+			 * @prop {bool} flat - Sets the style of the dialog (Default: false)
+			 * @prop {bool} shadow - If true the dialog will have a shadow (Default: false)
+			 * @prop {bool} overlay - If true the space around the dialog will be fill by a semi-transparent color. Clicking on the overlay will close the window if this.overlayClickClose is set to true (Default: false)
+			 * @prop {int} width - The width of the dialog [px] (Default: 'auto', meaning same as content)
+			 * @prop {int} height - The height of the dialog [px] (Default: 'auto', meaning same as content)
+			 * @prop {{top: number, left:number, bottom:number, right: number}} position - The position of the dialog in the window. All the properties can be specified, although top/left property will have priority, if set. (Default: 'auto', the center of the window)
+			 * @prop {object} style - The css that will be applied to the dialog's content (Default: same as body)
+			 * @prop {int} padding - The padding of the dialog's content (Default: 0)
+			 * @prop {bool} overlayClickClose - Specifies if the dialog will be closed by clicking on the overlay. If this.overlay is false this property is quite useless (Default: true)
+			 * @prop {{btnClose: bool, btnMin: bool, btnMax: bool}} sysButtons - Specifies which buttons must be shown in the dialog's caption (Default: {btnClose: true})
+			 * @prop {string} effect - The effect applied to dialog transitions (slide, fade, none) (Default: fade)
+			 * @prop {function} onShow - Triggered when dialog shows up (Default: function(_dialog) {})
+			 * @prop {function} onClose - Triggered when dialog vanishes (Default: function(_dialog) {})
+			 * @prop {function} sysBtnMinClick - Triggered when minButton is clicked (Note: .minimized css class will also be added, to avoid it alter css) (Default: function(event, _dialog) {})
+			 * @prop {function} sysBtnMaxClick - Triggered when maxButton is clicked (Note: .maximized css class will also be added, to avoid it alter css) (Default: function(event, _dialog) {})
+			 */
         params = $.extend({
             icon: false,
             title: '',
@@ -1287,30 +1525,47 @@ function touch2Mouse(e) {
         
         return _window;
     };
-
+	/** 
+	 * @name metro.Dialog#content
+	 * @description Replaces the content of the specified Dialog
+	 * @function
+	 * @param {int} _uuid - The id of the window. Stored in $(".window").data("uuid")
+	 * @param {(string|HTMLElement)} newContent - The content that will fill the dialog. If undefined, the function will return the current dialog's html 
+	 */
     $.Dialog.content = function(_uuid, newContent) {
         if(undefined===_uuid || !$.Dialog(_uuid).length) return false;
-        if(newContent) {
+        if(newContent!==undefined) {
             $.Dialog(_uuid).children(".content").html(newContent);
-            $.Dialog(_uuid).autoResize();
+            $.Dialog.autoResize(_uuid);
             return true;
         } else {
             return $.Dialog(_uuid).children(".content").html();
         }
     };
-
+	/**
+	 * @name metro.Dialog#title
+	 * @description Set the title of the specified Dialog
+	 * @function
+	 * @param {int} _uuid - The id of the window. Stored in $(".window").data("uuid")
+	 * @param {(string|HTMLElement)} newTitle - The new title of the Dialog. If undefined, the function will return the current title of the specified Dialog
+	 */
     $.Dialog.title = function(_uuid, newTitle) {
         if(undefined===_uuid || !$.Dialog(_uuid).length) return false;
         
         var _title = $.Dialog(_uuid).children('.caption').children('.title');
 
-        if(newTitle) {
+        if(newTitle!==undefined) {
             return _title.html(newTitle);
         } else {
             return _title.html();
         }
     };
-
+	/** 
+	 * @name metro.Dialog#autoResize
+	 * @description resize and eventually repositions Dialog(s)
+	 * @function
+	 * @param {int} _uuid - The id of the Dialog. If undefined ALL Dialogs will be resized [and repositioned]
+	 */
     $.Dialog.autoResize = function(_uuid) {
         if(!$.isNumeric(_uuid)) {
           $.each($("div.window"), function(i, el) {
@@ -1350,10 +1605,25 @@ function touch2Mouse(e) {
         return true;
     };
 
+	/**
+	 * @name metro.Dialog#close
+	 * @descriptions Closes the selected Dialog(s)
+	 * @param {(int|array)} _uuid - The id (or an array of ids) of the Dialog(s) to remove. If undefined ALL dialogs will be closed
+	 */
     $.Dialog.close = function(_uuid) {
         if(undefined===_uuid)
-          return $("div.window").fadeOut(function() { $(this).remove(); });
-        if(!$.Dialog(_uuid).length) return false;
+          return $("div.window").each(function() { 
+						$.Dialog.close($(this).data("uuid"));
+					});
+        
+        if(Object.prototype.toString.call( _uuid ) === '[object Array]') {
+					return $.each(_uuid, function(i, uuid) {
+						$.Dialog.close(uuid);
+					});
+				}
+				
+        if(!$.Dialog(_uuid).length || METRO_DIALOGS[_uuid]===false) 
+					return false;
 
         var _overlay = $.Dialog(_uuid).parent(".window-overlay");
         if(_overlay.length) 
@@ -1363,33 +1633,40 @@ function touch2Mouse(e) {
 
         var _hide = function(effect, obj, cb) {
           if (effect === 'slide') 
-            obj.slideUp('fast', cb);
+            obj.slideUp('fast');
            else if (effect === 'fade') 
-            obj.fadeOut('fast',cb);
+            obj.fadeOut('fast');
            else 
-            obj.hide(cb);
+            obj.hide();
+           cb();
         };
         
         _hide(METRO_DIALOGS[_uuid].effect, $.Dialog(_uuid), function(){
             if($.isFunction(METRO_DIALOGS[_uuid].onclose)) METRO_DIALOGS[_uuid].onclose();
             METRO_DIALOGS[_uuid] = false;
-            $(this).remove();
+            $.Dialog(_uuid).remove();
         });
 
         return false;
     };
 })(jQuery);
 
-// $.Confirm
+
 (function($) {
+	/** 
+	 * @namespace metro.Confirm
+	 * @description Create a confirm window, based on {@link metro.Dialog}
+	 * @function
+	 * @param {string} message - The message shown in the dialog
+	 * @param {function} callback - This will triggered when user clicks on OK button (Default: $.noop)
+	 * @param {object} options - An object formatted like {@link metro.Dialog} params. Some of these (title, content, flat, overlay, onShow) will be overwritten
+	 */
   $.Confirm = function(message, callback, options) {
     $.Confirm.callback = $.isFunction(callback) ? callback   : $.noop;
     options = $.extend({
-      icon: false,
       title: message,
       content: message + '<br /><br />',
       flat: true,
-      shadow: false,
       overlay: true,
       onShow: function(_d) {
         var cn = _d.children('.content').css('width', '400'),
@@ -1419,15 +1696,30 @@ function touch2Mouse(e) {
   };
 }(jQuery));
 
-// $.Notify
 (function($) {
 	var _notify_container = false;
 	var _notifies = [];
-	
-	var Notify = {
+/**
+ * @class Notify
+ * @description Shows notifications
+ */
+	var Notify = /** @lends Notify */ {
 		_container: null,
 		_notify: null,
 		_timer: null,
+	/** 
+	 * @type {object}
+	 * @prop {string} caption - Caption of the notifications (Default: "")
+	 * @prop {string} content - Content of the notifications (Default: "")
+	 * @prop {bool} shadow - If true the notification box will have a shadow (Default: true)
+	 * @prop {int} width - Width of the notify box (Default: "auto")
+	 * @prop {int} height - Height of the notify box (Default: "auto")
+	 * @prop {object} style - CSS style of the notify
+	 * @prop {string} position - Side on which notifications will appear (left, right) (Default: "right")
+	 * @prop {int} timeout - Time after which notification will disappear [ms] (Default: 3000)
+	 * @prop {function} onShow - Triggered when notify shows up (Default: function(notify) {})
+	 * @prop {function} onClick - Triggered on notify click (Default: false)
+	 */
 		options: {
 			caption: '',
 			content: '',
@@ -1440,6 +1732,10 @@ function touch2Mouse(e) {
       onShow: function(notify) {},
       onClick: false
 		},
+		/**
+		 * @function
+		 * @param {Notify.options} options - Set options for notify box
+		 */
 		init: function(options) {
 			this.options = $.extend({}, this.options, options);
 			this._build();
@@ -1476,7 +1772,11 @@ function touch2Mouse(e) {
 			this.close(o.timeout);
 			
 		},
-		
+		/**
+		 * @description set closure of a notification
+		 * @function 
+		 * @param {int} timeout - Timeout [ms]
+		 */
 		close: function(timeout) {
 			this.clear();
 			if(timeout === parseInt(timeout)) {
@@ -1491,7 +1791,10 @@ function touch2Mouse(e) {
 			}
 			return this;
 		},
-		
+		/**
+		 * @description stops a notification's closure
+		 * @function
+		 */
 		clear: function() {
 			if(this._timer !== null) {
 				clearTimeout(this._timer);
@@ -1515,7 +1818,10 @@ function touch2Mouse(e) {
 				return false;
 			}
 		},
-		
+		/** 
+		 * @description Closes all notifications
+		 * @function
+		 */
 		closeAll: function() {
 			_notifies.forEach(function(notEntry) {
 				notEntry.hide('slow', function() {
@@ -1526,10 +1832,19 @@ function touch2Mouse(e) {
 			return this;
 		}
 	};
-	
+	/**
+	 * @namespace metro.Notify
+	 * @description Shows a {@link Notify}
+	 */
 	$.Notify = function(options) {
 		return Object.create(Notify).init(options);
 	};
+	/**
+	 * @name metro.Notify.show
+	 * @function
+	 * @param {string} message - The message of the notification
+	 * @param {(string|function)} title - if is a string rapresents the title of the notify. If is a function rapresents the onClick
+	 */
 	$.Notify.show = function(message, title) {
     if($.isFunction(title))
       return $.Notify({

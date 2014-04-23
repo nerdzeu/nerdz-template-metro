@@ -1,5 +1,5 @@
 html {
-  font-size: 62.5%;
+  font-size: 70%;
 }
 body {
   font-size: 1.4rem;
@@ -1377,7 +1377,7 @@ dl.horizontal dd {
   line-height: 10pt;
 }
 .grid,
-#body {
+#body, #main {
   width: 100%;
 }
 .grid .row,
@@ -4266,6 +4266,14 @@ img.polaroid {
   width: 100%;
   display: block;
 }
+.fixedHeader .navigation-bar {
+	position: fixed;
+	z-index: 500;
+}
+.fixedHeader #main {
+	position: absolute;
+	top: 45px;
+}
 .navigation-bar .navigation-bar-content,
 .navbar .navigation-bar-content,
 .navigation-bar .navbar-content,
@@ -4583,7 +4591,7 @@ img.polaroid {
   background-color: #1ba1e2;
   color: #ffffff;
 }
-.pure .navigation-bar #gotopm {
+.pure .navigation-bar #gotopm, .pure .navigation-bar #gotono {
   background-color: #8bd0f1;
 }
 .pure .navigation-bar .element:hover,
@@ -5771,6 +5779,9 @@ img.polaroid {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+}
+.sidebar > div {
+  word-wrap: break-all;
 }
 .sidebar > ul,
 #left_col > ul,

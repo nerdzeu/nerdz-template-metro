@@ -1,20 +1,21 @@
-
 <div id="main">
   <aside id="left_col"></aside>
   <article id="center_col">
     <div class="row">
-      <div id="id" class="span1 pointer bolder">{$id}</div>
-      <div id="name" class="span4 pointer bolder">{$name}</div>
-      <div id="description" class="span7 pointer bolder">{$description}</div>
+      <div id="id" class="span1 pointer default bolder" onclick="$.Nerdz.orderBy(this.id)">{$id}</div>
+      <div id="name" class="span4 pointer bolder" onclick="$.Nerdz.orderBy(this.id)">{$name}</div>
+      <div id="description" class="span7 pointer bolder" onclick="$.Nerdz.orderBy(this.id)">{$description}</div>
     </div>
     <div class="row thin">
       <hr/>
-    </div>{loop="list_a"}
+    </div>
+    {loop="list_a"}
     <div class="row thin">
       <div class="span1">{$value.id_n}</div>
       <div class="span4"><a href="{$value.name4link_n}" class="board">{$value.name_n}</a></div>
       <div class="span7">{$value.description_n}</div>
-    </div>{/loop}
+    </div>
+    {/loop}
     <div class="row">
       <div class="span1 offset5">{if="!empty($prev_url_n)"}<a href="{$prev_url_n}">&lt;&lt;&lt;</a>{/if}</div>
       <div class="span1">{if="!empty($next_url_n)"}<a href="{$next_url_n}">&gt;&gt;&gt;</a>{/if}</div>

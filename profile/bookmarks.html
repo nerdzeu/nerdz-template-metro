@@ -3,12 +3,12 @@
     <nav id="left_col" class="span2"></nav>
     <article id="#center_col" class="span8">
         <div class="row">
-            <span class="span2" style="cursor:default"><i class="icon-link"></i>{$url}</span>
-            <span class="span8" id="preview"><i class="icon-book"></i>{$preview}</span>
-            <span style="span2" id="time">  <i style="padding-left:20px" class="icon-clock"></i>{$when}</span>
+            <span class="span2 bolder"><i class="icon-link"></i>{$url}</span>
+            <span class="span8 pointer default bolder" onclick="$.Nerdz.orderBy(this.id)" id="preview"><i class="icon-book"></i>{$preview}</span>
+            <span class="span2 pointer bolder" onclick="$.Nerdz.orderBy(this.id)" id="time">	<i style="padding-left:20px" class="icon-clock"></i>{$when}</span>
         </div>
         <hr>
-        <div id="postlist" class="singlepost" data-type='{if="$project_b"}project{else}profile{/if}'>
+        <div id="postlist" class="singlepost" data-location="bookmarks" data-type='{if="$project_b"}project{else}profile{/if}'>
           {loop="list_a"}
           <div class="row" id="tr{$key}" style="border-bottom: 1px #ccc solid">
             <span class="span2"><a href="{$value.link_n}" class="post">{$value.name_n} [{$value.pid_n}]</a></span>

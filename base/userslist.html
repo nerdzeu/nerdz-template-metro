@@ -1,13 +1,12 @@
-
 <div id="main">
   <aside id="left_col"></aside>
   <article id="center_col">
     <div class="row">
-      <div id="id" class="span1 pointer bolder">{$id}</div>
-      <div id="username" class="span3 pointer bolder">{$username}</div>
-      <div id="name" class="span3 pointer bolder">{$name}</div>
-      <div id="surname" class="span3 pointer bolder">{$surname}</div>
-      <div id="birthdate" class="span2 pointer bolder">{$birth_date}</div>
+      <div id="id" class="span1 pointer bolder" onclick="$.Nerdz.orderBy(this.id)">{$id}</div>
+      <div id="username" class="span3 pointer default bolder" onclick="$.Nerdz.orderBy(this.id)">{$username}</div>
+      <div id="name" class="span3 pointer bolder" onclick="$.Nerdz.orderBy(this.id)">{$name}</div>
+      <div id="surname" class="span3 pointer bolder" onclick="$.Nerdz.orderBy(this.id)">{$surname}</div>
+      <div id="birthdate" class="span2 pointer bolder" onclick="$.Nerdz.orderBy(this.id)">{$birth_date}</div>
     </div>
     <div class="row thin">
       <hr/>

@@ -1,9 +1,4 @@
 $(document).ready(function(){
-  $('#footersearch').on('submit', function(e) {
-    e.preventDefault();
-    $.Nerdz.Search();
-  });
-  
   $('#stdfrm').on('submit', function(e) {
     e.preventDefault();
     $.Nerdz.Post({location: plist.data("location"),type:plist.data("type")});
@@ -11,11 +6,11 @@ $(document).ready(function(){
 
   $.Nerdz.loadPosts();
   
-  /** postlist events **/
+  /* postlist events */
   var main = $("#main"),
       plist = $('#postlist');
   
-  /** home only **/
+  /* home only */
   main.on('click', '#postlist .spoiler', function() {
     if ($(this).data('parsed') || plist.data("location")!=="home")
       return;
@@ -45,7 +40,7 @@ $(document).ready(function(){
     $.Nerdz.home.hide(this);
   });
 
-  /** COMMON TO ALL PAGES **/
+  /* COMMON TO ALL PAGES */
   main.on('keydown', 'textarea', function(e) {
     if (e.ctrlKey && (e.keyCode === 10 || e.keyCode === 13)) {
       $(this).parent().trigger('submit');
@@ -493,8 +488,8 @@ $(document).ready(function(){
     });
   });
 
-  /** left_col events **/
-  /** home **/
+  /* left_col events */
+  /* home */
   main.on('click','#left_col #profilePostList, #left_col #projectPostList', function(e) {
     e.preventDefault();
     $.Nerdz.loadPosts({location:"home", type:$(this).attr("id").substr(0,7)});
@@ -508,7 +503,7 @@ $(document).ready(function(){
     var type = $(this).hasClass("selectlang") ? "profile" : "project";
     $.Nerdz.loadPosts({location: "home", type: type, lang: $(this).data('lang')});
   });
-  /** profile & projects **/
+  /* profile & projects */
   $.Nerdz.initButtons($("#main"));
   
   var BOARD, REBOARD, HINT = false;
@@ -519,8 +514,7 @@ $(document).ready(function(){
     window.clearTimeout(REBOARD);
     window.clearTimeout(BOARD);
     BOARD = window.setTimeout(function() {
-      var POS = {};
-          POS.position = "absolute";
+      var POS = {position:"absolute"};
       if(e.clientY+350<$(window).height())
         POS.top = $(window).scrollTop()+e.clientY+1;
       else
@@ -600,7 +594,7 @@ $(document).ready(function(){
   }).on('load', function() {
     $('body').on('paste', 'textarea', function(event) {
       var t = $(event.currentTarget),
-        blob;
+					blob;
       window.items = (event.clipboardData || event.originalEvent.clipboardData).items;
       if (JSON.stringify(items).indexOf('image') === -1)
         return;

@@ -70,8 +70,18 @@ input[type="submit"] {
 .notify {
   text-align: left;
  }
-#notifycounter {
+#ncounter {
   cursor: pointer;
+}
+.post_footer {
+	margin-top: 10px;
+	font-size: 110% !important;
+}
+.vote {
+	font-size: 100%!important;
+}
+.post_footer *, .vote {
+	margin: 0px 5px !important;
 }
 #site_title {
   position: fixed !important;

@@ -1,16 +1,13 @@
 {
 	"css": {
-		"default": [
-                "css/main.css"
-                ],
-        "faq": "css/faq.css"
+		"default": "css/main.css",
+     "faq": "css/faq.css"
 	},
 	"js": {
 		"default": [
                 "js/Nerdz.js",
                 "js/jquery.autogrow.js",
                 "js/functions.js",
-                "js/default.js",
                 "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.js",
                 "js/metro.js",
                 {
@@ -47,16 +44,11 @@
                   "outputVersion": true
                 }
               ],
-    "preferences": "js/preferences.js",
 		"project": "js/events.js",
 		"profile": "js/events.js",
-		"pm": "js/pm.js",
-		"userslist": "js/userslist.js",
-		"projectslist": "js/projectslist.js",
-		"bookmarks": "js/bookmarks.js",
-    "share": "js/share.js"
+		"preferences": "js/preferences.js"
 	},
-    "langs": {
-        "default": "langs/%lang%/json/default.json"
-    }
+	"langs": {
+			"default": "langs/%lang%/json/default.json"
+	}
 }

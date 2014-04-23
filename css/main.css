@@ -1739,6 +1739,39 @@ a,
 #followedlist .active {
   color: #1ba1e2;
 }
+.default #element .selected,
+.default .news,
+.default .yt_frame,
+.default .img_frame,
+.default .tile.selected,
+.default .tile.tiny.selected,
+.default .window,
+.default .window > .caption {
+  border-color: #1ba1e2;
+}
+.default #element .selected:after,
+.default .news:after,
+.default .yt_frame:after,
+.default .img_frame:after,
+.default .tile.selected:after,
+.default .tile.tiny.selected:after,
+.default .window:after,
+.default .window > .caption:after {
+  border-top-color: #1ba1e2;
+}
+.default .window > .caption {
+  background-color: #1ba1e2;
+}
+.default a,
+.default [id*=PostArrow],
+.default #followedlist .active {
+  color: #1ba1e2;
+}
+.default a:hover,
+.default [id*=PostArrow]:hover,
+.default #followedlist .active:hover {
+  color: #8bd0f1;
+}
 .amber #element .selected,
 .amber .news,
 .amber .yt_frame,
@@ -6431,10 +6464,6 @@ img.polaroid {
 .black #right_col li.active a {
   background-color: #1ba1e2;
   color: #ffffff;
-}
-.pure #right_col li.active a {
-  background-color: #FFFFFF;
-  color: #1691b3;
 }
 .calendar {
   width: 250px;

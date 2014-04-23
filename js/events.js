@@ -507,7 +507,9 @@ $(document).ready(function(){
   $.Nerdz.initButtons($("#main"));
   
   var BOARD, REBOARD, HINT = false;
-  main.on("mouseover","a.board",function(e) {
+  main.on("click", function() {
+		window.clearTimeout(BOARD);
+	}).on("mouseover","a.board",function(e) {
     if($.Nerdz.mobile) return;
     var that = $(this);
     if(HINT) $.Dialog.close(HINT.data("uuid"));

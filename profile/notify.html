@@ -3,15 +3,15 @@
     <li class="notify">
         <span class="small">{$value.datetime_n}:</span>&nbsp;
     {if="$value.type_n == 'new_follower'"}
-        <a href="/{$value.from4link_n}" class="board">{$value.from_n} {$following_you}</a>
+        <a href="/{$value.from4link_n}" class="notref">{$value.from_n} {$following_you}</a>
     {elseif="$value.type_n == 'profile_comments'"}
-        {$new_comments_on} <a class="notref post" href="/{$value.to4link_n}#last">{$value.to_n} [{$value.pid_n}]</a>
+        {$new_comments_on} <a class="notref" href="/{$value.to4link_n}#last">{$value.to_n} [{$value.pid_n}]</a>
     {elseif="$value.type_n == 'project_comments'"}
-        {$new_comments_on} <a class="notref post" href="/{$value.to4link_n}#last">{$value.to_n} [{$value.pid_n}]</a>
+        {$new_comments_on} <a class="notref" href="/{$value.to4link_n}#last">{$value.to_n} [{$value.pid_n}]</a>
     {elseif="$value.type_n == 'new_post_on_profile'"}
-        <a href="/{$value.to4link_n}" class="board">{$value.from_n} {$posted_on_your_board}</a>
+        <a href="/{$value.to4link_n}" class="notref">{$value.from_n} {$posted_on_your_board}</a>
     {elseif="$value.type_n == 'news_project'"}
-        <a href="/{$value.to4link_n}" class="board">{$news_on_project} - {$value.to_n}</a>
+        <a href="/{$value.to4link_n}" class="notref">{$news_on_project} - {$value.to_n}</a>
     {/if}
     </li>
 {/loop}

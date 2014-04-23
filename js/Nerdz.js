@@ -654,6 +654,7 @@ var Nerdz = function() {
       theme: 'dark',
       tagPanel: '11111111111111111111',
       notify: true,
+      desktopNotify: false,
       fixedHeader: false,
       footer: true
     };
@@ -742,10 +743,17 @@ var Nerdz = function() {
         $("body").removeClass(color).addClass($(this).attr("title"));
       });
       $("#metro-header").attr("checked",options.fixedHeader).on("change",function(){
-        setOption("notify", $(this).is(":checked"));
+        setOption("fixedHeader", $(this).is(":checked"));
         $("body").toggleClass("fixedHeader");
       });
       $("#metro-notify").attr("checked",options.notify).on("change",function(){
+				if($(this).is(":checked") && "Notification" in window) 
+					Notification.requestPermission(function(e){
+						if(e==="granted") setOption("desktopNotify", true);
+						else if(e==="denied") setOption("desktopNotify", false);
+					});
+				else
+					setOption("desktopNotify", false);
         setOption("notify", $(this).is(":checked"));
       });
       $("#metro-footer").attr("checked",options.footer).on("change",function(){
@@ -1350,27 +1358,74 @@ var Nerdz = function() {
 				});
 			});
 			
+			if(Notification.permission!=="granted" && t.metroOptions.getOption("notify") && t.metroOptions.getOption("desktopNotify")) {
+				$.Dialog({
+					icon: '<i class="icon-warning"></i>',
+					title: 'Desktop Notifications Permissions',
+					content: "look out! it seems you have activated desktop notifications, but i don't actually have permissions to access them. please reset your browser's permissions, then click the \"{0}\" button and grant permissions. If you don't want to receive Desktop Notifications click the \"{1}\" button".format("Ask for Permissions","Don't show again"), //N.getLangData().WRONGDNPERMS.format(N.getLangData().ASKDNPERMS, N.getLangData().DENYDNPERMS
+					padding: 10,
+					onShow: function(_dialog) {
+						var content = _dialog.width(500).find(".content").eq(0).append("<br/><br/>");
+						$("<button>").html("Ask for Permissions").click(function() {
+							if(Notification.permission!=="default") 
+								return alert("You should reset notifications' preferences first!");
+							Notification.requestPermission(function(e){
+								if(e==="granted") t.metroOptions.setOption("desktopNotify", true);
+								else if(e==="denied") t.metroOptions.setOption("desktopNotify", false);
+							});
+							$.Dialog.close(_dialog.data("_uuid"));
+						}).appendTo(content);
+						$("<button>").css("margin-left",10).html("Don't show again").click(function() {
+							t.metroOptions.setOption("desktopNotify", false);
+							$.Dialog.close(_dialog.data("_uuid")); 
+						}).appendTo(content);
+					}
+				});
+			}
+			
 			var curnot = sessionStorage.getItem('curnot') ? parseInt(sessionStorage.getItem('curnot')) : 0,
 					curpms = sessionStorage.getItem('curpms') ? parseInt(sessionStorage.getItem('curpms')) : 0;
 			var notify = function() {
+				var showDN = function(html, clicked) {
+					var n = new Notification(html, {
+						icon: "http://static.nerdz.eu/static/images/droidico.png"
+					});
+
+					if($.isFunction(clicked))
+						n.onclick = clicked;
+				};
 				var nc = $('#ncounter'), pc = $("#pcounter");
 				N.json.post('/pages/profile/notify.json.php',{}, function(obj) {
 					var nw, not = obj.status === 'ok' ? parseInt(obj.message) : 0;
 					nc.html(not).css("color", not===0?$color:'#FF0000');
 					if (not > curnot && t.metroOptions.getOption('notify')) {
 						nw = not-curnot;
-						if(nw===1)
+						if(nw===1) {
 							N.html.getNotifications(function(d) {
-								var htm = $("<div/>").html(d).find("li").html();
-								$.Notify.show(htm, function() {
-									N.html.getNotifications($.noop, false);
-								});
-							});
-						else
-							$.Notify.show('<a href="#" onclick="">' + N.getLangData().NEW_NOTIFICATIONS.format(nn.length) + '</a>', function(notify) {
-								$("#ncounter").click();
-								notify.hide();
-							});
+								var text = $("<div/>").html(d).find("li").eq(0).text(),
+										cb = function(e) {
+											e.preventDefault();
+											var url = $("<div/>").html(d).find("a").attr("href");
+											this.close();
+											$("<a>").addClass("notref").attr("href", url).appendTo($("#main")).click();
+										};
+								if(t.metroOptions.getOption("desktopNotify"))
+									showDN(text, cb);
+								else 
+									$.Notify({content:'<b class="pointer">'+text+'<b>', onClick: cb, icon: "/static/images/droidico.png"});
+							}, false);
+						}
+						else {
+							var htm = N.getLangData().NEW_NOTIFICATIONS.format(nw),
+									cb = function() {
+										this.close();
+										$("#ncounter").click();
+									};
+							if(t.metroOptions.getOption("desktopNotify"))
+								showDN(htm, cb);
+							else
+								$.Notify({content: htm, onClick: cb, icon: "/static/images/droidico.png"});
+						}
 						$('#notifyaudio')[0].play();
 					}
 					curnot = not;

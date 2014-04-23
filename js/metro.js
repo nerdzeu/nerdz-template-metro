@@ -1718,7 +1718,7 @@ function touch2Mouse(e) {
 	 * @prop {string} position - Side on which notifications will appear (left, right) (Default: "right")
 	 * @prop {int} timeout - Time after which notification will disappear [ms] (Default: 3000)
 	 * @prop {function} onShow - Triggered when notify shows up (Default: function(notify) {})
-	 * @prop {function} onClick - Triggered on notify click (Default: false)
+	 * @prop {function} onClick - Triggered on notify click (Default: function(event, notify) {})
 	 */
 		options: {
 			caption: '',
@@ -1729,8 +1729,9 @@ function touch2Mouse(e) {
 			style: false, // {background: '', color: ''}
 			position: 'right', //right, left
 			timeout: 3000,
+			icon: false,
       onShow: function(notify) {},
-      onClick: false
+      onClick: function(event, notify) {}
 		},
 		/**
 		 * @function
@@ -1746,22 +1747,26 @@ function touch2Mouse(e) {
 			_notify_container = this._container;
 			var o = this.options;
 			if (o.content === '' || o.content === undefined) return false;
-			this._notify = $("<div/>").addClass("notify");
+			_notify = this._notify = $("<div/>").addClass("notify").css("float","left");
 			if (o.shadow) this._notify.addClass("shadow");
       if (o.style && o.style.background !== undefined) this._notify.css("background-color", o.style.background);
       if (o.style && o.style.color !== undefined) this._notify.css("color", o.style.color);
+			// add icon
+			if(o.icon) {
+				$("<img/>").css({float: "left", width: "30px", margin: "0px 5px"}).attr("src",o.icon).appendTo(this._notify);
+			}
 			// add title
       if (o.caption !== '' && o.caption !== undefined) {
-          $("<div/>").addClass("caption").html(o.caption).appendTo(this._notify);
+          $("<div/>").addClass("caption").html(o.caption).css("float","left").appendTo(this._notify);
       }
       // add content
       if (o.content !== '' && o.content !== undefined) {
-          $("<div/>").addClass("content").html(o.content).appendTo(this._notify);
+          $("<div/>").addClass("content").html(o.content).css("float","left").appendTo(this._notify);
       }
       if(o.onClick) {
         this._notify.on("click",function(e) {
           e.stopPropagation();
-          o.onClick($(this));
+          o.onClick(e,$(this));
         });
       }
 			if (o.width !== 'auto') this._notify.css('min-width', o.width);
@@ -1770,7 +1775,9 @@ function touch2Mouse(e) {
       _notifies.push(this._notify);
 			if($.isFunction(o.onShow)) o.onShow(this._notify);
 			this.close(o.timeout);
-			
+			o.close = function() {
+				_notify.hide();
+			}
 		},
 		/**
 		 * @description set closure of a notification
@@ -1845,18 +1852,17 @@ function touch2Mouse(e) {
 	 * @param {string} message - The message of the notification
 	 * @param {(string|function)} title - if is a string rapresents the title of the notify. If is a function rapresents the onClick
 	 */
-	$.Notify.show = function(message, title) {
+	$.Notify.show = function(message, onclick) {
     if($.isFunction(title))
       return $.Notify({
         content: message,
-        onClick: title
+        onClick: onclick
       });
     else
       return $.Notify({
-        content: message,
-        caption: title
+        content: message
       });
-    };
+   };
 	
 })(jQuery);
 

@@ -490,7 +490,7 @@ var Nerdz = function() {
       $('#scrtxt').remove();
       if (data.length > 0) {
         plist.append(data);
-        hideHidden();
+        home.hideHidden();
       }
       if($.isFunction(callback)) callback();
     };

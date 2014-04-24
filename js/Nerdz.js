@@ -1358,7 +1358,7 @@ var Nerdz = function() {
 				});
 			});
 			
-			if(Notification.permission!=="granted" && t.metroOptions.getOption("notify") && t.metroOptions.getOption("desktopNotify")) {
+			if("Notification" in window && Notification.permission!=="granted" && t.metroOptions.getOption("notify") && t.metroOptions.getOption("desktopNotify")) {
 				$.Dialog({
 					icon: '<i class="icon-warning"></i>',
 					title: 'Desktop Notifications Permissions',

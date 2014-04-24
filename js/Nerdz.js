@@ -1419,7 +1419,7 @@ var Nerdz = function() {
 										$("<a>").addClass("notref").attr("href", url).appendTo($("#main")).click();
 									}
 								});
-							}, false);
+							}, true);
 						else 
 							Notify({
 								content: N.getLangData().NEW_NOTIFICATIONS.format(nw), 

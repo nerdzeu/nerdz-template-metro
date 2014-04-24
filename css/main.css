@@ -4287,6 +4287,7 @@ img.polaroid {
 .fixedHeader .navigation-bar {
 	position: fixed;
 	z-index: 5000;
+	top: 0px;
 }
 .fixedHeader #main {
 	position: absolute;
@@ -4621,14 +4622,13 @@ img.polaroid {
   color: #1d1d1d;
 }
 #footer_main {
-  margin-top: 20px;
   position: fixed;
   display: block;
   width: 100%;
   height: 35px;
   bottom: 0px;
   left: 0px;
-  margin: 0px;
+  margin: 0px !important;
   border-top: 1px solid #000;
   z-index: 30;
 }
@@ -4805,18 +4805,19 @@ img.polaroid {
 #notify_list {
   position: fixed;
   display: block;
-  bottom: 37px;
+  bottom: 35px;
   padding: 0px;
   right: 0px;
   background-color: #EEE;
   border: 1px solid #FFF;
 }
 #notify_list ul {
-  padding: 0;
+	color: #000000;
+  padding: 3px;
   margin: 0;
 }
 #notify_list ul li {
-  margin: 0px;
+  margin: 1px;
   height: 20px;
   list-style-type: none;
 }
@@ -5822,7 +5823,6 @@ img.polaroid {
   padding: 20px 20px 10px 20px;
   font-family: 'Segoe UI Light_', 'Open Sans Light', Verdana, Arial, Helvetica, sans-serif;
   font-weight: 300;
-  color: #000000;
   letter-spacing: 0.00em;
   font-size: 2.5rem;
   line-height: 2.5rem;
@@ -6268,16 +6268,6 @@ img.polaroid {
 #right_col {
   background-color: #3D3D3D;
 }
-.sidebar > ul li,
-#left_col > ul li,
-#right_col > ul li {
-  color: #ffffff;
-}
-.sidebar > ul li.title,
-#left_col > ul li.title,
-#right_col > ul li.title {
-  color: #ffffff;
-}
 .sidebar > ul li a,
 #left_col > ul li a,
 #right_col > ul li a {
@@ -6404,12 +6394,6 @@ img.polaroid {
   border-bottom-color: #eeeeee;
   color: #ffffff;
 }
-.black .sidebar li #profilePostArrow,
-.black #left_col li #profilePostArrow,
-.black #right_col li #profilePostArrow,
-.black .sidebar li #projectPostArrow,
-.black #left_col li #projectPostArrow,
-.black #right_col li #projectPostArrow,
 .black .sidebar li.title,
 .black #left_col li.title,
 .black #right_col li.title {

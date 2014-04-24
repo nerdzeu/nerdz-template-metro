@@ -244,18 +244,8 @@ var Nerdz = function() {
           var content = _dialog.children(".content"),
               msbox = content.children().eq(0).css("background-color",$("body").css("background-color")).css("padding", "0px 5px"),
               inbox = content.children().eq(1);
-          if(!$.Nerdz.mobile) {
-            inbox.css("width",content.width()*0.25).css("margin",content.width()*0.01);
-            msbox.css("width",content.width()*0.70).css("margin",content.width()*0.01);
-          } else {
-						var rs = function() { h = $(window).height(); content.height(h-80).css("overflow","auto"); _dialog.css("overflow","auto"); };
-						$(window).on("resize",rs);
-						rs();
-						content.html('');
-            var div = $("<div>").width(content.width()*0.99).appendTo(content).css("text-align","center");
-            inbox = msbox = $("<div>").width(content.width()*0.99).appendTo(content);
-            $("<a>").html("<a href='#' style='font-size: 150%'><i class='icon-mail'></i></a>").appendTo(div).click(function(e) {e.preventDefault();$.Nerdz.pm.loadInbox(inbox, msbox, cb);});
-          }
+					inbox.css("width",content.width()*0.25).css("margin",content.width()*0.01);
+					msbox.css("width",content.width()*0.70).css("margin",content.width()*0.01);
           var cb = function() {
             if(pmc.html() !== '0') {
               _dialog.find(".conversation").eq(0).click();
@@ -1343,7 +1333,7 @@ var Nerdz = function() {
 			$('#gotopm').on('click', function(e) {
 				e.preventDefault();
 				var pmc = $('#pcounter');
-				if(e.ctrlKey && location.pathname !== "/pm.php") {
+				if($.Nerdz.mobile || (e.ctrlKey && location.pathname !== "/pm.php")) {
 					location.href = "/pm.php"+(pmc.html() !== '0'?"#new":"");
 					return;
 				}

@@ -1,5 +1,3 @@
-
-<div class="row"></div>
 <div id="main">
   <article id="content" class="span7 offset1">{$pm_descr} </article>
   <aside id="right" class="span3"></aside>
@@ -7,7 +5,8 @@
 <script type="text/javascript">
 	$(window).load(function() {
 		if($.Nerdz.mobile) {
-			$("<div>").attr("id", "center_col").addClass("mobile").append($("#content").attr("class", "span10 offset1")).prependTo($("#main"));
+			$("<div>").attr("id", "center_col").addClass("mobile").append($("#content")
+								.attr("class", "span10 offset1")).prependTo($("#main"));
 			$("#right").prependTo($("#right_col"));
 		}
 		var cb = function () {

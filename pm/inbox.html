@@ -2,7 +2,7 @@
 <div class="inbox">
   <div class="new icon-plus-2">&nbsp;{$compose}</div>{loop="list_a"}<a data-from="{$value.fromid_n}" data-to="{$value.toid_n}" class="conversation">
     <div class="conversation-content"><span class="conversation-title">{$value.from_n}</span><span data-timestamp="{$value.timestamp_n}" class="conversation-subtitle">{$when}: {$value.datetime_n}</span></div></a>{else}
-  {$no_pm}
+  <div style="clear: both; width: 100%">{$no_pm}</div>
   {/loop}
   <div id="delconvs" class="icon-remove">&nbsp;</div>
 </div>

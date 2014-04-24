@@ -6972,8 +6972,8 @@ img.polaroid {
 #postlist .news > div .spoiler > div br:first-child {
   display: none;
 }
-#postlist .nerdz_message > div .spoiler span,
-#postlist .news > div .spoiler span {
+#postlist .nerdz_message > div .spoiler > span,
+#postlist .news > div .spoiler > span {
   clear: both;
   display: block;
   text-decoration: none;
@@ -6983,8 +6983,8 @@ img.polaroid {
   margin: 0;
   width: 100%;
 }
-#postlist .nerdz_message > div .spoiler span:before,
-#postlist .news > div .spoiler span:before {
+#postlist .nerdz_message > div .spoiler > span:before,
+#postlist .news > div .spoiler > span:before {
   float: left;
   margin-right: 7px;
   display: block;

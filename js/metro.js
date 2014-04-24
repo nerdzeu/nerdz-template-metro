@@ -1777,7 +1777,7 @@ function touch2Mouse(e) {
 			this.close(o.timeout);
 			o.close = function() {
 				_notify.hide();
-			}
+			};
 		},
 		/**
 		 * @description set closure of a notification

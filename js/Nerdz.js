@@ -1278,7 +1278,34 @@ var Nerdz = function() {
       }
       $.Nerdz.pm.loadWindow(true, selConv);
     });
-  };
+  }
+  /**
+   * @description Handles notifications
+   */
+  var Notify = this.notify = function(options) {
+		if(metroOptions.getOption("desktopNotify")) {
+			var n = new Notification($("<span>").html(options.content).text(), { icon: options.icon });
+			n.onshow = function() {
+				self = this;
+				setTimeout(function() {self.close();}, 3000);
+			}
+			n.onclick = function() {
+				if($.isFunction(options.onClick))
+					 options.onClick();
+					 this.close();
+			}
+		}
+		else
+			$.Notify({
+				content: options.content,
+				icon: options.icon,
+				onClick: function() {
+					options.onClick();
+					this.close();
+				}
+			});
+		$('#notifyaudio')[0].play();
+	}
   var __construct = function(t) {
     $(document).ready(function() {
       if(t.mobile) {
@@ -1376,47 +1403,31 @@ var Nerdz = function() {
 			var curnot = sessionStorage.getItem('curnot') ? parseInt(sessionStorage.getItem('curnot')) : 0,
 					curpms = sessionStorage.getItem('curpms') ? parseInt(sessionStorage.getItem('curpms')) : 0;
 			var notify = function() {
-				var showDN = function(html, clicked) {
-					var n = new Notification(html, {
-						icon: "http://static.nerdz.eu/static/images/droidico.png"
-					});
-
-					if($.isFunction(clicked))
-						n.onclick = clicked;
-				};
 				var nc = $('#ncounter'), pc = $("#pcounter");
 				N.json.post('/pages/profile/notify.json.php',{}, function(obj) {
 					var nw, not = obj.status === 'ok' ? parseInt(obj.message) : 0;
 					nc.html(not).css("color", not===0?$color:'#FF0000');
 					if (not > curnot && t.metroOptions.getOption('notify')) {
 						nw = not-curnot;
-						if(nw===1) {
+						if(nw===1) 
 							N.html.getNotifications(function(d) {
-								var text = $("<div/>").html(d).find("li").eq(0).text(),
-										cb = function(e) {
-											e.preventDefault();
-											var url = $("<div/>").html(d).find("a").attr("href");
-											this.close();
-											$("<a>").addClass("notref").attr("href", url).appendTo($("#main")).click();
-										};
-								if(t.metroOptions.getOption("desktopNotify"))
-									showDN(text, cb);
-								else 
-									$.Notify({content:'<b class="pointer">'+text+'<b>', onClick: cb, icon: "/static/images/droidico.png"});
+								Notify({
+									content:'<b class="pointer">'+$("<div/>").html(d).find("li").eq(0).text()+'<b>', 
+									icon: "/static/images/droidico.png",
+									onClick: function() {
+										var url = $("<div/>").html(d).find("a").attr("href");
+										$("<a>").addClass("notref").attr("href", url).appendTo($("#main")).click();
+									}
+								});
 							}, false);
-						}
-						else {
-							var htm = N.getLangData().NEW_NOTIFICATIONS.format(nw),
-									cb = function() {
-										this.close();
-										$("#ncounter").click();
-									};
-							if(t.metroOptions.getOption("desktopNotify"))
-								showDN(htm, cb);
-							else
-								$.Notify({content: htm, onClick: cb, icon: "/static/images/droidico.png"});
-						}
-						$('#notifyaudio')[0].play();
+						else 
+							Notify({
+								content: N.getLangData().NEW_NOTIFICATIONS.format(nw), 
+								icon: "/static/images/droidico.png", 
+								onClick: function() {
+									$("#ncounter").click();
+								}
+							});
 					}
 					curnot = not;
 					sessionStorage.setItem('curnot', not);
@@ -1427,11 +1438,13 @@ var Nerdz = function() {
 					pc.html(pms).css("color", pms===0?$color:'#FF0000');
 					if (pms > curpms && t.metroOptions.getOption('notify')) {
 						nw = pms-curpms;
-						$.Notify.show('<a href="#">' + (nw === 1 ? N.getLangData().NEW_MESSAGE : N.getLangData().NEW_MESSAGES.format(nw)) + '!</a>', function(notify) {
-							$('#gotopm').click();
-							notify.hide();
+						Notify({
+							content: '<a href="#">' + (nw === 1 ? N.getLangData().NEW_MESSAGE : N.getLangData().NEW_MESSAGES.format(nw)) + '!</a>',
+							onClick: function() {
+								$('#gotopm').click();
+							},
+							icon: "/static/images/droidico.png"
 						});
-						$('#notifyaudio')[0].play();
 					}
 					curpms = pms;
 					sessionStorage.setItem('curpms', pms);

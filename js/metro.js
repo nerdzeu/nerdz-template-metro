@@ -1852,16 +1852,11 @@ function touch2Mouse(e) {
 	 * @param {string} message - The message of the notification
 	 * @param {(string|function)} title - if is a string rapresents the title of the notify. If is a function rapresents the onClick
 	 */
-	$.Notify.show = function(message, onclick) {
-    if($.isFunction(title))
-      return $.Notify({
-        content: message,
-        onClick: onclick
-      });
-    else
-      return $.Notify({
-        content: message
-      });
+	$.Notify.show = function(message, title) {
+		return $.Notify({
+			content: message,
+			title: title
+		});
    };
 	
 })(jQuery);

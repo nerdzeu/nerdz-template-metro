@@ -1287,7 +1287,7 @@ var Nerdz = function() {
 			var n = new Notification($("<span>").html(options.content).text(), { icon: options.icon });
 			n.onshow = function() {
 				self = this;
-				setTimeout(function() {self.close();}, 3000);
+				setTimeout(function() {self.close();}, options.timeout);
 			}
 			n.onclick = function() {
 				if($.isFunction(options.onClick))
@@ -1375,7 +1375,7 @@ var Nerdz = function() {
 				});
 			});
 			
-			if("Notification" in window && Notification.permission!=="granted" && t.metroOptions.getOption("notify") && t.metroOptions.getOption("desktopNotify")) {
+			if("Notification" in window && Notification.permission!=="granted" && t.metroOptions.getOption("notify") && t.metroOptions.getOption("desktopNotifyNotify")) {
 				$.Dialog({
 					icon: '<i class="icon-warning"></i>',
 					title: 'Desktop Notifications Permissions',
@@ -1417,7 +1417,8 @@ var Nerdz = function() {
 									onClick: function() {
 										var url = $("<div/>").html(d).find("a").attr("href");
 										$("<a>").addClass("notref").attr("href", url).appendTo($("#main")).click();
-									}
+									},
+									timeout: 5000
 								});
 							}, true);
 						else 
@@ -1426,7 +1427,8 @@ var Nerdz = function() {
 								icon: "/static/images/droidico.png", 
 								onClick: function() {
 									$("#ncounter").click();
-								}
+								},
+								timeout: 5000
 							});
 					}
 					curnot = not;
@@ -1443,7 +1445,8 @@ var Nerdz = function() {
 							onClick: function() {
 								$('#gotopm').click();
 							},
-							icon: "/static/images/droidico.png"
+							icon: "/static/images/droidico.png",
+							timeout: 5000
 						});
 					}
 					curpms = pms;

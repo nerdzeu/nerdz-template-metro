@@ -518,7 +518,7 @@ $(document).ready(function(){
     BOARD = window.setTimeout(function() {
       var POS = {position:"absolute"};
       if(e.clientY+350<$(window).height())
-        POS.top = $(window).scrollTop()+e.clientY+1;
+        POS.top = ($("body").hasClass("fixedHeader")?0:$(window).scrollTop())+e.clientY+1;
       else
         POS.bottom = 45;
       if(e.clientX+500<$(window).width())
@@ -552,7 +552,9 @@ $(document).ready(function(){
                 .append(tmp.find("#badge_left").eq(0))
                 .appendTo(_content);
             var divr = $("<div/>").css({ float: "left", minWidth: 220, padding: 5, overflow: "auto" });
-            tmp.find("#badge_right").eq(0).appendTo(divr).find("h3").eq(0).remove();
+            var t = tmp.find("#badge_right").eq(0).appendTo(divr)
+            t.find("h3").eq(0).remove();
+            t.find("#userslist").eq(0).css("max-height",50);
             divr.data("type", divr.find("#stuff").length ? "profile" : "project")
                 .appendTo(_content);
             var usr = divr.find("#name");
@@ -581,7 +583,7 @@ $(document).ready(function(){
   });
   
   $(window).on('beforeunload', function() {
-    if (location.href.match(/(preferences)|(project)\.php/))
+    if (!$("#postlist").length)
       return;
     t = $('textarea');
     for (var ta in t) {

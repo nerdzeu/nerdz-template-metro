@@ -34,7 +34,9 @@
       <div class="row half">
         <div class="span10 offset1">
           <div class="center">{$users}  ({$users_n})</div>
-          <div style="max-height: 250px; overflow: auto;">{loop="users_a"}<a href="/{$value.username4link_n}" class="board">{$value.username_n}</a><br/>{/loop}</div>
+			<div style="max-height: 250px; overflow: auto;" id="userslist">
+			  {loop="users_a"}<a href="/{$value.username4link_n}" class="board">{$value.username_n}</a><br/>{/loop}
+			</div>
         </div>
       </div>{/if}
       {if="!empty($members_a)"}

@@ -181,7 +181,7 @@ $(document).ready(function(){
     if (METRO_DIALOGS.length && $("div.window").hasClass("ytplayer"))
       $.Dialog.close($("div.window.ytplayer").data("uuid"));
     e.preventDefault();
-    var vid = $(this).data('vid');
+    var vid = $(this).data('vid'), host = $(this).data("host");
     $.Dialog({
       overlay: false,
       shadow: true,
@@ -191,17 +191,18 @@ $(document).ready(function(){
         btnMin: true
       },
       icon: '<i class="icon-youtube"></i>',
-      title: 'Youtube Video',
+      title: host.capitalize()+' Video',
       draggable: true,
-      height: 480,
-      width: 656,
       content: '',
       onClose: function() {
         $(document).unbind('keyup.yt');
       },
       onShow: function(_dialog) {
         _dialog.addClass("ytplayer");
-        _dialog.find(".content").html('<iframe style="min-width:640px; min-height:460px; width: 100%; height:auto" src="//www.youtube.com/embed/' + vid + '" seamless></iframe>');
+        var content = _dialog.find(".content");
+        content.data("host",host).data("vid",vid);
+        N.yt(content, vid);
+        content.children("div").css({width: "auto", height: "auto", margin: "0px", padding: "0px", border: "0px"}).find("br").remove();
         $(document).on('keyup.yt', function(e) {
           var code = e.keyCode ? e.keyCode : e.which;
           if (code === 27)

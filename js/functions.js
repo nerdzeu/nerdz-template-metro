@@ -124,17 +124,19 @@ if (!String.prototype.capitalize) {
   };
 }
 REformat = function(str) {
-  return new RegExp('(?!\\[(?:img|url|code|gist|yt|youtube|noparse)[^\\]]*?\\])' + str + '(?![^\\[]*?\\[\\/(img|url|code|gist|yt|youtube|noparse)\\])', 'gi');
+  var pre = new RegExp(/(?!\[(?:img|url|code|gist|yt|youtube|noparse)[^\]]*?\])(^|\s+)/),
+      pos = new RegExp(/(?![^\[]*?\[\/(img|url|code|gist|yt|youtube|noparse)\])/);
+  return new RegExp(pre.source + str.source + pos.source, 'gi');
 };
 if (!String.prototype.tag) {
   String.prototype.tag = function() {
-    return this.replace(REformat('(^|\\s+)@@(?:\\s+)?([\\S ]+)@'), '$1[user]$2[/user]').replace(REformat('(^|\\s+)@([\\S]+)'), '$1[user]$2[/user]');
+    return this.replace(REformat(/@@(?:\s+)?([\S ]+)@/), '$1[user]$2[/user]').replace(REformat(/@([\S]+)/), '$1[user]$2[/user]');
   };
 }
 if (!String.prototype.autoLink) {
   String.prototype.autoLink = function() {
     str = this;
-    var pattern = REformat('(^|\\s+)((((ht|f)tps?:\\/\\/)|[www])([a-z\\-0-9]+\\.)*[\\-\\w]+(\\.[a-z]{2,4})+(\\/[+%:\\w\\_\\-\\?\\=\\#&\\.\\(\\)]*)*(?![a-z]))');
+    var pattern = REformat(/((((ht|f)tps?:\/\/)|(www\.))(.+\.)*[\-\w]+(\.[a-z]{2,4})+(\/[+%:\w\_\-\?\=\#&\.\(\)]*)*(?![a-z]))/);
     urls = this.match(pattern);
     for (var i in urls) {
       if (urls[i].match(/\.(png|gif|jpg|jpeg)$/))
@@ -142,14 +144,14 @@ if (!String.prototype.autoLink) {
       if (urls[i].match(/youtube\.com|https?:\/\/youtu\.be/) && !urls[i].match(/playlist/))
         str = str.replace(urls[i], '[yt]' + $.trim(urls[i]) + '[/yt]');
     }
-    return str.replace(pattern, '$1[url]$2[/url]').replace(/\[(\/)?noparse\]/gi, '').replace(REformat('<3'), '\u2665');
+    return str.replace(pattern, '$1[url]$2[/url]').replace(/\[(\/)?noparse\]/gi, '').replace(REformat(/<3/), '\u2665');
   };
 }
 if (!String.prototype.isUrl) {
   String.prototype.isUrl = function() {
     if (!this)
       return false;
-    return !!this.match(/^(((ht|f)tps?:\/\/)?([a-z\-0-9]+\.)*[\-\w]+(\.[a-z]{2,4})+(\/[\w\_\-\?\=\#&\.]*)*(?![a-z]))$/i);
+    return !!this.match(/^(((ht|f)tps?:\/\/)([a-z\-0-9]+\.)*[\-\w]+(\.[a-z]{2,4})+(\/[\w\_\-\?\=\#&\.]*)*(?![a-z]))$/i);
   };
 }
 if (!String.prototype.replaceAt) {

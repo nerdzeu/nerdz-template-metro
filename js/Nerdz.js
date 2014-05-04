@@ -822,7 +822,7 @@ var Nerdz = function() {
       { ak: "g", tag: "gist", html: "i.icon-github-2" },
       { ak: "m", tag: "m", html: "(∫)" },
       { ak: "r", tag: "hr", html: "(hr)" },
-      { ak: "y", tag: "spotify", html: "i.icon-music" },
+      { ak: "y", tag: "music", html: "i.icon-music" },
       { ak: "w", tag: "twitter", html: "i.icon-twitter" }
     ];
     

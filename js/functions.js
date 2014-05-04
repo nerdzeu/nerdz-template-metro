@@ -124,8 +124,8 @@ if (!String.prototype.capitalize) {
   };
 }
 REformat = function(str) {
-  var pre = new RegExp(/(?!\[(?:img|url|code|gist|yt|youtube|noparse)[^\]]*?\])(^|\s+)/),
-      pos = new RegExp(/(?![^\[]*?\[\/(img|url|code|gist|yt|youtube|noparse)\])/);
+  var pre = new RegExp(/(?!\[(?:img|url|code|gist|yt|youtube|video|twitter|spotify|noparse)[^\]]*?\])(^|\s+)/),
+      pos = new RegExp(/(?![^\[]*?\[\/(img|url|code|gist|yt|youtube|video|twitter|spotify|noparse)\])/);
   return new RegExp(pre.source + str.source + pos.source, 'gi');
 };
 if (!String.prototype.tag) {
@@ -141,8 +141,8 @@ if (!String.prototype.autoLink) {
     for (var i in urls) {
       if (urls[i].match(/\.(png|gif|jpg|jpeg)$/))
         str = str.replace(urls[i], '[img]' + (urls[i].match(/(^|\s+)https?:\/\//) ? '' : 'http://') + urls[i] + '[/img]');
-      if (urls[i].match(/youtube\.com|https?:\/\/youtu\.be/) && !urls[i].match(/playlist/))
-        str = str.replace(urls[i], '[yt]' + $.trim(urls[i]) + '[/yt]');
+      if (urls[i].match(/youtu\.?be(\.com)?|vimeo\.com|dai\.?ly(motion)?/) && !urls[i].match(/playlist/))
+        str = str.replace(urls[i], '[video]' + $.trim(urls[i]) + '[/video]');
     }
     return str.replace(pattern, '$1[url]$2[/url]').replace(/\[(\/)?noparse\]/gi, '').replace(REformat(/<3/), '\u2665');
   };

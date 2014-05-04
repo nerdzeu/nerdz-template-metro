@@ -642,7 +642,7 @@ var Nerdz = function() {
       codeLight: false,
       color: 'default',
       theme: 'dark',
-      tagPanel: '11111111111111111111',
+      tagPanel: '1111111111111111111111',
       notify: true,
       desktopNotify: false,
       fixedHeader: false,
@@ -752,7 +752,7 @@ var Nerdz = function() {
       });
       var tp = options.tagPanel;
       if(typeof tp === "boolean" || typeof tp === "undefined") {
-				tp =  '11111111111111111111';
+				tp =  '1111111111111111111111';
 				setOption("tagpanel", tp);
 			}
       $("#metro-tagpanel").attr("checked",tp.charAt(0)==="1").on("change",function() {
@@ -811,7 +811,7 @@ var Nerdz = function() {
       { ak: "w", tag: "wiki", html: "i.icon-wiki" },
       { ak: "l", tag: "list", html: "i.icon-list" },
       { ak: "j", tag: "img", html: "i.icon-pictures" },
-      { ak: "v", tag: "yt", html: "i.icon-youtube" },
+      { ak: "v", tag: "video", html: "i.icon-youtube" },
       { ak: "b", tag: "b", html: "b(B)" },
       { ak: "i", tag: "cur", html: "i(I)" },
       { ak: "u", tag: "u", html: "u(U)" },
@@ -821,7 +821,9 @@ var Nerdz = function() {
       { ak: "p", tag: "project", html: "(Project)" },
       { ak: "g", tag: "gist", html: "i.icon-github-2" },
       { ak: "m", tag: "m", html: "(∫)" },
-      { ak: "r", tag: "hr", html: "(hr)" }
+      { ak: "r", tag: "hr", html: "(hr)" },
+      { ak: "y", tag: "spotify", html: "i.icon-music" },
+      { ak: "w", tag: "twitter", html: "i.icon-twitter" }
     ];
     
     var render = function(obj) {
@@ -847,6 +849,7 @@ var Nerdz = function() {
 				tp = $(".tagpanel");
       var div = tp.children("div").eq(0);
       opt = metroOptions.getOption("tagPanel").toString();
+      console.log(opt.length);
       if(!tp.length)
         return;
       if(opt.charAt(0)==="0")
@@ -871,8 +874,8 @@ var Nerdz = function() {
         tp = $(".tagpanel").eq(0);
       var div = $("<div>").css({float: "left", paddingRight: "30px"});
       var opt = metroOptions.getOption("tagPanel").toString();
-      if(!opt || !/^[01]{20}$/.test(opt))
-          opt = "11111111111111111111";
+      if(!opt || !/^[01]{22}$/.test(opt))
+          opt = "1111111111111111111111";
       if(!tp.length)
         return;
       if(opt.charAt(0)==="0") 

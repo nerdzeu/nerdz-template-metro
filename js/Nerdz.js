@@ -849,7 +849,6 @@ var Nerdz = function() {
 				tp = $(".tagpanel");
       var div = tp.children("div").eq(0);
       opt = metroOptions.getOption("tagPanel").toString();
-      console.log(opt.length);
       if(!tp.length)
         return;
       if(opt.charAt(0)==="0")

@@ -574,8 +574,12 @@ var Nerdz = function() {
     };
     var type = plist.data("type"),
 				location = plist.data("location");
-		if(/(home|profile|project)/.test(location))
-			N.html.search[((location==="home")?"global":"specific")+type.capitalize()+"Posts"](num, qs, manageResponse);
+		if(/(home|profile|project)/.test(location)) {
+      if(location==="home") 
+        N.html.search[("global"+type.capitalize()+"Posts"](num, qs, manageResponse);
+      else 
+        N.html.search[("specific"+type.capitalize()+"Posts"](num, qs, plist.data("id"), manageResponse);
+    }
 		else {
 			var url = window.location.href,
 					order;

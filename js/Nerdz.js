@@ -576,9 +576,9 @@ var Nerdz = function() {
 				location = plist.data("location");
 		if(/(home|profile|project)/.test(location)) {
       if(location==="home") 
-        N.html.search[("global"+type.capitalize()+"Posts"](num, qs, manageResponse);
+        N.html.search["global"+type.capitalize()+"Posts"](num, qs, manageResponse);
       else 
-        N.html.search[("specific"+type.capitalize()+"Posts"](num, qs, plist.data("id"), manageResponse);
+        N.html.search["specific"+type.capitalize()+"Posts"](num, qs, plist.data("id"), manageResponse);
     }
 		else {
 			var url = window.location.href,

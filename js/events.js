@@ -241,7 +241,10 @@ $(document).ready(function(){
               $(window).scrollTo(refto.find(".singlecomment").last(), 500);
               ta.focus();
           } else if (document.location.hash)
+            if($(document.location.hash).length)
               $(window).scrollTo($(document.location.hash), 500);
+            else
+              showAllComments($(".all_comments_btn")[0], function(){$(window).scrollTo($(document.location.hash), 500);});
         });
         count.html(refto.children('.commentcount').html());
       });
@@ -282,8 +285,8 @@ $(document).ready(function(){
       cList.find('.frmcomment textarea').focus();
     });
   });
-  main.on('click', '#postlist .all_comments_btn', function() {
-    var btn = $(this),
+  var showAllComments = function(el, callback) {
+    var btn = $(el),
       commentList = btn.parents('div[id^="commentlist"]'),
       hpid = /^post(\d+)$/.exec(commentList.parents('div[id^="post"]').attr('id'))[1],
       moreBtn = commentList.find('.more_btn');
@@ -299,8 +302,10 @@ $(document).ready(function(){
       commentList.find('.scroll_bottom_btn').show();
       moreBtn.data('morecount', Math.ceil(parseInt($('<div>').html(res).find('.commentcount').html()) / 10)).hide();
       commentList.children('.comments').eq(0).html(res);
+      if($.isFunction(callback)) callback();
     });
-  });
+  };
+  main.on('click', '#postlist .all_comments_btn', function() {showAllComments(this)});
   main.on('click', '#postlist .qu_ico', function() {
     var area = $('#' + $(this).data('refto'));
     area.insertAtCaret('[quote=' + $(this).data('hcid') + '|' + $(this).data('type') + ']');

@@ -3992,7 +3992,7 @@ img.polaroid {
   list-style: none;
   position: absolute;
   display: none;
-  z-index: 1100;
+  z-index: 50;
   background: #ffffff;
   min-width: 220px;
   width: auto;

@@ -137,7 +137,7 @@ if (!String.prototype.autoLink) {
   String.prototype.autoLink = function() {
     str = this;
     var pattern = REformat(/((((ht|f)tps?:\/\/)|(www\.))([\S]+\.)*[\-\w]+(\.[a-z]{2,4})+(\/[+%:\w\_\-\?\=\#&\.\(\)]*)*(?![a-z]))/);
-    urls = this.match(pattern);
+    urls = decodeURIComponent(this.replace(/%([^\d].)/g, "%25$1")).match(pattern);
     for (var i in urls) {
       if (urls[i].match(/\.(png|gif|jpg|jpeg)$/))
         str = str.replace(urls[i], '[img]' + (urls[i].match(/(^|\s+)https?:\/\//) ? '' : 'http://') + urls[i] + '[/img]');

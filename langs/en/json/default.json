@@ -133,6 +133,7 @@
     "NO_EMPTY_MESSAGE" : "Message cannot be empty",
     "NO_PM" : "No private messages",
     "NO_PROJECTS" : "You don't have any project",
+    "NUMBER_OF_MODIFICATIONS" : "Number of modifications",
     "OFFLINE" : "Offline",
     "OLDER_NERDZ" : "Older nerdz",
     "ON" : "On",

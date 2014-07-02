@@ -70,7 +70,7 @@ input[type="submit"] {
 .notify {
   text-align: left;
  }
-#ncounter {
+#notifycounter {
   cursor: pointer;
 }
 .post_footer {

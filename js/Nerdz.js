@@ -229,7 +229,7 @@ var Nerdz = function() {
         $.Dialog.close($(".window").data("uuid"));
         if(!reopenifalreadyopened) return;
       }
-      var pmc = $('#pcounter');
+      var pmc = $('#pmcounter');
       $.Dialog({
         title: pmc.attr("title"),
         position: { top: "45px", right:"0px" },
@@ -768,7 +768,7 @@ var Nerdz = function() {
       $("body").addClass(options.theme).addClass(options.color);
       if(options.fixedHeader && !$.Nerdz.mobile) $("body").addClass("fixedHeader");
 			if(!options.footer && !$.Nerdz.mobile) {
-				$("#ncounter").appendTo($("<a>").attr("id","gotono").addClass("element place-right").css({paddingLeft: 30, paddingRight:30, cursor: "pointer"}).insertBefore("#gotopm"));
+				$("#notifycounter").appendTo($("<a>").attr("id","gotono").addClass("element place-right").css({paddingLeft: 30, paddingRight:30, cursor: "pointer"}).insertBefore("#gotopm"));
 				$("<style>").html("#notify_list { top: 45px; bottom: auto; }").appendTo("head");
 				$("#footersearch").appendTo($("<span>").attr("id","search").addClass("element place-right").css({paddingLeft: 30, paddingRight:30, cursor: "pointer"}).appendTo($("header").children().eq(0)));
 				$("footer").remove();
@@ -1351,7 +1351,7 @@ var Nerdz = function() {
 				t.Preview(this);
 			}).children().append("<br/><br/>");
 			
-			$('#ncounter').on('click', function(e) {
+			$('#notifycounter').on('click', function(e) {
 				e.preventDefault();
 				var list = $('#notify_list'),
 					old = $(this).html();
@@ -1365,7 +1365,7 @@ var Nerdz = function() {
 			});
 			$('#gotopm').on('click', function(e) {
 				e.preventDefault();
-				var pmc = $('#pcounter');
+				var pmc = $('#pmcounter');
 				if($.Nerdz.mobile || (e.ctrlKey && location.pathname !== "/pm.php")) {
 					location.href = "/pm.php"+(pmc.html() !== '0'?"#new":"");
 					return;
@@ -1409,7 +1409,7 @@ var Nerdz = function() {
 			var curnot = sessionStorage.getItem('curnot') ? parseInt(sessionStorage.getItem('curnot')) : 0,
 					curpms = sessionStorage.getItem('curpms') ? parseInt(sessionStorage.getItem('curpms')) : 0;
 			var notify = function() {
-				var nc = $('#ncounter'), pc = $("#pcounter");
+				var nc = $('#notifycounter'), pc = $("#pmcounter");
 				N.json.post('/pages/profile/notify.json.php',{}, function(obj) {
 					var nw, not = obj.status === 'ok' ? parseInt(obj.message) : 0;
 					nc.html(not).css("color", not===0?$color:'#FF0000');
@@ -1432,7 +1432,7 @@ var Nerdz = function() {
 								content: N.getLangData().NEW_NOTIFICATIONS.format(nw), 
 								icon: "/static/images/droidico.png", 
 								onClick: function() {
-									$("#ncounter").click();
+									$("#notifycounter").click();
 								},
 								timeout: 5000
 							});
@@ -1463,8 +1463,8 @@ var Nerdz = function() {
 			
 			var updateTitle = function() {
 				var title = t.title;
-				if(parseInt($("#ncounter").text())>0) title = "("+$("#ncounter").text()+") "+title;
-				if(parseInt($("#pcounter").text())>0) title = "["+$("#pcounter").text()+"] "+title;
+				if(parseInt($("#notifycounter").text())>0) title = "("+$("#notifycounter").text()+") "+title;
+				if(parseInt($("#pmcounter").text())>0) title = "["+$("#pmcounter").text()+"] "+title;
 				document.title = title;
 			};
 			

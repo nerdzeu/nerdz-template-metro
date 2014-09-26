@@ -68,7 +68,7 @@
     <div style="display: none;">
       <div class="tagpanel span9"></div>
     </div>{/if}
-    {if="!$singlepost_b"}
+    {if="!isset($post_n)"}
     <div id="postlist" data-type="project" data-id="{$id_n}" data-location="project" data-limit="0" data-mode="std"></div>{else}
     <div id="postlist" data-type="project" data-projectid="{$id_n}" data-location="project" data-limit="0" data-mode="std" class="singlepost">{$post_n}</div>{/if}<br/><br/>
   </article>

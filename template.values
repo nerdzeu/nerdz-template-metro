@@ -46,7 +46,9 @@
               ],
 		"project": "js/events.js",
 		"profile": "js/events.js",
-		"preferences": "js/preferences.js"
+		"preferences": "js/preferences.js",
+        "search": "js/search.js",
+        "reset": "js/reset.js"
 	},
 	"langs": {
 			"default": "langs/%lang%/json/default.json"

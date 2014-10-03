@@ -1,0 +1,21 @@
+{
+     "BACK_TO_THE_TOP" : "Back to top",
+     "CANCEL" : "Cancel",
+     "CODE_THEME" : "Code Theme",
+     "COLOR" : "Cor",
+     "HIDDEN_POSTS" : "Hidden Posts",
+     "IMG_UPLOADING" : "The image you selected was not uploaded still. Do you want to send the message anyway?",
+     "IMG_UPLOADING_2" : "The image you selected was not uploaded still.",
+     "METRO_SETTINGS" : "Metro Settings",
+     "MOTIVATION" : "Motivation",
+     "NEW_MESSAGE" : "You have 1 new message",
+     "NEW_MESSAGES" : "You have {0} new messages",
+     "NEW_NOTIFICATIONS" : "You have {0} new n",
+     "NO" : "No",
+     "NOTIFICATIONS" : "Notifications",
+     "NO_PROJECTS" : "You don't have any project",
+     "POST_NOT_SENT" : "The following post has not been sent:",
+     "THEME" : "Theme",
+     "UPLOADING" : "Uploading...",
+     "YOU_HAVE_BEEN_BLACKLISTED" : "Você tem sido na lista negra"
+}

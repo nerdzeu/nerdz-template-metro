@@ -1,0 +1,21 @@
+{
+     "BACK_TO_THE_TOP" : "Back to top",
+     "CODE_THEME" : "Tema [code]",
+     "COLOR" : "Colore",
+     "HIDDEN_POSTS" : "Hidden Posts",
+     "IMG_UPLOADING" : "La foto selezionata risulta non ancora stata caricata. Vuoi davvero inviare il messaggio?",
+     "IMG_UPLOADING_2" : "La foto selezionata risulta non ancora stata caricata.",
+     "METRO_SETTINGS" : "Preferenze Metro",
+     "MOTIVATION" : "Motivo",
+     "NEW_MESSAGE" : "Hai 1 nuovo messaggio",
+     "NEW_MESSAGES" : "Hai {0} nuovi messaggi",
+     "NEW_NOTIFICATIONS" : "Hai {0} notifiche non lette",
+     "NO" : "No",
+     "NOTIFICATIONS" : "Notifiche",
+     "NO_PROJECTS" : "Non hai alcun progetto",
+     "POST_NOT_SENT" : "Il seguente post risulta non ancora stato inviato:",
+     "PROJECT_INFO" : "Info Progetto",
+     "THEME" : "Thema",
+     "UPLOADING" : "Caricamento...",
+     "YOU_HAVE_BEEN_BLACKLISTED" : "Sei stato messo in lista nera"
+}

@@ -1,0 +1,23 @@
+{
+     "BACK_TO_THE_TOP" : "Back to top",
+     "CODE_THEME" : "Code Theme",
+     "COLOR" : "Color",
+     "GOTOMOBILE" : "Go to mobile versione",
+     "HIDDEN_POSTS" : "Hidden Posts",
+     "IMG_UPLOADING" : "The image you selected was not uploaded still. Do you want to send the message anyway?",
+     "IMG_UPLOADING_2" : "The image you selected was not uploaded still.",
+     "METRO_SETTINGS" : "Metro Settings",
+     "MOBILEAVAILABLE" : "NERDZ also has a mobile website, would you like to check it out?",
+     "NEW_MESSAGE" : "You have 1 new message",
+     "NEW_MESSAGES" : "You have {0} new messages",
+     "NEW_NOTIFICATIONS" : "You have {0} unread notifications",
+     "NO" : "No",
+     "NOTIFICATIONS" : "Notifications",
+     "NO_PROJECTS" : "You don't have any project",
+     "POST_NOT_SENT" : "The following post has not been sent:",
+     "SOMETHING_MISS" : "Nešto miss",
+     "STAYONDESKTOP" : "Stay on desktop version",
+     "THEME" : "Theme",
+     "UPLOADING" : "Uploading...",
+     "YOU_HAVE_BEEN_BLACKLISTED" : "You have been blacklisted"
+}
